@@ -4,6 +4,9 @@ import { Icon } from "@iconify/react";
 import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import Button from "@/components/ui/Button";
+import { toastSuccess } from "@/components/ui/alert";
 import {
   getProductBySlug,
   relatedProducts,
@@ -16,8 +19,8 @@ export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { user } = useAuth();
   const [qty, setQty] = useState(1);
-  const [toast, setToast] = useState("");
 
   const product = slug ? getProductBySlug(slug) : undefined;
 
@@ -42,19 +45,14 @@ export default function ProductDetailPage() {
 
   const clampQty = (n: number) => Math.max(1, Math.min(product.stock, n));
 
-  const showToast = (msg: string) => {
-    setToast(msg);
-    setTimeout(() => setToast(""), 1800);
-  };
-
   const handleAddToCart = () => {
     addItem(product.id, qty);
-    showToast("Ditambahkan ke keranjang");
+    if (user) toastSuccess("Ditambahkan ke keranjang");
   };
 
   const handleBuyNow = () => {
     addItem(product.id, qty);
-    navigate("/keranjang");
+    if (user) navigate("/keranjang");
   };
 
   return (
@@ -126,16 +124,13 @@ export default function ProductDetailPage() {
             </div>
 
             <div className="product-detail-actions">
-              <button className="btn-outline-lg" onClick={handleAddToCart}>
-                <Icon icon="mdi:cart-plus" width={19} />
+              <Button variant="outline" size="lg" icon="mdi:cart-plus" onClick={handleAddToCart}>
                 Tambah ke Keranjang
-              </button>
-              <button className="btn-solid-lg" onClick={handleBuyNow}>
+              </Button>
+              <Button variant="primary" size="lg" onClick={handleBuyNow}>
                 Beli Langsung
-              </button>
+              </Button>
             </div>
-
-            {toast && <div className="mini-toast">{toast}</div>}
           </div>
         </div>
 

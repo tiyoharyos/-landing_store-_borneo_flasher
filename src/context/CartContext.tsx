@@ -1,5 +1,8 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { PRODUCTS, type Product } from "@/data/products";
+import { useAuth } from "@/context/AuthContext";
+import { alertNeedLogin } from "@/components/ui/alert";
 
 export interface CartLine {
   productId: string;
@@ -16,6 +19,8 @@ interface CartContextValue {
   items: CartItemView[];
   totalItems: number;
   subtotal: number;
+  /** Menambahkan produk ke keranjang. Butuh login — kalau belum masuk,
+   *  user akan diarahkan ke halaman login lewat dialog konfirmasi. */
   addItem: (productId: string, qty?: number) => void;
   removeItem: (productId: string) => void;
   setQty: (productId: string, qty: number) => void;
@@ -27,6 +32,8 @@ const STORAGE_KEY = "bf_cart";
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     try {
@@ -41,7 +48,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
   }, [lines]);
 
+  // Kalau user logout sementara ada isi keranjang, kosongkan supaya
+  // keranjang benar-benar "tidak bisa diisi" tanpa akun yang aktif.
+  useEffect(() => {
+    if (!user && lines.length > 0) {
+      setLines([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   const addItem: CartContextValue["addItem"] = (productId, qty = 1) => {
+    if (!user) {
+      alertNeedLogin().then((wantsLogin) => {
+        if (wantsLogin) navigate("/masuk?next=/keranjang");
+      });
+      return;
+    }
     setLines((prev) => {
       const existing = prev.find((l) => l.productId === productId);
       if (existing) {

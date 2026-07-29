@@ -5,6 +5,10 @@ import Navbar from "@/components/Navbar";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatRupiah } from "@/data/products";
+import Button from "@/components/ui/Button";
+import { Input, Textarea } from "@/components/ui/Input";
+import { FormRow, FormSpan } from "@/components/ui/FormLayout";
+import { alertWarning, toastSuccess } from "@/components/ui/alert";
 import {
   createOrder,
   SHIPPING_OPTIONS,
@@ -25,7 +29,7 @@ export default function CheckoutPage() {
   const [postalCode, setPostalCode] = useState("");
   const [shippingMethod, setShippingMethod] = useState<ShippingMethodKey>("reguler");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodKey>("transfer");
-  const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
   if (items.length === 0) {
@@ -36,8 +40,10 @@ export default function CheckoutPage() {
           <Icon icon="mdi:cart-off" width={64} style={{ color: "var(--line)" }} />
           <p className="title">Keranjang Kosong</p>
           <p className="desc">Tambahkan produk ke keranjang sebelum checkout.</p>
-          <Link to="/" className="btn-clear mt-4 inline-block">
-            Kembali Belanja
+          <Link to="/" className="inline-block mt-4">
+            <Button variant="primary" icon="mdi:storefront-outline">
+              Kembali Belanja
+            </Button>
           </Link>
         </div>
       </div>
@@ -48,11 +54,22 @@ export default function CheckoutPage() {
   const total = subtotal + shippingCost;
 
   const handleSubmit = () => {
-    if (!name.trim() || !phone.trim() || !fullAddress.trim() || !city.trim() || !postalCode.trim()) {
-      setError("Semua kolom alamat wajib diisi.");
+    const errors: Record<string, string> = {};
+    if (!name.trim()) errors.name = "Nama penerima wajib diisi.";
+    if (!phone.trim()) errors.phone = "No. HP wajib diisi.";
+    if (!fullAddress.trim()) errors.fullAddress = "Alamat lengkap wajib diisi.";
+    if (!city.trim()) errors.city = "Kota/kabupaten wajib diisi.";
+    if (!postalCode.trim()) errors.postalCode = "Kode pos wajib diisi.";
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      alertWarning({
+        title: "Lengkapi Data Dulu",
+        text: "Beberapa kolom alamat pengiriman masih kosong.",
+      });
       return;
     }
-    setError("");
+
     setSubmitting(true);
     setTimeout(() => {
       const order = createOrder(
@@ -62,6 +79,7 @@ export default function CheckoutPage() {
         paymentMethod
       );
       clear();
+      toastSuccess("Pesanan berhasil dibuat!");
       navigate(`/pesanan/sukses/${order.id}`);
     }, 700);
   };
@@ -78,34 +96,46 @@ export default function CheckoutPage() {
               <p className="checkout-card-title">
                 <Icon icon="mdi:map-marker-outline" width={18} /> Alamat Pengiriman
               </p>
-              <div className="form-grid">
-                <label>
-                  Nama Penerima
-                  <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama lengkap" />
-                </label>
-                <label>
-                  No. HP
-                  <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="08xxxxxxxxxx" />
-                </label>
-                <label className="col-span-2">
-                  Alamat Lengkap
-                  <textarea
+              <FormRow columns={2}>
+                <Input
+                  label="Nama Penerima"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Nama lengkap"
+                  error={fieldErrors.name}
+                />
+                <Input
+                  label="No. HP"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="08xxxxxxxxxx"
+                  error={fieldErrors.phone}
+                />
+                <FormSpan>
+                  <Textarea
+                    label="Alamat Lengkap"
                     value={fullAddress}
                     onChange={(e) => setFullAddress(e.target.value)}
                     placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan"
                     rows={3}
+                    error={fieldErrors.fullAddress}
                   />
-                </label>
-                <label>
-                  Kota / Kabupaten
-                  <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Contoh: Boyolali" />
-                </label>
-                <label>
-                  Kode Pos
-                  <input value={postalCode} onChange={(e) => setPostalCode(e.target.value)} placeholder="57316" />
-                </label>
-              </div>
-              {error && <p className="form-error">{error}</p>}
+                </FormSpan>
+                <Input
+                  label="Kota / Kabupaten"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder="Contoh: Boyolali"
+                  error={fieldErrors.city}
+                />
+                <Input
+                  label="Kode Pos"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                  placeholder="57316"
+                  error={fieldErrors.postalCode}
+                />
+              </FormRow>
             </div>
 
             <div className="checkout-card">
@@ -178,9 +208,16 @@ export default function CheckoutPage() {
               <span>Total Bayar</span>
               <span>{formatRupiah(total)}</span>
             </div>
-            <button className="btn-solid-lg w-full mt-3" onClick={handleSubmit} disabled={submitting}>
-              {submitting ? "Memproses..." : "Buat Pesanan"}
-            </button>
+            <Button
+              variant="primary"
+              size="lg"
+              fullWidth
+              className="mt-3"
+              onClick={handleSubmit}
+              loading={submitting}
+            >
+              Buat Pesanan
+            </Button>
             <p className="cart-summary-note text-center mt-2">
               Ini adalah simulasi checkout (belum ada pembayaran nyata).
             </p>

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { findUserByEmail, registerMockUser, validateCredentials } from "@/data/users";
 
 export interface User {
   name: string;
@@ -38,13 +39,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     else localStorage.removeItem(STORAGE_KEY);
   };
 
-  // Mock login: tidak ada backend, jadi kredensial apa pun yang valid formatnya akan diterima.
+  // Mock login: kredensial divalidasi terhadap daftar akun demo di
+  // src/data/users.ts (belum ada backend sungguhan).
   const login: AuthContextValue["login"] = async (email, password) => {
     await new Promise((r) => setTimeout(r, 500));
     if (!email.includes("@")) return { ok: false, message: "Format email tidak valid." };
     if (password.length < 4) return { ok: false, message: "Password minimal 4 karakter." };
-    const name = email.split("@")[0].replace(/[._-]/g, " ");
-    persist({ name: name.charAt(0).toUpperCase() + name.slice(1), email });
+
+    const matched = validateCredentials(email, password);
+    if (!matched) {
+      const exists = findUserByEmail(email);
+      return {
+        ok: false,
+        message: exists ? "Password salah." : "Email belum terdaftar. Coba daftar dulu.",
+      };
+    }
+    persist({ name: matched.name, email: matched.email });
     return { ok: true };
   };
 
@@ -53,7 +63,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!name.trim()) return { ok: false, message: "Nama tidak boleh kosong." };
     if (!email.includes("@")) return { ok: false, message: "Format email tidak valid." };
     if (password.length < 4) return { ok: false, message: "Password minimal 4 karakter." };
-    persist({ name: name.trim(), email });
+    if (findUserByEmail(email)) {
+      return { ok: false, message: "Email sudah terdaftar. Coba masuk saja." };
+    }
+    const created = registerMockUser(name.trim(), email.trim(), password);
+    persist({ name: created.name, email: created.email });
     return { ok: true };
   };
 
