@@ -1,84 +1,86 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import logoBlack from "@/assets/img/logo-black.png";
-import mandiri from "@/assets/img/mandiri.png";
-import bni from "@/assets/img/bni.png";
-import bri from "@/assets/img/bri.png";
-import bca from "@/assets/img/bca.png";
-import ovo from "@/assets/img/ovo.png";
-import dana from "@/assets/img/dana.png";
-import qris from "@/assets/img/qris.png";
-import linkBank from "@/assets/img/link.png";
-import jne from "@/assets/img/jne.png";
-import jnt from "@/assets/img/jnt.png";
-import sicepat from "@/assets/img/sicepat.png";
-import anteraja from "@/assets/img/anteraja.png";
-import lion from "@/assets/img/lion.png";
-import { STORE_ADDRESS, WHATSAPP_NUMBER } from "@/config/config";
+import logoLpks from "../assets/img/logo-lpks.png";
+import { ADDRESS, EMAIL, PHONE_DISPLAY, SOCIALS, waLink } from "@/config/config";
+
+const SOCIAL_ICONS: { key: keyof typeof SOCIALS; icon: string }[] = [
+  { key: "facebook", icon: "mdi:facebook" },
+  { key: "instagram", icon: "mdi:instagram" },
+  { key: "youtube", icon: "mdi:youtube" },
+  { key: "tiktok", icon: "ic:baseline-tiktok" },
+];
 
 export default function Footer() {
-  const location = useLocation();
-  const isSearchOrMitraDetail =
-    location.pathname === "/" || location.pathname.startsWith("/mitra/");
-
   return (
-    <footer className="footer mt-auto">
-      <div className="container">
-        {!isSearchOrMitraDetail && (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 pb-4 mb-4 border-b border-[var(--color-light)]">
-            <div className="md:col-span-2">
-              <img src={logoBlack} alt="GadgetShop" className="w-20" />
-              <div className="content-info mt-3">
-                <p>
-                  <Link to="/privasi">Kebijakan Privasi</Link>
-                </p>
-                <p>
-                  <Link to="/terms">Syarat dan Ketentuan</Link>
-                </p>
-              </div>
-            </div>
-            <div className="md:col-span-2">
-              <p className="title-info">Menu</p>
-              <div className="content-info">
-                <p>
-                  <Link to="/">Home</Link>
-                </p>
-                <p>
-                  <Link to="/mitra">Mitra Kami</Link>
-                </p>
-              </div>
-            </div>
-            <div className="md:col-span-4">
-              <p className="title-bayar">Pembayaran</p>
-              <div className="content-bayar flex flex-wrap items-center">
-                {[mandiri, bni, bri, bca, ovo, dana, qris, linkBank].map((img, i) => (
-                  <img key={i} src={img} alt="metode pembayaran" />
-                ))}
-              </div>
-            </div>
-            <div className="md:col-span-4">
-              <p className="title-bayar">Pengiriman</p>
-              <div className="content-bayar flex flex-wrap items-center">
-                {[jne, jnt, sicepat, anteraja, lion].map((img, i) => (
-                  <img key={i} src={img} alt="metode pengiriman" />
-                ))}
-              </div>
+    <footer className="site-footer">
+      <div className="container py-14">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+          <div className="md:col-span-4">
+            <img src={logoLpks} alt="LPKS Borneo Flasher" className="h-10 w-auto" />
+            <p className="mt-4 text-[14px] leading-relaxed" style={{ color: "#bcb1a6" }}>
+              Awali kesuksesan belajarmu bersama LPKS Borneo Flasher Indonesia —
+              dari nol sampai mahir, dibimbing sampai siap kerja.
+            </p>
+            <div className="flex gap-2 mt-5">
+              {SOCIAL_ICONS.map((s) => (
+                <a
+                  key={s.key}
+                  href={SOCIALS[s.key]}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="footer-social"
+                  aria-label={s.key}
+                >
+                  <Icon icon={s.icon} width={18} />
+                </a>
+              ))}
             </div>
           </div>
-        )}
 
-        <div className="cr">
-          <p className="flex items-center gap-2">
-            <Icon icon="mdi:map-marker" />
-            {STORE_ADDRESS}
-          </p>
-          <p>Copyright © 2026 Gadgetshop All rights reserved.</p>
+          <div className="md:col-span-2">
+            <p className="font-display font-bold text-white mb-3 text-[15px]">Menu</p>
+            <div className="flex flex-col gap-2 text-[14px]" style={{ color: "#bcb1a6" }}>
+              <Link to="/">Beranda</Link>
+              <Link to="/kategori/alat-tools">Alat & Tools</Link>
+              <Link to="/kategori/sparepart-iphone">Sparepart iPhone</Link>
+              <Link to="/keranjang">Keranjang</Link>
+            </div>
+          </div>
+
+          <div className="md:col-span-3">
+            <p className="font-display font-bold text-white mb-3 text-[15px]">Kontak</p>
+            <div className="flex flex-col gap-2.5 text-[14px]" style={{ color: "#bcb1a6" }}>
+              <span className="flex items-center gap-2">
+                <Icon icon="mdi:phone-outline" />
+                {PHONE_DISPLAY}
+              </span>
+              <span className="flex items-center gap-2">
+                <Icon icon="mdi:email-outline" />
+                {EMAIL}
+              </span>
+            </div>
+          </div>
+
+          <div className="md:col-span-3">
+            <p className="font-display font-bold text-white mb-3 text-[15px]">Alamat</p>
+            <p className="flex items-start gap-2 text-[14px] leading-relaxed" style={{ color: "#bcb1a6" }}>
+              <Icon icon="mdi:map-marker-outline" className="flex-shrink-0 mt-0.5" />
+              {ADDRESS}
+            </p>
+          </div>
+        </div>
+
+        <div
+          className="flex flex-col md:flex-row justify-between items-center gap-3 mt-10 pt-6 text-[13px]"
+          style={{ borderTop: "1px solid rgba(231,221,209,0.15)", color: "#8a8078" }}
+        >
+          <p>Copyright © 2026 LPKS Borneo Flasher Indonesia. All rights reserved.</p>
         </div>
       </div>
 
       <a
-        href={`https://api.whatsapp.com/send?phone=62${WHATSAPP_NUMBER}&text=Halo+Admin+saya+ingin+bertanya`}
-        className="float"
+        href={waLink()}
+        className="wa-float"
         target="_blank"
         rel="noreferrer"
         title="Hubungi Admin"
