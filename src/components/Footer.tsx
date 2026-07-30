@@ -12,23 +12,23 @@ const SOCIAL_ICONS: { key: keyof typeof SOCIALS; icon: string }[] = [
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
-      <div className="container py-14">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+    <footer className="mt-auto bg-ink text-line">
+      <div className="mx-auto w-full max-w-[1180px] px-5 py-14">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
           <div className="md:col-span-4">
             <img src={logoLpks} alt="LPKS Borneo Flasher" className="h-10 w-auto" />
-            <p className="mt-4 text-[14px] leading-relaxed" style={{ color: "#bcb1a6" }}>
+            <p className="mt-4 text-[14px] leading-relaxed text-[#bcb1a6]">
               Awali kesuksesan belajarmu bersama LPKS Borneo Flasher Indonesia —
               dari nol sampai mahir, dibimbing sampai siap kerja.
             </p>
-            <div className="flex gap-2 mt-5">
+            <div className="mt-5 flex gap-2">
               {SOCIAL_ICONS.map((s) => (
                 <a
                   key={s.key}
                   href={SOCIALS[s.key]}
                   target="_blank"
                   rel="noreferrer"
-                  className="footer-social"
+                  className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-[rgba(231,221,209,0.25)] text-line transition-colors hover:border-brand hover:bg-brand hover:text-white"
                   aria-label={s.key}
                 >
                   <Icon icon={s.icon} width={18} />
@@ -38,8 +38,8 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-2">
-            <p className="font-display font-bold text-white mb-3 text-[15px]">Menu</p>
-            <div className="flex flex-col gap-2 text-[14px]" style={{ color: "#bcb1a6" }}>
+            <p className="mb-3 font-display text-[15px] font-bold text-white">Menu</p>
+            <div className="flex flex-col gap-2 text-[14px] text-[#bcb1a6]">
               <Link to="/">Beranda</Link>
               <Link to="/kategori/alat-tools">Alat & Tools</Link>
               <Link to="/kategori/sparepart-iphone">Sparepart iPhone</Link>
@@ -48,8 +48,8 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-3">
-            <p className="font-display font-bold text-white mb-3 text-[15px]">Kontak</p>
-            <div className="flex flex-col gap-2.5 text-[14px]" style={{ color: "#bcb1a6" }}>
+            <p className="mb-3 font-display text-[15px] font-bold text-white">Kontak</p>
+            <div className="flex flex-col gap-2.5 text-[14px] text-[#bcb1a6]">
               <span className="flex items-center gap-2">
                 <Icon icon="mdi:phone-outline" />
                 {PHONE_DISPLAY}
@@ -62,25 +62,22 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-3">
-            <p className="font-display font-bold text-white mb-3 text-[15px]">Alamat</p>
-            <p className="flex items-start gap-2 text-[14px] leading-relaxed" style={{ color: "#bcb1a6" }}>
-              <Icon icon="mdi:map-marker-outline" className="flex-shrink-0 mt-0.5" />
+            <p className="mb-3 font-display text-[15px] font-bold text-white">Alamat</p>
+            <p className="flex items-start gap-2 text-[14px] leading-relaxed text-[#bcb1a6]">
+              <Icon icon="mdi:map-marker-outline" className="mt-0.5 shrink-0" />
               {ADDRESS}
             </p>
           </div>
         </div>
 
-        <div
-          className="flex flex-col md:flex-row justify-between items-center gap-3 mt-10 pt-6 text-[13px]"
-          style={{ borderTop: "1px solid rgba(231,221,209,0.15)", color: "#8a8078" }}
-        >
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-[rgba(231,221,209,0.15)] pt-6 text-[13px] text-muted md:flex-row">
           <p>Copyright © 2026 LPKS Borneo Flasher Indonesia. All rights reserved.</p>
         </div>
       </div>
 
       <a
         href={waLink()}
-        className="wa-float"
+        className="fixed right-[26px] bottom-[26px] z-[100] flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-2xl text-white shadow-[0_8px_20px_rgba(0,0,0,0.3)]"
         target="_blank"
         rel="noreferrer"
         title="Hubungi Admin"

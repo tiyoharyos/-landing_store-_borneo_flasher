@@ -35,10 +35,10 @@ export default function RegisterPage() {
   return (
     <div>
       <Navbar />
-      <div className="auth-page">
-        <Card className="auth-card-ui" noPadding>
-          <div className="auth-card-inner">
-            <CardHeader className="auth-card-header">
+      <div className="relative flex min-h-[60vh] items-center justify-center overflow-hidden px-5 py-12">
+        <Card className="z-[2] w-full max-w-[400px]" noPadding>
+          <div className="p-8">
+            <CardHeader className="mb-1">
               <div>
                 <CardTitle>Daftar Akun Baru</CardTitle>
                 <CardSubtitle>
@@ -81,16 +81,19 @@ export default function RegisterPage() {
                 </Button>
               </Form>
 
-              <p className="auth-footer-text">
+              <p className="mt-1.5 text-center text-sm text-muted">
                 Sudah punya akun?{" "}
-                <Link to={`/masuk${next !== "/" ? `?next=${encodeURIComponent(next)}` : ""}`}>
+                <Link
+                  to={`/masuk${next !== "/" ? `?next=${encodeURIComponent(next)}` : ""}`}
+                  className="font-bold text-brand"
+                >
                   Masuk di sini
                 </Link>
               </p>
             </CardBody>
           </div>
         </Card>
-        <Icon icon="mdi:account-plus-outline" className="auth-decor" width={140} />
+        <Icon icon="mdi:account-plus-outline" className="absolute -right-5 -bottom-5 z-[1] text-brand-tint" width={140} />
       </div>
     </div>
   );

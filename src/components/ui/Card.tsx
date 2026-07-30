@@ -16,9 +16,9 @@ export function Card({
   ...rest
 }: CardProps) {
   const classes = [
-    "ui-card",
-    interactive ? "ui-card-interactive" : "",
-    noPadding ? "ui-card-flush" : "",
+    "rounded-[18px] border border-line bg-white shadow-card-xs transition-[box-shadow,transform,border-color] duration-200",
+    noPadding ? "p-0" : "p-[1.4rem]",
+    interactive ? "cursor-pointer hover:-translate-y-0.5 hover:border-cream-deep hover:shadow-card-md" : "",
     className,
   ]
     .filter(Boolean)
@@ -32,7 +32,7 @@ export function Card({
 
 export function CardHeader({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`ui-card-header ${className}`} {...rest}>
+    <div className={`mb-4 flex items-start justify-between gap-3 ${className}`} {...rest}>
       {children}
     </div>
   );
@@ -40,7 +40,7 @@ export function CardHeader({ className = "", children, ...rest }: HTMLAttributes
 
 export function CardTitle({ className = "", children, ...rest }: HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={`ui-card-title ${className}`} {...rest}>
+    <p className={`font-display text-[1.05rem] font-extrabold text-ink ${className}`} {...rest}>
       {children}
     </p>
   );
@@ -48,7 +48,7 @@ export function CardTitle({ className = "", children, ...rest }: HTMLAttributes<
 
 export function CardSubtitle({ className = "", children, ...rest }: HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={`ui-card-subtitle ${className}`} {...rest}>
+    <p className={`mt-0.5 text-[12.5px] text-muted ${className}`} {...rest}>
       {children}
     </p>
   );
@@ -56,7 +56,7 @@ export function CardSubtitle({ className = "", children, ...rest }: HTMLAttribut
 
 export function CardBody({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`ui-card-body ${className}`} {...rest}>
+    <div className={`flex flex-col gap-2.5 ${className}`} {...rest}>
       {children}
     </div>
   );
@@ -64,7 +64,7 @@ export function CardBody({ className = "", children, ...rest }: HTMLAttributes<H
 
 export function CardFooter({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`ui-card-footer ${className}`} {...rest}>
+    <div className={`mt-[1.1rem] flex items-center justify-end gap-2.5 border-t border-line pt-4 ${className}`} {...rest}>
       {children}
     </div>
   );
