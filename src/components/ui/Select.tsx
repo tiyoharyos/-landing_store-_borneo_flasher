@@ -24,14 +24,21 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
   const autoId = useId();
   const selectId = id || autoId;
   return (
-    <div className={`ui-field ${error ? "has-error" : ""} ${containerClassName}`}>
+    <div className={`flex flex-col gap-1.5 ${containerClassName}`}>
       {label && (
-        <label htmlFor={selectId} className="ui-field-label">
+        <label htmlFor={selectId} className="text-[12.5px] font-bold text-ink-soft">
           {label}
         </label>
       )}
-      <div className="ui-select-wrap">
-        <select ref={ref} id={selectId} className={`ui-input ui-select ${className}`} {...rest}>
+      <div className="relative flex items-center">
+        <select
+          ref={ref}
+          id={selectId}
+          className={`w-full h-11 border-[1.5px] rounded-xl bg-surface pl-3.5 pr-9 text-[13.75px] font-body text-ink outline-none appearance-none cursor-pointer transition-all focus:border-brand focus:ring-[3.5px] focus:ring-brand/15 ${
+            error ? "border-warn focus:ring-warn/15" : "border-line"
+          } ${className}`}
+          {...rest}
+        >
           {placeholder && (
             <option value="" disabled>
               {placeholder}
@@ -43,12 +50,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
             </option>
           ))}
         </select>
-        <Icon icon="mdi:chevron-down" width={17} className="ui-select-icon" />
+        <Icon icon="mdi:chevron-down" width={17} className="absolute right-[13px] text-muted pointer-events-none" />
       </div>
       {error ? (
-        <span className="ui-field-error">{error}</span>
+        <span className="text-xs text-warn font-semibold">{error}</span>
       ) : hint ? (
-        <span className="ui-field-hint">{hint}</span>
+        <span className="text-[11.5px] text-muted">{hint}</span>
       ) : null}
     </div>
   );

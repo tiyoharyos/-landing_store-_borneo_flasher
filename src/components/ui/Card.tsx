@@ -16,9 +16,9 @@ export function Card({
   ...rest
 }: CardProps) {
   const classes = [
-    "ui-card",
-    interactive ? "ui-card-interactive" : "",
-    noPadding ? "ui-card-flush" : "",
+    "bg-surface border border-line rounded-[18px] shadow-sm transition-all",
+    noPadding ? "" : "p-[1.4rem]",
+    interactive ? "cursor-pointer hover:shadow-md hover:border-cream-deep hover:-translate-y-0.5" : "",
     className,
   ]
     .filter(Boolean)
@@ -32,7 +32,7 @@ export function Card({
 
 export function CardHeader({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`ui-card-header ${className}`} {...rest}>
+    <div className={`flex items-start justify-between gap-3 mb-4 ${className}`} {...rest}>
       {children}
     </div>
   );
@@ -40,7 +40,7 @@ export function CardHeader({ className = "", children, ...rest }: HTMLAttributes
 
 export function CardTitle({ className = "", children, ...rest }: HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={`ui-card-title ${className}`} {...rest}>
+    <p className={`font-display font-extrabold text-[1.05rem] text-ink ${className}`} {...rest}>
       {children}
     </p>
   );
@@ -48,7 +48,7 @@ export function CardTitle({ className = "", children, ...rest }: HTMLAttributes<
 
 export function CardSubtitle({ className = "", children, ...rest }: HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={`ui-card-subtitle ${className}`} {...rest}>
+    <p className={`text-[12.5px] text-muted mt-0.5 ${className}`} {...rest}>
       {children}
     </p>
   );
@@ -56,7 +56,7 @@ export function CardSubtitle({ className = "", children, ...rest }: HTMLAttribut
 
 export function CardBody({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`ui-card-body ${className}`} {...rest}>
+    <div className={`flex flex-col gap-2.5 ${className}`} {...rest}>
       {children}
     </div>
   );
@@ -64,7 +64,10 @@ export function CardBody({ className = "", children, ...rest }: HTMLAttributes<H
 
 export function CardFooter({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`ui-card-footer ${className}`} {...rest}>
+    <div
+      className={`mt-[1.1rem] pt-4 border-t border-line flex items-center justify-end gap-2.5 ${className}`}
+      {...rest}
+    >
       {children}
     </div>
   );

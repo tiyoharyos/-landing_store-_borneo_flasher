@@ -34,10 +34,10 @@ export default function LoginPage() {
   return (
     <div>
       <Navbar />
-      <div className="auth-page">
-        <Card className="auth-card-ui" noPadding>
-          <div className="auth-card-inner">
-            <CardHeader className="auth-card-header">
+      <div className="min-h-[60vh] flex items-center justify-center px-5 py-12 relative overflow-hidden">
+        <Card className="w-full max-w-[400px] z-[2]" noPadding>
+          <div className="p-8">
+            <CardHeader className="mb-1">
               <div>
                 <CardTitle>Masuk ke Akun Kamu</CardTitle>
                 <CardSubtitle>
@@ -72,24 +72,24 @@ export default function LoginPage() {
                 </Button>
               </Form>
 
-              <div className="auth-demo-box">
-                <p className="auth-demo-title">
+              <div className="mt-1.5 bg-cream-deep rounded-xl px-3.5 py-2.5 flex flex-col gap-0.5">
+                <p className="flex items-center gap-1.5 text-[11.5px] font-bold text-brand-dark mb-0.5">
                   <Icon icon="mdi:information-outline" width={15} /> Akun demo
                 </p>
-                <p className="auth-demo-item">andi@borneoflasher.id / andi1234</p>
-                <p className="auth-demo-item">siti@borneoflasher.id / siti1234</p>
+                <p className="font-mono text-[11.5px] text-ink-soft">andi@borneoflasher.id / andi1234</p>
+                <p className="font-mono text-[11.5px] text-ink-soft">siti@borneoflasher.id / siti1234</p>
               </div>
 
-              <p className="auth-footer-text">
+              <p className="text-center text-[13px] text-muted mt-1.5">
                 Belum punya akun?{" "}
-                <Link to={`/daftar${next !== "/" ? `?next=${encodeURIComponent(next)}` : ""}`}>
+                <Link to={`/daftar${next !== "/" ? `?next=${encodeURIComponent(next)}` : ""}`} className="text-brand font-bold">
                   Daftar di sini
                 </Link>
               </p>
             </CardBody>
           </div>
         </Card>
-        <Icon icon="mdi:shield-check-outline" className="auth-decor" width={140} />
+        <Icon icon="mdi:shield-check-outline" className="absolute text-brand-tint right-[-20px] bottom-[-20px] z-[1]" width={140} />
       </div>
     </div>
   );

@@ -30,10 +30,13 @@ export default function ProductDetailPage() {
     return (
       <div>
         <Navbar />
-        <div className="container not-found-box">
-          <Icon icon="mdi:package-variant-closed" width={64} style={{ color: "var(--line)" }} />
-          <p className="title">Produk Tidak Ditemukan</p>
-          <Link to="/" className="btn-clear mt-4 inline-block">
+        <div className="container text-center py-12 px-6">
+          <Icon icon="mdi:package-variant-closed" width={64} className="text-line inline-block" />
+          <p className="font-display font-bold text-[1.1rem] mt-4">Produk Tidak Ditemukan</p>
+          <Link
+            to="/"
+            className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-full px-6 py-2 hover:bg-brand-tint transition-colors"
+          >
             Kembali ke Beranda
           </Link>
         </div>
@@ -62,21 +65,27 @@ export default function ProductDetailPage() {
     <div>
       <Navbar />
       <div className="container">
-        <div className="breadcrumb">
-          <Link to="/">Beranda</Link>
+        <div className="flex items-center gap-1.5 text-[12.5px] text-muted my-5 flex-wrap">
+          <Link to="/" className="hover:text-brand">Beranda</Link>
           <Icon icon="mdi:chevron-right" width={14} />
-          {category && <Link to={`/kategori/${category.key}`}>{category.label}</Link>}
+          {category && <Link to={`/kategori/${category.key}`} className="hover:text-brand">{category.label}</Link>}
           <Icon icon="mdi:chevron-right" width={14} />
           <span>{product.name}</span>
         </div>
 
-        <div className="product-detail-layout">
-          <div className="product-detail-image">
-            <img src={product.image} alt={product.name} />
-            {pct > 0 && <span className="badge-discount lg">-{pct}%</span>}
+        <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] gap-7 pb-4">
+          <div className="relative rounded-[18px] overflow-hidden bg-cream-deep aspect-square self-start">
+            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+            {pct > 0 && (
+              <span className="absolute top-3 left-3 bg-brand text-white text-[13px] font-extrabold px-2.5 py-1 rounded-md">
+                -{pct}%
+              </span>
+            )}
             <button
               type="button"
-              className={`wishlist-btn lg ${wished ? "active" : ""}`}
+              className={`absolute top-3 right-3 w-10 h-10 rounded-full border-none bg-white/92 flex items-center justify-center cursor-pointer shadow-md transition-transform hover:scale-110 ${
+                wished ? "text-brand" : "text-ink-soft"
+              }`}
               aria-label={wished ? "Hapus dari wishlist" : "Tambah ke wishlist"}
               onClick={() => toggle(product.id)}
             >
@@ -84,57 +93,68 @@ export default function ProductDetailPage() {
             </button>
           </div>
 
-          <div className="product-detail-info">
-            <p className="product-detail-name">{product.name}</p>
-            <div className="product-detail-meta">
-              <span className="rating">
+          <div>
+            <p className="font-display font-extrabold text-[1.4rem] text-ink">{product.name}</p>
+            <div className="flex items-center gap-2 text-[13px] text-muted mt-2">
+              <span className="flex items-center gap-1 text-amber-dark font-bold">
                 <Icon icon="mdi:star" width={15} />
                 {product.rating.toFixed(1)}
               </span>
-              <span className="dot">•</span>
+              <span className="text-line">•</span>
               <span>Terjual {product.sold}</span>
-              <span className="dot">•</span>
-              <span className={`badge ${product.condition === "Baru" ? "badge-open" : "badge-low"}`}>
+              <span className="text-line">•</span>
+              <span
+                className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold whitespace-nowrap ${
+                  product.condition === "Baru" ? "bg-ok/10 text-ok" : "bg-amber/15 text-amber-dark"
+                }`}
+              >
                 {product.condition}
               </span>
             </div>
 
-            <div className="product-detail-price">
-              <span className="price-final">{formatRupiah(product.price)}</span>
+            <div className="mt-3.5 flex items-baseline gap-2.5">
+              <span className="font-mono font-extrabold text-2xl text-brand-dark">{formatRupiah(product.price)}</span>
               {product.priceOriginal && (
-                <span className="price-original">{formatRupiah(product.priceOriginal)}</span>
+                <span className="line-through text-muted text-xs">{formatRupiah(product.priceOriginal)}</span>
               )}
             </div>
 
-            <p className="product-detail-desc">{product.description}</p>
+            <p className="mt-3.5 text-sm leading-relaxed text-ink-soft">{product.description}</p>
 
-            <div className="product-detail-row">
-              <span className="label">Stok</span>
+            <div className="flex gap-2.5 text-[13.5px] mt-2 text-ink-soft">
+              <span className="w-[70px] text-muted flex-shrink-0">Stok</span>
               <span>{product.stock} unit tersedia</span>
             </div>
-            <div className="product-detail-row">
-              <span className="label">Berat</span>
+            <div className="flex gap-2.5 text-[13.5px] mt-2 text-ink-soft">
+              <span className="w-[70px] text-muted flex-shrink-0">Berat</span>
               <span>{product.weightGram} gram</span>
             </div>
 
-            <div className="qty-selector">
-              <span className="label">Jumlah</span>
-              <div className="qty-control">
-                <button onClick={() => setQty((q) => clampQty(q - 1))}>
+            <div className="flex items-center gap-3.5 mt-4">
+              <span className="text-[13.5px] text-muted w-[70px]">Jumlah</span>
+              <div className="flex items-center border border-line rounded-[10px] overflow-hidden">
+                <button
+                  className="w-[34px] h-[34px] bg-cream-deep border-none flex items-center justify-center cursor-pointer text-ink"
+                  onClick={() => setQty((q) => clampQty(q - 1))}
+                >
                   <Icon icon="mdi:minus" width={16} />
                 </button>
                 <input
                   type="number"
                   value={qty}
                   onChange={(e) => setQty(clampQty(Number(e.target.value) || 1))}
+                  className="w-[46px] text-center border-none outline-none font-bold text-[13.5px] bg-surface text-ink"
                 />
-                <button onClick={() => setQty((q) => clampQty(q + 1))}>
+                <button
+                  className="w-[34px] h-[34px] bg-cream-deep border-none flex items-center justify-center cursor-pointer text-ink"
+                  onClick={() => setQty((q) => clampQty(q + 1))}
+                >
                   <Icon icon="mdi:plus" width={16} />
                 </button>
               </div>
             </div>
 
-            <div className="product-detail-actions">
+            <div className="flex gap-3 mt-[22px] flex-wrap">
               <Button variant="outline" size="lg" icon="mdi:cart-plus" onClick={handleAddToCart}>
                 Tambah ke Keranjang
               </Button>
@@ -147,8 +167,8 @@ export default function ProductDetailPage() {
 
         {related.length > 0 && (
           <div className="mt-10 pb-16">
-            <p className="section-title mb-4">Produk Terkait</p>
-            <div className="product-grid">
+            <p className="font-display font-extrabold text-[1.1rem] text-ink mb-4">Produk Terkait</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
               {related.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}

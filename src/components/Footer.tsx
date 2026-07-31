@@ -12,12 +12,12 @@ const SOCIAL_ICONS: { key: keyof typeof SOCIALS; icon: string }[] = [
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
+    <footer className="bg-footer-bg text-footer-text mt-auto">
       <div className="container py-14">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
           <div className="md:col-span-4">
             <img src={logoLpks} alt="LPKS Borneo Flasher" className="h-10 w-auto" />
-            <p className="mt-4 text-[14px] leading-relaxed" style={{ color: "#bcb1a6" }}>
+            <p className="mt-4 text-[14px] leading-relaxed text-footer-muted">
               Awali kesuksesan belajarmu bersama LPKS Borneo Flasher Indonesia —
               dari nol sampai mahir, dibimbing sampai siap kerja.
             </p>
@@ -28,7 +28,7 @@ export default function Footer() {
                   href={SOCIALS[s.key]}
                   target="_blank"
                   rel="noreferrer"
-                  className="footer-social"
+                  className="w-[38px] h-[38px] rounded-full border border-footer-line flex items-center justify-center transition-colors hover:bg-brand hover:border-brand"
                   aria-label={s.key}
                 >
                   <Icon icon={s.icon} width={18} />
@@ -39,7 +39,7 @@ export default function Footer() {
 
           <div className="md:col-span-2">
             <p className="font-display font-bold text-white mb-3 text-[15px]">Menu</p>
-            <div className="flex flex-col gap-2 text-[14px]" style={{ color: "#bcb1a6" }}>
+            <div className="flex flex-col gap-2 text-[14px] text-footer-muted">
               <Link to="/">Beranda</Link>
               <Link to="/kategori/alat-tools">Alat & Tools</Link>
               <Link to="/kategori/sparepart-iphone">Sparepart iPhone</Link>
@@ -49,7 +49,7 @@ export default function Footer() {
 
           <div className="md:col-span-3">
             <p className="font-display font-bold text-white mb-3 text-[15px]">Kontak</p>
-            <div className="flex flex-col gap-2.5 text-[14px]" style={{ color: "#bcb1a6" }}>
+            <div className="flex flex-col gap-2.5 text-[14px] text-footer-muted">
               <span className="flex items-center gap-2">
                 <Icon icon="mdi:phone-outline" />
                 {PHONE_DISPLAY}
@@ -63,24 +63,21 @@ export default function Footer() {
 
           <div className="md:col-span-3">
             <p className="font-display font-bold text-white mb-3 text-[15px]">Alamat</p>
-            <p className="flex items-start gap-2 text-[14px] leading-relaxed" style={{ color: "#bcb1a6" }}>
+            <p className="flex items-start gap-2 text-[14px] leading-relaxed text-footer-muted">
               <Icon icon="mdi:map-marker-outline" className="flex-shrink-0 mt-0.5" />
               {ADDRESS}
             </p>
           </div>
         </div>
 
-        <div
-          className="flex flex-col md:flex-row justify-between items-center gap-3 mt-10 pt-6 text-[13px]"
-          style={{ borderTop: "1px solid rgba(231,221,209,0.15)", color: "#8a8078" }}
-        >
+        <div className="flex flex-col md:flex-row justify-between items-center gap-3 mt-10 pt-6 text-[13px] border-t border-footer-line text-footer-muted">
           <p>Copyright © 2026 LPKS Borneo Flasher Indonesia. All rights reserved.</p>
         </div>
       </div>
 
       <a
         href={waLink()}
-        className="wa-float"
+        className="fixed w-14 h-14 bottom-[26px] right-[26px] bg-[#25d366] text-white rounded-full flex items-center justify-center text-2xl shadow-lg z-[100]"
         target="_blank"
         rel="noreferrer"
         title="Hubungi Admin"

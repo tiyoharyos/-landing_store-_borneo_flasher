@@ -9,16 +9,32 @@ export default function ProductCard({ product }: { product: Product }) {
   const wished = isWishlisted(product.id);
 
   return (
-    <Link to={`/produk/${product.slug}`} className="product-card">
-      <div className="product-card-img">
-        <img src={product.image} alt={product.name} loading="lazy" />
-        {pct > 0 && <span className="badge-discount">-{pct}%</span>}
+    <Link
+      to={`/produk/${product.slug}`}
+      className="block bg-surface border border-line rounded-[14px] overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5"
+    >
+      <div className="relative aspect-square bg-cream-deep">
+        <img
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
+        {pct > 0 && (
+          <span className="absolute top-2 left-2 bg-brand text-white text-[10.5px] font-extrabold px-[7px] py-0.5 rounded-md">
+            -{pct}%
+          </span>
+        )}
         {product.condition === "Bekas Layak Pakai" && (
-          <span className="badge-condition">Bekas</span>
+          <span className="absolute bottom-2 left-2 bg-black/65 text-white text-[10px] font-bold px-[7px] py-0.5 rounded-md">
+            Bekas
+          </span>
         )}
         <button
           type="button"
-          className={`wishlist-btn ${wished ? "active" : ""}`}
+          className={`absolute top-2 right-2 w-7 h-7 rounded-full border-none bg-white/92 flex items-center justify-center cursor-pointer shadow-md transition-transform hover:scale-110 z-[2] ${
+            wished ? "text-brand" : "text-ink-soft"
+          }`}
           aria-label={wished ? "Hapus dari wishlist" : "Tambah ke wishlist"}
           onClick={(e) => {
             e.preventDefault();
@@ -29,20 +45,24 @@ export default function ProductCard({ product }: { product: Product }) {
           <Icon icon={wished ? "mdi:heart" : "mdi:heart-outline"} width={16} />
         </button>
       </div>
-      <div className="product-card-body">
-        <p className="product-card-name">{product.name}</p>
-        <div className="product-card-price">
-          <span className="price-final">{formatRupiah(product.price)}</span>
+      <div className="px-3 pt-2.5 pb-3">
+        <p className="text-[13px] font-semibold text-ink leading-[1.35] line-clamp-2 min-h-[35px]">
+          {product.name}
+        </p>
+        <div className="flex flex-col mt-1.5">
+          <span className="font-mono font-bold text-brand-dark">{formatRupiah(product.price)}</span>
           {product.priceOriginal && (
-            <span className="price-original">{formatRupiah(product.priceOriginal)}</span>
+            <span className="line-through text-muted text-xs block">
+              {formatRupiah(product.priceOriginal)}
+            </span>
           )}
         </div>
-        <div className="product-card-meta">
-          <span className="rating">
+        <div className="flex items-center gap-1.5 text-[11.5px] text-muted mt-1.5">
+          <span className="flex items-center gap-0.5 text-amber-dark font-bold">
             <Icon icon="mdi:star" width={13} />
             {product.rating.toFixed(1)}
           </span>
-          <span className="dot">•</span>
+          <span className="text-line">•</span>
           <span>Terjual {product.sold}</span>
         </div>
       </div>

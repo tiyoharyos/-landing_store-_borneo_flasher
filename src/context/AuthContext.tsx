@@ -4,6 +4,7 @@ import { findUserByEmail, registerMockUser, validateCredentials } from "@/data/u
 export interface User {
   name: string;
   email: string;
+  phone?: string;
 }
 
 interface AuthContextValue {
@@ -12,11 +13,29 @@ interface AuthContextValue {
   login: (email: string, password: string) => Promise<{ ok: boolean; message?: string }>;
   register: (name: string, email: string, password: string) => Promise<{ ok: boolean; message?: string }>;
   logout: () => void;
+  updateProfile: (input: { name: string; phone?: string }) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 const STORAGE_KEY = "bf_auth_user";
+
+// Biodata (nama & no. HP) disimpan terpisah per akun supaya tetap ada
+// walau user logout lalu login lagi di sesi lain.
+const profileKey = (email: string) => `bf_profile:${email.trim().toLowerCase()}`;
+
+function loadProfileOverride(email: string): { name?: string; phone?: string } {
+  try {
+    const raw = localStorage.getItem(profileKey(email));
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveProfileOverride(email: string, data: { name: string; phone?: string }) {
+  localStorage.setItem(profileKey(email), JSON.stringify(data));
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -54,7 +73,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         message: exists ? "Password salah." : "Email belum terdaftar. Coba daftar dulu.",
       };
     }
-    persist({ name: matched.name, email: matched.email });
+    const override = loadProfileOverride(matched.email);
+    persist({ name: override.name ?? matched.name, email: matched.email, phone: override.phone });
     return { ok: true };
   };
 
@@ -73,8 +93,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => persist(null);
 
+  const updateProfile: AuthContextValue["updateProfile"] = ({ name, phone }) => {
+    if (!user) return;
+    const next: User = { ...user, name: name.trim(), phone: phone?.trim() || undefined };
+    saveProfileOverride(user.email, { name: next.name, phone: next.phone });
+    persist(next);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, updateProfile }}>
       {children}
     </AuthContext.Provider>
   );

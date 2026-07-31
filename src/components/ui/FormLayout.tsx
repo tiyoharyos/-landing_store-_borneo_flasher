@@ -8,7 +8,7 @@ interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
 export function Form({ className = "", children, onSubmit, ...rest }: FormProps) {
   return (
     <form
-      className={`ui-form ${className}`}
+      className={`flex flex-col gap-4 ${className}`}
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit?.(e);
@@ -26,10 +26,16 @@ interface FormRowProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
+const COLUMN_CLASSES: Record<1 | 2 | 3, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-3",
+};
+
 /** Grid responsif untuk menata beberapa field field berdampingan. */
 export function FormRow({ columns = 2, className = "", children, ...rest }: FormRowProps) {
   return (
-    <div className={`ui-form-row ui-form-row-${columns} ${className}`} {...rest}>
+    <div className={`grid gap-3.5 ${COLUMN_CLASSES[columns]} ${className}`} {...rest}>
       {children}
     </div>
   );
@@ -45,10 +51,10 @@ interface FormSectionProps extends HTMLAttributes<HTMLDivElement> {
 /** Grup field dengan judul kecil di atasnya — cocok untuk form panjang bertahap. */
 export function FormSection({ title, description, className = "", children, ...rest }: FormSectionProps) {
   return (
-    <div className={`ui-form-section ${className}`} {...rest}>
-      {title && <p className="ui-form-section-title">{title}</p>}
-      {description && <p className="ui-form-section-desc">{description}</p>}
-      <div className="ui-form-section-body">{children}</div>
+    <div className={`flex flex-col gap-1 ${className}`} {...rest}>
+      {title && <p className="font-display font-extrabold text-[0.95rem] text-ink">{title}</p>}
+      {description && <p className="text-xs text-muted mb-1.5">{description}</p>}
+      <div className="flex flex-col gap-3.5">{children}</div>
     </div>
   );
 }
@@ -56,7 +62,7 @@ export function FormSection({ title, description, className = "", children, ...r
 /** Elemen full-width di dalam FormRow (mis. textarea alamat). */
 export function FormSpan({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`ui-form-span ${className}`} {...rest}>
+    <div className={`col-span-full ${className}`} {...rest}>
       {children}
     </div>
   );
