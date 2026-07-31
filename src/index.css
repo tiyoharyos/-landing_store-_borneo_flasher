@@ -1,44 +1,47 @@
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap");
 @import "tailwindcss";
 
-
 :root {
-  /* ---- Palet: merah teknisi + amber sinyal (LIGHT) ---- */
-  --ink: #1c1613;
-  --ink-soft: #3a322d;
-  --cream: #faf6f1;
-  --cream-deep: #f2e9df;
-  --surface: #ffffff;
-  --brand: #c0272d;
-  --brand-dark: #8c1c21;
-  --brand-tint: #fdeeed;
+  /* ---- Palet Utama (LIGHT): Disesuaikan dengan Logo BorneoFlasher ---- */
+  --ink: #2c2522;
+  --ink-soft: #4a3e36;
+  --cream: #fdfcfb;
+  --cream-deep: #f5f0e9;
+  --surface: #ffffff; /* Putih murni dari logo */
+  --brand: #e62129; /* Merah cerah dari logo */
+  --brand-dark: #b2191f;
+  --brand-tint: #fbeeee;
+  
+  /* ---- Palet Fungsional (Untuk UI & SweetAlert) ---- */
   --amber: #f2a93b;
   --amber-dark: #c9821f;
-  --line: #e7ddd1;
-  --muted: #8a8078;
+  --line: #e7ded8;
+  --muted: #8c847e;
   --ok: #2f9e5b;
   --warn: #d94e3f;
 
   /* Footer & tombol WA selalu gelap, tidak ikut berganti tema */
-  --footer-bg: #1c1613;
-  --footer-text: #e7ddd1;
-  --footer-muted: #8a8078;
-  --footer-line: rgba(231, 221, 209, 0.15);
+  --footer-bg: #1e1815;
+  --footer-text: #e7ded8;
+  --footer-muted: #8c847e;
+  --footer-line: rgba(231, 230, 224, 0.15);
 }
 
 [data-theme="dark"] {
-  --ink: #f3ede6;
-  --ink-soft: #cabfb5;
-  --cream: #16120f;
-  --cream-deep: #221c18;
+  --ink: #ffffff; /* Teks dominan putih agar kontras */
+  --ink-soft: #f2e9df;
+  --cream: #2c2522;
+  --cream-deep: #3a312c;
   --surface: #1e1815;
-  --brand: #e2534f;
+  --brand: #e62129; /* Merah logo tetap dipertahankan sebagai identitas */
   --brand-dark: #f2837c;
-  --brand-tint: #3a201f;
+  --brand-tint: #412a29;
+  
+  /* Palet Fungsional Dark */
   --amber: #f5be7c;
   --amber-dark: #e0a355;
-  --line: #362d27;
-  --muted: #9d9188;
+  --line: #3a312c;
+  --muted: #b5aaa2;
   --ok: #4ade80;
   --warn: #f3766a;
 }
