@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
+import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
 import { toastSuccess } from "@/components/ui/alert";
 import {
@@ -20,6 +21,7 @@ export default function ProductDetailPage() {
   const navigate = useNavigate();
   const { addItem } = useCart();
   const { user } = useAuth();
+  const { isWishlisted, toggle } = useWishlist();
   const [qty, setQty] = useState(1);
 
   const product = slug ? getProductBySlug(slug) : undefined;
@@ -42,6 +44,7 @@ export default function ProductDetailPage() {
   const pct = discountPercent(product);
   const category = getCategory(product.category);
   const related = relatedProducts(product);
+  const wished = isWishlisted(product.id);
 
   const clampQty = (n: number) => Math.max(1, Math.min(product.stock, n));
 
@@ -71,6 +74,14 @@ export default function ProductDetailPage() {
           <div className="product-detail-image">
             <img src={product.image} alt={product.name} />
             {pct > 0 && <span className="badge-discount lg">-{pct}%</span>}
+            <button
+              type="button"
+              className={`wishlist-btn lg ${wished ? "active" : ""}`}
+              aria-label={wished ? "Hapus dari wishlist" : "Tambah ke wishlist"}
+              onClick={() => toggle(product.id)}
+            >
+              <Icon icon={wished ? "mdi:heart" : "mdi:heart-outline"} width={22} />
+            </button>
           </div>
 
           <div className="product-detail-info">

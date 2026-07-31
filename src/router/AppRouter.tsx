@@ -8,6 +8,7 @@ import OrderSuccessPage from "@/pages/OrderSuccessPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import AccountOrdersPage from "@/pages/AccountOrdersPage";
+import ProfilePage from "@/pages/ProfilePage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
 export default function AppRouter() {
@@ -23,6 +24,7 @@ export default function AppRouter() {
       <Route path="/masuk" element={<LoginPage />} />
       <Route path="/daftar" element={<RegisterPage />} />
       <Route path="/akun/pesanan" element={<AccountOrdersPage />} />
+      <Route path="/akun/profil" element={<ProfilePage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

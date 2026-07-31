@@ -73,7 +73,7 @@ export default function OrderSuccessPage() {
             <Link to="/" className="btn-outline-lg">
               Kembali ke Beranda
             </Link>
-            <Link to="/akun/pesanan" className="btn-solid-lg">
+            <Link to="/akun/profil?tab=pesanan" className="btn-solid-lg">
               Lihat Pesanan Saya
             </Link>
           </div>

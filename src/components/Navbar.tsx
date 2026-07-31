@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import logoLpks from "../assets/img/logo-lpks.png";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
 import { formatRupiah } from "@/data/products";
 
@@ -15,6 +16,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { items, subtotal, totalItems, setQty } = useCart();
+  const { totalItems: wishlistCount } = useWishlist();
   const menuRef = useRef<HTMLDivElement>(null);
   const cartCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -56,6 +58,11 @@ export default function Navbar() {
           </div>
 
           <div className="navbar-actions">
+            <Link to="/akun/profil?tab=wishlist" className="navbar-cart" aria-label="Wishlist">
+              <Icon icon="mdi:heart-outline" width={23} />
+              {wishlistCount > 0 && <span className="cart-badge">{wishlistCount}</span>}
+            </Link>
+
             <div
               className="navbar-cart-wrap"
               onMouseEnter={openCartDropdown}
@@ -212,7 +219,10 @@ export default function Navbar() {
                 </button>
                 {menuOpen && (
                   <div className="navbar-account-dropdown">
-                    <Link to="/akun/pesanan" onClick={() => setMenuOpen(false)}>
+                    <Link to="/akun/profil" onClick={() => setMenuOpen(false)}>
+                      <Icon icon="mdi:account-outline" width={17} /> Profil Saya
+                    </Link>
+                    <Link to="/akun/profil?tab=pesanan" onClick={() => setMenuOpen(false)}>
                       <Icon icon="mdi:receipt-text-outline" width={17} /> Pesanan Saya
                     </Link>
                     <button

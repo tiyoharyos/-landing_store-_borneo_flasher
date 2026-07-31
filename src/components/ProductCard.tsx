@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { formatRupiah, discountPercent, type Product } from "@/data/products";
+import { useWishlist } from "@/context/WishlistContext";
 
 export default function ProductCard({ product }: { product: Product }) {
   const pct = discountPercent(product);
+  const { isWishlisted, toggle } = useWishlist();
+  const wished = isWishlisted(product.id);
 
   return (
     <Link to={`/produk/${product.slug}`} className="product-card">
@@ -13,6 +16,18 @@ export default function ProductCard({ product }: { product: Product }) {
         {product.condition === "Bekas Layak Pakai" && (
           <span className="badge-condition">Bekas</span>
         )}
+        <button
+          type="button"
+          className={`wishlist-btn ${wished ? "active" : ""}`}
+          aria-label={wished ? "Hapus dari wishlist" : "Tambah ke wishlist"}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggle(product.id);
+          }}
+        >
+          <Icon icon={wished ? "mdi:heart" : "mdi:heart-outline"} width={16} />
+        </button>
       </div>
       <div className="product-card-body">
         <p className="product-card-name">{product.name}</p>
