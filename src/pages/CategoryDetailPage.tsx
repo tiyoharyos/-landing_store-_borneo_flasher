@@ -13,6 +13,16 @@ import {
 
 type SortKey = "terbaru" | "terlaris" | "nama-az" | "nama-za" | "termurah" | "termahal" | "rating";
 
+const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: "terbaru", label: "Terbaru" },
+  { key: "terlaris", label: "Terlaris" },
+  { key: "nama-az", label: "Nama A-Z" },
+  { key: "nama-za", label: "Nama Z-A" },
+  { key: "termurah", label: "Harga Terendah" },
+  { key: "termahal", label: "Harga Tertinggi" },
+  { key: "rating", label: "Rating Tertinggi" },
+];
+
 type Availability = "semua" | "tersedia" | "habis";
 type ConditionFilter = "semua" | Condition;
 type CategoryFilter = "semua" | CategoryKey;
@@ -21,10 +31,6 @@ const PER_PAGE = 12;
 
 const isCategoryKey = (value: string | undefined): value is CategoryKey =>
   CATEGORIES.some((c) => c.key === value);
-
-const filterOptionClass = "flex cursor-pointer items-center gap-2 py-1.5 text-[13.5px] text-ink-soft";
-const filterGroupClass = "border-b border-line pb-5 last:border-b-0 last:pb-0";
-const filterGroupTitleClass = "mb-2.5 font-display text-[13px] font-bold text-ink";
 
 export default function CategoryDetailPage() {
   const { category } = useParams<{ category: string }>();
@@ -151,61 +157,52 @@ export default function CategoryDetailPage() {
       <Navbar />
 
       <div className="container">
-        <div className="my-6 mb-2 flex flex-wrap justify-end gap-2.5">
+        <div className="catalog-toolbar">
           <button
             type="button"
-            className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-brand px-4 py-1.5 text-[13px] font-semibold text-brand min-[900px]:hidden"
+            className="btn-outline-sm catalog-filter-toggle"
             onClick={() => setMobileFilterOpen((v) => !v)}
           >
             <Icon icon="mdi:filter-variant" width={17} /> Filter
           </button>
+
         </div>
 
-        <div className="grid grid-cols-1 gap-6 pb-16 min-[900px]:grid-cols-[240px_1fr]">
+        <div className="home-layout">
           {/* Filter sidebar */}
-          <aside
-            className={`${mobileFilterOpen ? "flex" : "hidden"} flex-col gap-6 self-start rounded-2xl border border-line bg-white p-5 min-[900px]:sticky min-[900px]:top-[90px] min-[900px]:flex`}
-          >
-            <div className={filterGroupClass}>
-              <p className={filterGroupTitleClass}>Kategori</p>
-              <ul className="m-0 flex max-h-[260px] list-none flex-col gap-0.5 overflow-y-auto p-0">
+          <aside className={`filter-panel ${mobileFilterOpen ? "filter-panel-open" : ""}`}>
+            <div className="filter-group">
+              <p className="filter-group-title">Kategori</p>
+              <ul className="filter-category-list">
                 <li>
                   <button
                     type="button"
-                    className={`flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-left text-[13px] font-semibold text-ink-soft hover:bg-cream-deep ${
-                      categoryFilter === "semua" ? "bg-brand-tint text-brand" : ""
-                    }`}
+                    className={`filter-category-link ${categoryFilter === "semua" ? "active" : ""}`}
                     onClick={() => goToCategory("semua")}
                   >
                     <Icon icon="mdi:view-grid-outline" width={16} />
                     <span>Semua Produk</span>
-                    <span className={`ml-auto text-xs font-medium ${categoryFilter === "semua" ? "text-brand" : "text-muted"}`}>
-                      ({PRODUCTS.length})
-                    </span>
+                    <span className="filter-category-count">({PRODUCTS.length})</span>
                   </button>
                 </li>
                 {CATEGORIES.map((c) => (
                   <li key={c.key}>
                     <button
                       type="button"
-                      className={`flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-left text-[13px] font-semibold text-ink-soft hover:bg-cream-deep ${
-                        categoryFilter === c.key ? "bg-brand-tint text-brand" : ""
-                      }`}
+                      className={`filter-category-link ${categoryFilter === c.key ? "active" : ""}`}
                       onClick={() => goToCategory(c.key)}
                     >
                       <Icon icon={c.icon} width={16} />
                       <span>{c.label}</span>
-                      <span className={`ml-auto text-xs font-medium ${categoryFilter === c.key ? "text-brand" : "text-muted"}`}>
-                        ({categoryCounts.get(c.key) ?? 0})
-                      </span>
+                      <span className="filter-category-count">({categoryCounts.get(c.key) ?? 0})</span>
                     </button>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className={filterGroupClass}>
-              <p className={filterGroupTitleClass}>Ketersediaan</p>
+            <div className="filter-group">
+              <p className="filter-group-title">Ketersediaan</p>
               {(
                 [
                   { key: "semua", label: "Semua Produk" },
@@ -213,11 +210,10 @@ export default function CategoryDetailPage() {
                   { key: "habis", label: "Stok Habis" },
                 ] as { key: Availability; label: string }[]
               ).map((opt) => (
-                <label key={opt.key} className={filterOptionClass}>
+                <label key={opt.key} className="filter-option">
                   <input
                     type="radio"
                     name="availability"
-                    className="accent-brand"
                     checked={availability === opt.key}
                     onChange={() => setAvailability(opt.key)}
                   />
@@ -226,8 +222,8 @@ export default function CategoryDetailPage() {
               ))}
             </div>
 
-            <div className={filterGroupClass}>
-              <p className={filterGroupTitleClass}>Kondisi</p>
+            <div className="filter-group">
+              <p className="filter-group-title">Kondisi</p>
               {(
                 [
                   { key: "semua", label: "Semua Kondisi" },
@@ -235,11 +231,10 @@ export default function CategoryDetailPage() {
                   { key: "Bekas Layak Pakai", label: "Bekas Layak Pakai" },
                 ] as { key: ConditionFilter; label: string }[]
               ).map((opt) => (
-                <label key={opt.key} className={filterOptionClass}>
+                <label key={opt.key} className="filter-option">
                   <input
                     type="radio"
                     name="condition"
-                    className="accent-brand"
                     checked={condition === opt.key}
                     onChange={() => setCondition(opt.key)}
                   />
@@ -248,32 +243,29 @@ export default function CategoryDetailPage() {
               ))}
             </div>
 
-            <div className={filterGroupClass}>
-              <p className={filterGroupTitleClass}>Range Harga</p>
-              <div className="flex items-center gap-2">
+            <div className="filter-group">
+              <p className="filter-group-title">Range Harga</p>
+              <div className="filter-price-inputs">
                 <input
                   type="number"
                   placeholder="Min"
-                  className="w-0 flex-1 rounded-lg border border-line px-2.5 py-2 text-[13px] outline-none"
                   value={priceMin}
                   onChange={(e) => setPriceMin(e.target.value)}
                 />
-                <span className="text-muted">-</span>
+                <span>-</span>
                 <input
                   type="number"
                   placeholder="Max"
-                  className="w-0 flex-1 rounded-lg border border-line px-2.5 py-2 text-[13px] outline-none"
                   value={priceMax}
                   onChange={(e) => setPriceMax(e.target.value)}
                 />
               </div>
             </div>
 
-            <div className={filterGroupClass}>
-              <label className={filterOptionClass}>
+            <div className="filter-group">
+              <label className="filter-option">
                 <input
                   type="checkbox"
-                  className="accent-brand"
                   checked={discountOnly}
                   onChange={(e) => setDiscountOnly(e.target.checked)}
                 />
@@ -281,34 +273,26 @@ export default function CategoryDetailPage() {
               </label>
             </div>
 
-            <button
-              type="button"
-              className="mt-0 w-full rounded-full border border-brand bg-white px-6 py-2 text-center text-[13px] font-semibold text-brand transition-colors hover:bg-brand-tint"
-              onClick={resetAllFilters}
-            >
+            <button type="button" className="btn-clear filter-reset-btn" onClick={resetAllFilters}>
               Reset Filter
             </button>
           </aside>
 
           {/* Main content */}
-          <div className="min-w-0">
-            <div className="my-5 mb-4 flex flex-wrap items-center justify-between gap-2.5">
-              <p className="font-display text-[1.1rem] font-extrabold text-ink">
+          <div className="home-main">
+            <div className="catalog-count-row">
+              <p className="section-title">
                 Menampilkan <span className="text-brand">{filtered.length}</span> produk
               </p>
               {activeFilters.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="catalog-active-filters">
                   {activeFilters.map((f) => (
-                    <button
-                      key={f.label}
-                      className="inline-flex items-center gap-[5px] rounded-full bg-brand-tint px-3 py-1.5 text-xs font-semibold text-brand"
-                      onClick={f.onClear}
-                    >
+                    <button key={f.label} className="filter-chip" onClick={f.onClear}>
                       {f.label}
                       <Icon icon="mdi:close" width={13} />
                     </button>
                   ))}
-                  <button className="text-[12.5px] font-bold text-warn hover:underline" onClick={resetAllFilters}>
+                  <button className="catalog-clear-all" onClick={resetAllFilters}>
                     Hapus Semua
                   </button>
                 </div>
@@ -317,16 +301,16 @@ export default function CategoryDetailPage() {
 
             {paged.length ? (
               <>
-                <div className="grid grid-cols-2 gap-3.5 pb-8 sm:grid-cols-3 lg:grid-cols-4">
+                <div className="product-grid">
                   {paged.map((p) => (
                     <ProductCard key={p.id} product={p} />
                   ))}
                 </div>
 
                 {totalPages > 1 && (
-                  <div className="my-9 mb-12 flex flex-wrap justify-center gap-1.5">
+                  <div className="pagination">
                     <button
-                      className="flex h-9 min-w-9 items-center justify-center rounded-lg border border-line bg-white px-1.5 text-[13px] font-semibold text-ink-soft enabled:hover:border-brand enabled:hover:text-brand disabled:cursor-not-allowed disabled:opacity-40"
+                      className="page-btn"
                       disabled={page === 1}
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
                       aria-label="Sebelumnya"
@@ -336,18 +320,14 @@ export default function CategoryDetailPage() {
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
                       <button
                         key={n}
-                        className={`flex h-9 min-w-9 items-center justify-center rounded-lg border px-1.5 text-[13px] font-semibold ${
-                          page === n
-                            ? "border-brand bg-brand text-white"
-                            : "border-line bg-white text-ink-soft hover:border-brand hover:text-brand"
-                        }`}
+                        className={`page-btn ${page === n ? "active" : ""}`}
                         onClick={() => setPage(n)}
                       >
                         {n}
                       </button>
                     ))}
                     <button
-                      className="flex h-9 min-w-9 items-center justify-center rounded-lg border border-line bg-white px-1.5 text-[13px] font-semibold text-ink-soft enabled:hover:border-brand enabled:hover:text-brand disabled:cursor-not-allowed disabled:opacity-40"
+                      className="page-btn"
                       disabled={page === totalPages}
                       onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       aria-label="Berikutnya"
@@ -358,10 +338,10 @@ export default function CategoryDetailPage() {
                 )}
               </>
             ) : (
-              <div className="px-6 py-12 text-center">
-                <Icon icon="mdi:package-variant-closed" width={64} className="mx-auto text-line" />
-                <p className="mt-4 font-display text-[1.1rem] font-bold text-ink">Produk Tidak Ditemukan</p>
-                <p className="mt-1 text-sm text-muted">Coba ubah kata kunci atau filter pencarian Anda.</p>
+              <div className="not-found-box">
+                <Icon icon="mdi:package-variant-closed" width={64} style={{ color: "var(--line)" }} />
+                <p className="title">Produk Tidak Ditemukan</p>
+                <p className="desc">Coba ubah kata kunci atau filter pencarian Anda.</p>
               </div>
             )}
           </div>

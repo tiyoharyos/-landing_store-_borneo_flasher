@@ -19,16 +19,14 @@ export default function Logo({ variant = "dark", className = "" }: LogoProps) {
       </svg>
       <div className="leading-tight">
         <p
-          className={`font-display font-extrabold tracking-tight text-[15px] ${
-            isLight ? "text-cream" : "text-ink"
-          }`}
+          className="font-display font-extrabold tracking-tight text-[15px]"
+          style={{ color: isLight ? "#faf6f1" : "#1c1613" }}
         >
           BORNEO FLASHER
         </p>
         <p
-          className={`font-mono text-[9px] tracking-[0.18em] uppercase ${
-            isLight ? "text-line" : "text-muted"
-          }`}
+          className="font-mono text-[9px] tracking-[0.18em] uppercase"
+          style={{ color: isLight ? "#e7ddd1" : "#8a8078" }}
         >
           LPKS Indonesia
         </p>

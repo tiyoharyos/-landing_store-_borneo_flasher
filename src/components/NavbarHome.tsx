@@ -2,22 +2,22 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import logoLpks from "../assets/img/logo-lpks.png";
-import { navLinkClass } from "@/components/navLinkClass";
 
 export default function NavbarHome() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-line bg-cream">
-      <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between px-5 py-3.5">
+    <nav className="site-navbar">
+      <div className="container flex items-center justify-between py-3.5">
         <NavLink to="/" onClick={() => setOpen(false)}>
           <img src={logoLpks} alt="LPKS Borneo Flasher" className="h-10 w-auto" />
         </NavLink>
 
         <button
-          className="text-2xl text-ink md:hidden"
+          className="md:hidden text-2xl"
           onClick={() => setOpen(!open)}
           aria-label="Toggle navigation"
+          style={{ color: "var(--ink)" }}
         >
           <Icon icon={open ? "mdi:close" : "mdi:menu"} />
         </button>
@@ -25,15 +25,24 @@ export default function NavbarHome() {
         <ul
           className={`${
             open ? "flex" : "hidden"
-          } absolute top-full left-0 m-0 w-full list-none flex-col items-start gap-1 border-b border-line bg-cream p-4 md:static md:flex md:w-auto md:flex-row md:items-center md:gap-8 md:border-0 md:bg-transparent md:p-0`}
+          } md:flex flex-col md:flex-row absolute md:static top-full left-0 w-full md:w-auto bg-[var(--cream)] md:bg-transparent border-b md:border-0 border-[var(--line)] p-4 md:p-0 gap-1 md:gap-8 list-none m-0 items-start md:items-center`}
         >
           <li>
-            <NavLink to="/" end onClick={() => setOpen(false)} className={navLinkClass}>
+            <NavLink
+              to="/"
+              end
+              onClick={() => setOpen(false)}
+              className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+            >
               Beranda
             </NavLink>
           </li>
           <li>
-            <NavLink to="/kategori" onClick={() => setOpen(false)} className={navLinkClass}>
+            <NavLink
+              to="/kategori"
+              onClick={() => setOpen(false)}
+              className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+            >
               Kategori Kelas
             </NavLink>
           </li>

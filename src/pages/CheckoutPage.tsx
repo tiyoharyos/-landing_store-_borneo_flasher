@@ -17,9 +17,6 @@ import {
   type PaymentMethodKey,
 } from "@/data/orders";
 
-const CARD = "rounded-2xl border border-line bg-white p-5";
-const CARD_TITLE = "mb-3 flex items-center gap-2 font-display text-[14.5px] font-bold text-ink";
-
 export default function CheckoutPage() {
   const { items, subtotal, clear } = useCart();
   const { user } = useAuth();
@@ -39,11 +36,11 @@ export default function CheckoutPage() {
     return (
       <div>
         <Navbar />
-        <div className="container px-6 py-12 text-center">
-          <Icon icon="mdi:cart-off" width={64} className="mx-auto text-line" />
-          <p className="mt-4 font-display text-[1.1rem] font-bold text-ink">Keranjang Kosong</p>
-          <p className="mt-1 text-sm text-muted">Tambahkan produk ke keranjang sebelum checkout.</p>
-          <Link to="/" className="mt-4 inline-block">
+        <div className="container not-found-box">
+          <Icon icon="mdi:cart-off" width={64} style={{ color: "var(--line)" }} />
+          <p className="title">Keranjang Kosong</p>
+          <p className="desc">Tambahkan produk ke keranjang sebelum checkout.</p>
+          <Link to="/" className="inline-block mt-4">
             <Button variant="primary" icon="mdi:storefront-outline">
               Kembali Belanja
             </Button>
@@ -91,12 +88,12 @@ export default function CheckoutPage() {
     <div>
       <Navbar />
       <div className="container">
-        <p className="mt-6 mb-4 font-display text-[1.1rem] font-extrabold text-ink">Checkout</p>
+        <p className="section-title mt-6 mb-4">Checkout</p>
 
-        <div className="grid grid-cols-1 items-start gap-[22px] pb-12 md:grid-cols-[1fr_320px]">
-          <div className="flex flex-col gap-4">
-            <div className={CARD}>
-              <p className={CARD_TITLE}>
+        <div className="checkout-layout">
+          <div className="checkout-form">
+            <div className="checkout-card">
+              <p className="checkout-card-title">
                 <Icon icon="mdi:map-marker-outline" width={18} /> Alamat Pengiriman
               </p>
               <FormRow columns={2}>
@@ -141,57 +138,45 @@ export default function CheckoutPage() {
               </FormRow>
             </div>
 
-            <div className={CARD}>
-              <p className={CARD_TITLE}>
+            <div className="checkout-card">
+              <p className="checkout-card-title">
                 <Icon icon="mdi:truck-outline" width={18} /> Metode Pengiriman
               </p>
-              <div className="flex flex-col gap-2">
+              <div className="option-list">
                 {SHIPPING_OPTIONS.map((opt) => (
-                  <label
-                    key={opt.key}
-                    className={`flex cursor-pointer items-center gap-3 rounded-xl border px-3.5 py-2.5 ${
-                      shippingMethod === opt.key ? "border-brand bg-brand-tint" : "border-line"
-                    }`}
-                  >
+                  <label key={opt.key} className={`option-row ${shippingMethod === opt.key ? "selected" : ""}`}>
                     <input
                       type="radio"
                       name="shipping"
-                      className="accent-brand"
                       checked={shippingMethod === opt.key}
                       onChange={() => setShippingMethod(opt.key)}
                     />
-                    <div className="flex-1">
-                      <p className="text-[13.5px] font-semibold text-ink">{opt.label}</p>
-                      <span className="text-xs text-muted">Estimasi {opt.eta}</span>
+                    <div className="option-row-text">
+                      <p>{opt.label}</p>
+                      <span>Estimasi {opt.eta}</span>
                     </div>
-                    <span className="font-mono text-[13px] font-bold text-brand-dark">{formatRupiah(opt.cost)}</span>
+                    <span className="option-row-price">{formatRupiah(opt.cost)}</span>
                   </label>
                 ))}
               </div>
             </div>
 
-            <div className={CARD}>
-              <p className={CARD_TITLE}>
+            <div className="checkout-card">
+              <p className="checkout-card-title">
                 <Icon icon="mdi:credit-card-outline" width={18} /> Metode Pembayaran
               </p>
-              <div className="flex flex-col gap-2">
+              <div className="option-list">
                 {PAYMENT_OPTIONS.map((opt) => (
-                  <label
-                    key={opt.key}
-                    className={`flex cursor-pointer items-center gap-3 rounded-xl border px-3.5 py-2.5 ${
-                      paymentMethod === opt.key ? "border-brand bg-brand-tint" : "border-line"
-                    }`}
-                  >
+                  <label key={opt.key} className={`option-row ${paymentMethod === opt.key ? "selected" : ""}`}>
                     <input
                       type="radio"
                       name="payment"
-                      className="accent-brand"
                       checked={paymentMethod === opt.key}
                       onChange={() => setPaymentMethod(opt.key)}
                     />
-                    <div className="flex-1">
-                      <p className="text-[13.5px] font-semibold text-ink">{opt.label}</p>
-                      <span className="text-xs text-muted">{opt.desc}</span>
+                    <div className="option-row-text">
+                      <p>{opt.label}</p>
+                      <span>{opt.desc}</span>
                     </div>
                   </label>
                 ))}
@@ -199,27 +184,27 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className={`sticky top-[90px] ${CARD}`}>
-            <p className="mb-3 font-display text-[15px] font-bold text-ink">Ringkasan Pesanan</p>
+          <div className="cart-summary">
+            <p className="cart-summary-title">Ringkasan Pesanan</p>
             {items.map((i) => (
-              <div key={i.productId} className="flex justify-between py-1 text-xs text-muted">
+              <div key={i.productId} className="cart-summary-row small">
                 <span>
                   {i.product.name} x{i.qty}
                 </span>
                 <span>{formatRupiah(i.lineTotal)}</span>
               </div>
             ))}
-            <div className="my-2 h-px bg-line" />
-            <div className="flex justify-between py-1 text-[13.5px] text-ink-soft">
+            <div className="cart-summary-divider" />
+            <div className="cart-summary-row">
               <span>Subtotal</span>
               <span>{formatRupiah(subtotal)}</span>
             </div>
-            <div className="flex justify-between py-1 text-[13.5px] text-ink-soft">
+            <div className="cart-summary-row">
               <span>Ongkos Kirim</span>
               <span>{formatRupiah(shippingCost)}</span>
             </div>
-            <div className="my-2 h-px bg-line" />
-            <div className="flex justify-between py-1 text-[15px] font-extrabold text-ink">
+            <div className="cart-summary-divider" />
+            <div className="cart-summary-row total">
               <span>Total Bayar</span>
               <span>{formatRupiah(total)}</span>
             </div>
@@ -233,7 +218,7 @@ export default function CheckoutPage() {
             >
               Buat Pesanan
             </Button>
-            <p className="mt-2 text-center text-[11.5px] text-muted">
+            <p className="cart-summary-note text-center mt-2">
               Ini adalah simulasi checkout (belum ada pembayaran nyata).
             </p>
           </div>
