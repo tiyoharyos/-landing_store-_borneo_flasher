@@ -19,8 +19,9 @@ export default function Footer() {
           <div className="md:col-span-4">
             <Logo variant="light" className="mb-4" />
             <p className="mt-4 text-[14px] leading-relaxed text-footer-muted">
-              Awali kesuksesan belajarmu bersama LPKS Borneo Flasher Indonesia —
-              dari nol sampai mahir, dibimbing sampai siap kerja.
+              Borneo Flasher Indonesia menghadirkan marketplace terpercaya untuk
+              kebutuhan sparepart smartphone, alat servis, dan perlengkapan teknisi
+              dengan produk berkualitas serta harga terbaik
             </p>
             <div className="flex gap-2 mt-5">
               {SOCIAL_ICONS.map((s) => (
