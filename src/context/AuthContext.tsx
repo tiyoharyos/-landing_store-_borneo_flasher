@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       };
     }
     const override = loadProfileOverride(matched.email);
-    persist({ name: override.name ?? matched.name, email: matched.email, phone: override.phone });
+    persist({ name: override.name ?? matched.name, email: matched.email, phone: override.phone ?? matched.phone });
     return { ok: true };
   };
 

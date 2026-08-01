@@ -1,3 +1,5 @@
+import { getDemoAddressSeed } from "@/data/demoSeed";
+
 export interface Address {
   id: string;
   label: string;
@@ -13,11 +15,27 @@ export type AddressInput = Omit<Address, "id" | "isPrimary">;
 
 const storageKey = (email: string) => `bf_addresses:${email.trim().toLowerCase()}`;
 
+const genAddressId = () => `ADR-${Date.now().toString(36)}-${Math.floor(Math.random() * 9000 + 1000)}`;
+
 export function getAddresses(email: string): Address[] {
   if (!email) return [];
   try {
     const raw = localStorage.getItem(storageKey(email));
-    return raw ? JSON.parse(raw) : [];
+    if (raw) return JSON.parse(raw);
+
+    // Belum pernah ada alamat tersimpan sama sekali — kalau ini akun
+    // demo, suntik alamat contoh supaya profil terasa sudah terisi.
+    const seed = getDemoAddressSeed(email);
+    if (seed && seed.length > 0) {
+      const seeded: Address[] = seed.map((input, i) => ({
+        ...input,
+        id: genAddressId(),
+        isPrimary: i === 0,
+      }));
+      saveAddresses(email, seeded);
+      return seeded;
+    }
+    return [];
   } catch {
     return [];
   }
@@ -27,8 +45,6 @@ export function saveAddresses(email: string, addresses: Address[]) {
   if (!email) return;
   localStorage.setItem(storageKey(email), JSON.stringify(addresses));
 }
-
-const genAddressId = () => `ADR-${Date.now().toString(36)}-${Math.floor(Math.random() * 9000 + 1000)}`;
 
 export function createAddress(email: string, input: AddressInput, makePrimary = false): Address {
   const all = getAddresses(email);

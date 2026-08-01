@@ -9,7 +9,7 @@ import AddressFormModal from "@/components/address/AddressFormModal";
 import { useAuth } from "@/context/AuthContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAddresses } from "@/context/AddressContext";
-import { getOrders, type Order } from "@/data/orders";
+import { getOrders, ORDER_STATUS_STYLES, type Order } from "@/data/orders";
 import { formatRupiah } from "@/data/products";
 import { confirmDialog } from "@/components/ui/alert";
 import type { Address } from "@/data/addresses";
@@ -34,8 +34,8 @@ export default function ProfilePage() {
   );
 
   useEffect(() => {
-    setOrders(getOrders());
-  }, []);
+    if (user) setOrders(getOrders(user.email));
+  }, [user]);
 
   if (!user) return <Navigate to="/masuk?next=/akun/profil" replace />;
 
@@ -170,7 +170,9 @@ export default function ProfilePage() {
                             })}
                           </p>
                         </div>
-                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold whitespace-nowrap bg-amber/15 text-amber-dark">
+                        <span
+                          className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold whitespace-nowrap ${ORDER_STATUS_STYLES[o.status]}`}
+                        >
                           {o.status}
                         </span>
                       </div>

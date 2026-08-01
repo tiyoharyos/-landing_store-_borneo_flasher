@@ -11,6 +11,8 @@ export interface MockUserRecord {
   email: string;
   password: string;
   role: "admin" | "member";
+  /** Nomor HP default akun demo, dipakai AuthContext saat login pertama kali. */
+  phone?: string;
 }
 
 // Akun contoh yang bisa langsung dipakai untuk demo/testing login.
@@ -20,18 +22,21 @@ export const MOCK_USERS: MockUserRecord[] = [
     email: "andi@borneoflasher.id",
     password: "andi1234",
     role: "member",
+    phone: "081234567890",
   },
   {
     name: "Siti Rahma",
     email: "siti@borneoflasher.id",
     password: "siti1234",
     role: "member",
+    phone: "082198765432",
   },
   {
     name: "Admin Borneo",
     email: "admin@borneoflasher.id",
     password: "admin123",
     role: "admin",
+    phone: "085611122233",
   },
 ];
 

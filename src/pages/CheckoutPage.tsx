@@ -84,7 +84,8 @@ export default function CheckoutPage() {
           postalCode: selectedAddress.postalCode,
         },
         shippingMethod,
-        paymentMethod
+        paymentMethod,
+        user.email
       );
       clear();
       toastSuccess("Pesanan berhasil dibuat!");
