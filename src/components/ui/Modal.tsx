@@ -27,18 +27,18 @@ export default function Modal({ open, onClose, title, children, maxWidth = 480 }
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center bg-ink/50 p-3 sm:p-5 overflow-y-auto"
+      className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center bg-ink/50 p-3 sm:p-5 overflow-y-auto transition-colors duration-200"
       onMouseDown={onClose}
     >
       <div
-        className="w-full bg-surface rounded-2xl shadow-xl my-6 sm:my-0 max-h-[90vh] flex flex-col"
+        className="w-full bg-surface rounded-2xl shadow-xl my-6 sm:my-0 max-h-[90vh] flex flex-col transition-colors duration-200"
         style={{ maxWidth }}
         onMouseDown={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label={title}
       >
-        <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-line shrink-0">
+        <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-line shrink-0 transition-colors duration-200">
           <p className="font-display font-extrabold text-[15px] text-ink">{title}</p>
           <button
             type="button"

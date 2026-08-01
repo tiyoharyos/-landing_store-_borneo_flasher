@@ -72,7 +72,7 @@ export default function LoginPage() {
                 </Button>
               </Form>
 
-              <div className="mt-1.5 bg-cream-deep rounded-xl px-3.5 py-2.5 flex flex-col gap-0.5">
+              <div className="mt-1.5 bg-cream-deep rounded-xl px-3.5 py-2.5 flex flex-col gap-0.5 transition-colors duration-200">
                 <p className="flex items-center gap-1.5 text-[11.5px] font-bold text-brand-dark mb-0.5">
                   <Icon icon="mdi:information-outline" width={15} /> Akun demo
                 </p>

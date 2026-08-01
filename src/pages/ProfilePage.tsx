@@ -84,9 +84,9 @@ export default function ProfilePage() {
     <div>
       <Navbar />
       <div className="container grid grid-cols-1 md:grid-cols-[260px_1fr] gap-4.5 gap-x-4 pt-6 pb-12 items-start">
-        <aside className="bg-surface border border-line rounded-2xl overflow-hidden">
-          <div className="flex flex-col items-center text-center px-4 py-6 border-b border-line">
-            <div className="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-display font-extrabold text-2xl mb-2.5">
+        <aside className="bg-surface border border-line rounded-2xl overflow-hidden transition-colors duration-200">
+          <div className="flex flex-col items-center text-center px-4 py-6 border-b border-line transition-colors duration-200">
+            <div className="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-display font-extrabold text-2xl mb-2.5 transition-colors duration-200">
               {initial}
             </div>
             <p className="font-bold text-[14.5px] text-ink">{user.name}</p>
@@ -98,7 +98,7 @@ export default function ProfilePage() {
               <Icon icon="mdi:receipt-text-outline" width={18} />
               Pesanan Saya
               {orders.length > 0 && (
-                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px]">{orders.length}</span>
+                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px] transition-colors duration-200">{orders.length}</span>
               )}
             </button>
 
@@ -106,7 +106,7 @@ export default function ProfilePage() {
               <Icon icon="mdi:heart-outline" width={18} />
               Wishlist Saya
               {wishlistCount > 0 && (
-                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px]">{wishlistCount}</span>
+                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px] transition-colors duration-200">{wishlistCount}</span>
               )}
             </button>
 
@@ -117,7 +117,7 @@ export default function ProfilePage() {
             <button type="button" className={navItemClass(tab === "alamat", "pl-5 font-medium")} onClick={() => changeTab("alamat")}>
               Alamat Tersimpan
               {addresses.length > 0 && (
-                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px]">{addresses.length}</span>
+                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px] transition-colors duration-200">{addresses.length}</span>
               )}
             </button>
 
@@ -128,8 +128,8 @@ export default function ProfilePage() {
           </nav>
         </aside>
 
-        <section className="bg-surface border border-line rounded-2xl overflow-hidden">
-          <div className="flex gap-1 border-b border-line px-4 overflow-x-auto">
+        <section className="bg-surface border border-line rounded-2xl overflow-hidden transition-colors duration-200">
+          <div className="flex gap-1 border-b border-line px-4 overflow-x-auto transition-colors duration-200">
             <button type="button" className={tabBtnClass(tab === "pesanan")} onClick={() => changeTab("pesanan")}>
               Pesanan Saya{orders.length > 0 ? ` (${orders.length})` : ""}
             </button>
@@ -158,8 +158,8 @@ export default function ProfilePage() {
               ) : (
                 <div className="flex flex-col gap-4">
                   {orders.map((o) => (
-                    <div key={o.id} className="bg-surface border border-line rounded-2xl px-5 py-4.5">
-                      <div className="flex justify-between items-center pb-2.5 border-b border-line mb-2.5">
+                    <div key={o.id} className="bg-surface border border-line rounded-2xl px-5 py-4.5 transition-colors duration-200">
+                      <div className="flex justify-between items-center pb-2.5 border-b border-line mb-2.5 transition-colors duration-200">
                         <div>
                           <p className="font-mono font-bold text-brand-dark">{o.id}</p>
                           <p className="text-xs text-muted mt-0.5">
@@ -179,7 +179,7 @@ export default function ProfilePage() {
                       <div className="flex flex-col gap-2">
                         {o.items.map((i) => (
                           <div key={i.productId} className="flex items-center gap-2.5 text-[13px]">
-                            <img src={i.image} alt={i.name} className="w-9 h-9 rounded-lg object-cover bg-cream-deep" />
+                            <img src={i.image} alt={i.name} className="w-9 h-9 rounded-lg object-cover bg-cream-deep transition-colors duration-200" />
                             <span className="flex-1">
                               {i.name} x{i.qty}
                             </span>
@@ -187,7 +187,7 @@ export default function ProfilePage() {
                           </div>
                         ))}
                       </div>
-                      <div className="flex justify-between mt-2.5 pt-2.5 border-t border-line text-[13.5px] font-bold">
+                      <div className="flex justify-between mt-2.5 pt-2.5 border-t border-line text-[13.5px] font-bold transition-colors duration-200">
                         <span>Total Bayar</span>
                         <span className="font-mono text-brand-dark">{formatRupiah(o.total)}</span>
                       </div>
@@ -202,22 +202,22 @@ export default function ProfilePage() {
             <div className="p-5">
               <p className="font-display font-extrabold text-base text-ink mb-4">Ubah Biodata Diri</p>
 
-              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
+              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap transition-colors duration-200">
                 <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nama</span>
                 <span className="text-[13.5px] text-ink font-semibold">{user.name}</span>
                 <button
                   type="button"
-                  className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline"
+                  className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline transition-colors duration-200"
                   onClick={() => openBiodataModal("name")}
                 >
                   Ubah
                 </button>
               </div>
 
-              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
+              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap transition-colors duration-200">
                 <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Email</span>
                 <span className="text-[13.5px] text-ink font-semibold">{user.email}</span>
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold bg-ok/10 text-ok">Terverifikasi</span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold bg-ok/10 text-ok transition-colors duration-200">Terverifikasi</span>
               </div>
 
               <div className="flex items-center gap-3 py-3.5 flex-wrap">
@@ -227,7 +227,7 @@ export default function ProfilePage() {
                 </span>
                 <button
                   type="button"
-                  className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline"
+                  className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline transition-colors duration-200"
                   onClick={() => openBiodataModal("phone")}
                 >
                   {user.phone ? "Ubah" : "Tambah"}

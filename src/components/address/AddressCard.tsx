@@ -20,14 +20,14 @@ export default function AddressCard({
   onMakePrimary,
 }: Props) {
   return (
-    <div className="border border-line rounded-2xl p-4 bg-surface flex flex-col gap-1.5">
+    <div className="border border-line rounded-2xl p-4 bg-surface flex flex-col gap-1.5 transition-colors duration-200">
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="inline-flex items-center gap-1 text-[12px] font-bold text-ink-soft bg-cream-deep rounded-full px-2.5 py-1">
+        <span className="inline-flex items-center gap-1 text-[12px] font-bold text-ink-soft bg-cream-deep rounded-full px-2.5 py-1 transition-colors duration-200">
           <Icon icon="mdi:home-outline" width={14} />
           {address.label}
         </span>
         {address.isPrimary && (
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold bg-ok/10 text-ok">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold bg-ok/10 text-ok transition-colors duration-200">
             Utama
           </span>
         )}
@@ -39,11 +39,11 @@ export default function AddressCard({
         {address.fullAddress}, {address.city} {address.postalCode}
       </p>
 
-      <div className="flex items-center gap-3.5 flex-wrap mt-2 pt-2.5 border-t border-line">
+      <div className="flex items-center gap-3.5 flex-wrap mt-2 pt-2.5 border-t border-line transition-colors duration-200">
         {onEdit && (
           <button
             type="button"
-            className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline"
+            className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline transition-colors duration-200"
             onClick={onEdit}
           >
             Ubah Alamat
@@ -52,7 +52,7 @@ export default function AddressCard({
         {!address.isPrimary && onMakePrimary && (
           <button
             type="button"
-            className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline"
+            className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline transition-colors duration-200"
             onClick={onMakePrimary}
           >
             {selectable ? "Jadikan Utama & Pilih" : "Jadikan Alamat Utama"}
@@ -61,7 +61,7 @@ export default function AddressCard({
         {onDelete && (
           <button
             type="button"
-            className="bg-transparent border-none p-0 text-warn text-[12.5px] font-bold cursor-pointer hover:underline"
+            className="bg-transparent border-none p-0 text-warn text-[12.5px] font-bold cursor-pointer hover:underline transition-colors duration-200"
             onClick={onDelete}
           >
             Hapus

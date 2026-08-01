@@ -8,7 +8,7 @@ interface Props {
 
 export default function Sidebar({ active, onSelect }: Props) {
   return (
-    <aside className="hidden md:block self-start sticky top-[90px] bg-surface border border-line rounded-2xl p-4">
+    <aside className="hidden md:block self-start sticky top-[90px] bg-surface border border-line rounded-2xl p-4 transition-colors duration-200">
       <p className="flex items-center gap-2 font-display font-bold text-sm text-muted uppercase tracking-wide mb-2.5">
         <Icon icon="mdi:format-list-bulleted" />
         Kategori

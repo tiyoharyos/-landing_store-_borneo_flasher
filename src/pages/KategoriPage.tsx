@@ -22,7 +22,7 @@ const PER_PAGE = 12;
 const isCategoryKey = (value: string | undefined): value is CategoryKey =>
   CATEGORIES.some((c) => c.key === value);
 
-export default function CategoryDetailPage() {
+export default function KategoriPage() {
   const { category } = useParams<{ category: string }>();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -162,9 +162,9 @@ export default function CategoryDetailPage() {
           <aside
             className={`${
               mobileFilterOpen ? "flex" : "hidden"
-            } lg:flex flex-col gap-6 bg-surface border border-line rounded-2xl p-5 self-start lg:sticky lg:top-[90px]`}
+            } lg:flex flex-col gap-6 bg-surface border border-line rounded-2xl p-5 self-start lg:sticky lg:top-[90px] transition-colors duration-200`}
           >
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
               <p className="font-display font-bold text-[13px] text-ink mb-2.5">Kategori</p>
               <ul className="list-none m-0 p-0 flex flex-col gap-0.5 max-h-[260px] overflow-y-auto">
                 <li>
@@ -172,7 +172,7 @@ export default function CategoryDetailPage() {
                     type="button"
                     className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer ${
                       categoryFilter === "semua" ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
-                    }`}
+                    } transition-colors duration-200`}
                     onClick={() => goToCategory("semua")}
                   >
                     <Icon icon="mdi:view-grid-outline" width={16} />
@@ -188,7 +188,7 @@ export default function CategoryDetailPage() {
                       type="button"
                       className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer ${
                         categoryFilter === c.key ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
-                      }`}
+                      } transition-colors duration-200`}
                       onClick={() => goToCategory(c.key)}
                     >
                       <Icon icon={c.icon} width={16} />
@@ -202,7 +202,7 @@ export default function CategoryDetailPage() {
               </ul>
             </div>
 
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
               <p className="font-display font-bold text-[13px] text-ink mb-2.5">Ketersediaan</p>
               {(
                 [
@@ -224,7 +224,7 @@ export default function CategoryDetailPage() {
               ))}
             </div>
 
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
               <p className="font-display font-bold text-[13px] text-ink mb-2.5">Kondisi</p>
               {(
                 [
@@ -246,7 +246,7 @@ export default function CategoryDetailPage() {
               ))}
             </div>
 
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
               <p className="font-display font-bold text-[13px] text-ink mb-2.5">Range Harga</p>
               <div className="flex items-center gap-2">
                 <input
@@ -254,7 +254,7 @@ export default function CategoryDetailPage() {
                   placeholder="Min"
                   value={priceMin}
                   onChange={(e) => setPriceMin(e.target.value)}
-                  className="flex-1 w-0 border border-line rounded-lg px-2.5 py-2 text-[13px] outline-none focus:border-brand"
+                  className="flex-1 w-0 border border-line rounded-lg px-2.5 py-2 text-[13px] outline-none focus:border-brand transition-colors duration-200"
                 />
                 <span className="text-muted">-</span>
                 <input
@@ -262,12 +262,12 @@ export default function CategoryDetailPage() {
                   placeholder="Max"
                   value={priceMax}
                   onChange={(e) => setPriceMax(e.target.value)}
-                  className="flex-1 w-0 border border-line rounded-lg px-2.5 py-2 text-[13px] outline-none focus:border-brand"
+                  className="flex-1 w-0 border border-line rounded-lg px-2.5 py-2 text-[13px] outline-none focus:border-brand transition-colors duration-200"
                 />
               </div>
             </div>
 
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
               <label className="flex items-center gap-2 text-[13.5px] text-ink-soft py-1.5 cursor-pointer">
                 <input
                   type="checkbox"
@@ -290,31 +290,35 @@ export default function CategoryDetailPage() {
 
           {/* Main content */}
           <div className="min-w-0">
-            <div className="flex flex-wrap items-center justify-between gap-2.5 my-5 mb-4">
-              <p className="font-display font-extrabold text-[1.1rem] text-ink">
-                Menampilkan <span className="text-brand">{filtered.length}</span> produk
-              </p>
-              {activeFilters.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2">
-                  {activeFilters.map((f) => (
+            {(query.trim() || activeFilters.length > 0) && (
+              <div className="flex flex-wrap items-center justify-between gap-2.5 my-5 mb-4">
+                {query.trim() && (
+                  <p className="font-display font-extrabold text-[1.1rem] text-ink">
+                    Menampilkan <span className="text-brand">{filtered.length}</span> produk
+                  </p>
+                )}
+                {activeFilters.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    {activeFilters.map((f) => (
+                      <button
+                        key={f.label}
+                        className="inline-flex items-center gap-1.5 bg-brand-tint text-brand border-none rounded-full px-3 py-1.5 text-xs font-semibold cursor-pointer transition-colors duration-200"
+                        onClick={f.onClear}
+                      >
+                        {f.label}
+                        <Icon icon="mdi:close" width={13} />
+                      </button>
+                    ))}
                     <button
-                      key={f.label}
-                      className="inline-flex items-center gap-1.5 bg-brand-tint text-brand border-none rounded-full px-3 py-1.5 text-xs font-semibold cursor-pointer"
-                      onClick={f.onClear}
+                      className="bg-transparent border-none text-warn text-[12.5px] font-bold cursor-pointer hover:underline transition-colors duration-200"
+                      onClick={resetAllFilters}
                     >
-                      {f.label}
-                      <Icon icon="mdi:close" width={13} />
+                      Hapus Semua
                     </button>
-                  ))}
-                  <button
-                    className="bg-transparent border-none text-warn text-[12.5px] font-bold cursor-pointer hover:underline"
-                    onClick={resetAllFilters}
-                  >
-                    Hapus Semua
-                  </button>
-                </div>
-              )}
-            </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {paged.length ? (
               <>
@@ -327,7 +331,7 @@ export default function CategoryDetailPage() {
                 {totalPages > 1 && (
                   <div className="flex flex-wrap justify-center gap-1.5 my-9 mb-12">
                     <button
-                      className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand"
+                      className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand transition-colors duration-200"
                       disabled={page === 1}
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
                       aria-label="Sebelumnya"
@@ -341,14 +345,14 @@ export default function CategoryDetailPage() {
                           page === n
                             ? "bg-brand border-brand text-white"
                             : "border-line bg-surface text-ink-soft hover:border-brand hover:text-brand"
-                        }`}
+                        } transition-colors duration-200`}
                         onClick={() => setPage(n)}
                       >
                         {n}
                       </button>
                     ))}
                     <button
-                      className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand"
+                      className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand transition-colors duration-200"
                       disabled={page === totalPages}
                       onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       aria-label="Berikutnya"

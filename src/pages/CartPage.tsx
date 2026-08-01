@@ -41,7 +41,7 @@ export default function CartPage() {
         <p className="font-display font-extrabold text-[1.1rem] text-ink mt-6 mb-4">Keranjang Belanja</p>
 
         {!user && (
-          <div className="flex items-center gap-2 bg-brand-tint text-brand-dark border border-brand/25 rounded-xl px-3.5 py-2.5 text-[12.75px] font-semibold mb-4">
+          <div className="flex items-center gap-2 bg-brand-tint text-brand-dark border border-brand/25 rounded-xl px-3.5 py-2.5 text-[12.75px] font-semibold mb-4 transition-colors duration-200">
             <Icon icon="mdi:lock-outline" width={17} />
             <span>
               Kamu belum masuk. <Link to="/masuk?next=/keranjang" className="underline font-bold">Masuk dulu</Link> untuk mulai
@@ -52,7 +52,7 @@ export default function CartPage() {
 
         {items.length === 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
-            <div className="flex flex-col items-center text-center bg-surface border border-line rounded-2xl px-6 py-14 shadow-sm">
+            <div className="flex flex-col items-center text-center bg-surface border border-line rounded-2xl px-6 py-14 shadow-sm transition-colors duration-200">
               <div className="w-[140px] h-[140px] flex items-center justify-center text-line">
                 <Icon icon="mdi:basket-outline" width={56} />
               </div>
@@ -69,14 +69,14 @@ export default function CartPage() {
               </Link>
             </div>
 
-            <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px] opacity-70">
+            <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px] opacity-70 transition-colors duration-200">
               <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Belanja</p>
               <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
                 <span>Total</span>
                 <span>-</span>
               </div>
 
-              <div className="flex items-center gap-2 bg-cream-deep rounded-xl px-3.5 py-2.5 text-[13px] text-ink-soft mt-2">
+              <div className="flex items-center gap-2 bg-cream-deep rounded-xl px-3.5 py-2.5 text-[13px] text-ink-soft mt-2 transition-colors duration-200">
                 <Icon icon="mdi:tag-outline" width={18} />
                 <span>Makin hemat pakai promo</span>
                 <Icon icon="mdi:chevron-right" width={18} className="ml-auto" />
@@ -91,8 +91,8 @@ export default function CartPage() {
           <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
             <div className="flex flex-col gap-3">
               {items.map((item) => (
-                <div key={item.productId} className="flex gap-3.5 bg-surface border border-line rounded-2xl p-3.5 items-center">
-                  <Link to={`/produk/${item.product.slug}`} className="w-[72px] h-[72px] rounded-[10px] overflow-hidden flex-shrink-0 bg-cream-deep">
+                <div key={item.productId} className="flex gap-3.5 bg-surface border border-line rounded-2xl p-3.5 items-center transition-colors duration-200">
+                  <Link to={`/produk/${item.product.slug}`} className="w-[72px] h-[72px] rounded-[10px] overflow-hidden flex-shrink-0 bg-cream-deep transition-colors duration-200">
                     <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
                   </Link>
                   <div className="flex-1 min-w-0">
@@ -101,16 +101,16 @@ export default function CartPage() {
                     </Link>
                     <p className="font-mono font-bold text-[13px] text-brand-dark mt-1">{formatRupiah(item.product.price)}</p>
                     <div className="flex items-center gap-3.5 mt-2">
-                      <div className="flex items-center border border-line rounded-lg overflow-hidden">
+                      <div className="flex items-center border border-line rounded-lg overflow-hidden transition-colors duration-200">
                         <button
-                          className="w-[26px] h-[26px] bg-cream-deep flex items-center justify-center cursor-pointer text-ink"
+                          className="w-[26px] h-[26px] bg-cream-deep flex items-center justify-center cursor-pointer text-ink transition-colors duration-200"
                           onClick={() => setQty(item.productId, item.qty - 1)}
                         >
                           <Icon icon="mdi:minus" width={14} />
                         </button>
                         <span className="w-[30px] text-center font-bold text-[13px] text-ink">{item.qty}</span>
                         <button
-                          className="w-[26px] h-[26px] bg-cream-deep flex items-center justify-center cursor-pointer text-ink"
+                          className="w-[26px] h-[26px] bg-cream-deep flex items-center justify-center cursor-pointer text-ink transition-colors duration-200"
                           onClick={() =>
                             setQty(item.productId, Math.min(item.product.stock, item.qty + 1))
                           }
@@ -119,7 +119,7 @@ export default function CartPage() {
                         </button>
                       </div>
                       <button
-                        className="flex items-center gap-1 text-xs text-warn bg-transparent border-none cursor-pointer hover:underline"
+                        className="flex items-center gap-1 text-xs text-warn bg-transparent border-none cursor-pointer hover:underline transition-colors duration-200"
                         onClick={() => handleRemove(item.productId, item.product.name)}
                       >
                         <Icon icon="mdi:trash-can-outline" width={16} />
@@ -132,7 +132,7 @@ export default function CartPage() {
               ))}
             </div>
 
-            <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px]">
+            <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px] transition-colors duration-200">
               <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Belanja</p>
               <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
                 <span>Subtotal</span>

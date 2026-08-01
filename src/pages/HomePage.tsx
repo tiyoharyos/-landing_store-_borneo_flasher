@@ -81,7 +81,7 @@ export default function HomePage() {
         </div>
 
         {/* Kategori Teratas */}
-        <section className="py-7 border-b border-line last-of-type:border-b-0">
+        <section className="py-7 border-b border-line last-of-type:border-b-0 transition-colors duration-200">
           <div className="flex flex-wrap items-center justify-between gap-3 my-7 mb-[1.1rem]">
             <p className="font-display font-extrabold text-[1.1rem] text-ink">Kategori Teratas</p>
             <Link to="/kategori" className="text-[13.5px] font-bold text-brand hover:underline">
@@ -95,7 +95,7 @@ export default function HomePage() {
                 to={`/kategori/${c.key}`}
                 className="bg-surface border border-line rounded-2xl px-3 py-5 text-center transition-all hover:-translate-y-[3px] hover:shadow-lg"
               >
-                <span className="w-12 h-12 mx-auto mb-2.5 rounded-[14px] bg-brand-tint text-brand flex items-center justify-center">
+                <span className="w-12 h-12 mx-auto mb-2.5 rounded-[14px] bg-brand-tint text-brand flex items-center justify-center transition-colors duration-200">
                   <Icon icon={c.icon} width={26} />
                 </span>
                 <p className="font-display font-bold text-[13.5px] text-ink">{c.label}</p>
@@ -108,7 +108,7 @@ export default function HomePage() {
         </section>
 
         {/* Produk Pilihan */}
-        <section className="py-7 border-b border-line last-of-type:border-b-0">
+        <section className="py-7 border-b border-line last-of-type:border-b-0 transition-colors duration-200">
           <div className="flex flex-wrap items-center justify-between gap-3 my-7 mb-[1.1rem]">
             <div>
               <p className="font-display font-extrabold text-[1.1rem] text-ink mb-2">Produk Pilihan</p>
@@ -150,11 +150,11 @@ export default function HomePage() {
         </section>
 
         {/* Promo Section */}
-        {/* <section className="py-7 border-b border-line last-of-type:border-b-0">
+        {/* <section className="py-7 border-b border-line last-of-type:border-b-0 transition-colors duration-200">
           <p className="font-display font-extrabold text-[1.1rem] text-ink mb-4">Baru untuk Anda</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {PROMO_CARDS.map((promo) => (
-              <div key={promo.title} className={`rounded-[18px] p-6 border border-line ${promo.tone}`}>
+              <div key={promo.title} className={`rounded-[18px] p-6 border border-line ${promo.tone} transition-colors duration-200`}>
                 <h3 className="font-display font-extrabold text-[1.05rem] text-ink mb-2">{promo.title}</h3>
                 <p className="text-[13px] text-ink-soft mb-[1.1rem] leading-relaxed">{promo.desc}</p>
                 <Link
@@ -167,7 +167,41 @@ export default function HomePage() {
             ))}
           </div>
         </section> */}
+
+        {/* Trusted Brands */}
+        {/* <section className="py-7 border-b border-line last-of-type:border-b-0 transition-colors duration-200">
+          <p className="font-display font-extrabold text-[1.1rem] text-ink text-center mb-6">
+            Sparepart &amp; Tools Kompatibel Dengan Brand Terpercaya
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 gap-x-8 items-center justify-items-center">
+            {TRUSTED_BRANDS.map((brand) => (
+              <span key={brand} className="font-display font-extrabold text-[1.15rem] text-muted tracking-wide">
+                {brand}
+              </span>
+            ))}
+          </div>
+        </section> */}
       </div>
+
+      {/* Newsletter */}
+      {/* <section className="bg-gradient-to-br from-brand to-brand-dark text-white py-14 mt-4">
+        <div className="container text-center">
+          <h2 className="font-display font-extrabold text-[1.6rem]">Dapatkan Penawaran Eksklusif!</h2>
+          <p className="mt-2 text-[14.5px] opacity-90">
+            Langganan info promo &amp; produk baru Borneo Flasher Store
+          </p>
+          <div className="mx-auto mt-6 flex gap-2 max-w-[440px]">
+            <input
+              type="email"
+              placeholder="Email Anda"
+              className="flex-1 border-none outline-none rounded-full px-[18px] h-[46px] text-sm text-ink"
+            />
+            <button className="rounded-full px-7 font-bold text-sm bg-white text-brand h-[46px] hover:bg-cream transition-colors">
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </section> */}
     </div>
   );
 }

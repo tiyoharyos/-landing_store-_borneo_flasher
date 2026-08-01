@@ -18,7 +18,7 @@ export default function NavbarHome() {
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
           <button
-            className="text-2xl text-ink bg-transparent border-none cursor-pointer"
+            className="text-2xl text-ink bg-transparent border-none cursor-pointer transition-colors duration-200"
             onClick={() => setOpen(!open)}
             aria-label="Toggle navigation"
           >
@@ -29,7 +29,7 @@ export default function NavbarHome() {
         <ul
           className={`${
             open ? "flex" : "hidden"
-          } md:flex flex-col md:flex-row absolute md:static top-full left-0 w-full md:w-auto bg-cream md:bg-transparent border-b md:border-0 border-line p-4 md:p-0 gap-1 md:gap-8 list-none m-0 items-start md:items-center`}
+          } md:flex flex-col md:flex-row absolute md:static top-full left-0 w-full md:w-auto bg-cream md:bg-transparent border-b md:border-0 border-line p-4 md:p-0 gap-1 md:gap-8 list-none m-0 items-start md:items-center transition-colors duration-200`}
         >
           <li>
             <NavLink to="/" end onClick={() => setOpen(false)} className={navLinkClass}>

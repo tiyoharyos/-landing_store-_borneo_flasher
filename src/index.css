@@ -72,10 +72,6 @@
    library pihak ketiga seperti SweetAlert2 di bawah) */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-* {
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
 }

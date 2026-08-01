@@ -13,7 +13,7 @@ export default function BannerCarousel() {
   const go = (dir: 1 | -1) => setIndex((i) => (i + dir + BANNERS.length) % BANNERS.length);
 
   return (
-    <div className="relative rounded-[20px] overflow-hidden bg-cream-deep aspect-[1400/500]">
+    <div className="relative rounded-[20px] overflow-hidden bg-cream-deep aspect-[1400/500] transition-colors duration-200">
       {BANNERS.map((b, i) => (
         <div
           key={i}
@@ -29,14 +29,14 @@ export default function BannerCarousel() {
         </div>
       ))}
       <button
-        className="absolute top-1/2 -translate-y-1/2 left-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer text-ink"
+        className="absolute top-1/2 -translate-y-1/2 left-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer text-ink transition-colors duration-200"
         onClick={() => go(-1)}
         aria-label="Sebelumnya"
       >
         <Icon icon="mdi:chevron-left" width={22} />
       </button>
       <button
-        className="absolute top-1/2 -translate-y-1/2 right-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer text-ink"
+        className="absolute top-1/2 -translate-y-1/2 right-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer text-ink transition-colors duration-200"
         onClick={() => go(1)}
         aria-label="Berikutnya"
       >

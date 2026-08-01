@@ -13,7 +13,7 @@ export default function ProductCard({ product }: { product: Product }) {
       to={`/produk/${product.slug}`}
       className="block bg-surface border border-line rounded-[14px] overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5"
     >
-      <div className="relative aspect-square bg-cream-deep">
+      <div className="relative aspect-square bg-cream-deep transition-colors duration-200">
         <img
           src={product.image}
           alt={product.name}
@@ -21,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
           className="w-full h-full object-cover"
         />
         {pct > 0 && (
-          <span className="absolute top-2 left-2 bg-brand text-white text-[10.5px] font-extrabold px-[7px] py-0.5 rounded-md">
+          <span className="absolute top-2 left-2 bg-brand text-white text-[10.5px] font-extrabold px-[7px] py-0.5 rounded-md transition-colors duration-200">
             -{pct}%
           </span>
         )}
