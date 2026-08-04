@@ -83,8 +83,6 @@
   --font-mono: "JetBrains Mono", monospace;
 }
 
-/* variant dark: masih disediakan untuk kasus khusus (mis. re-theme
-   library pihak ketiga seperti SweetAlert2 di bawah) */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 * {
@@ -121,7 +119,6 @@ a {
   padding-inline: 20px;
 }
 
-/* ---------------- Toast: animasi slide-in per posisi ---------------- */
 @keyframes toast-slide-in-right {
   from {
     opacity: 0;
@@ -173,4 +170,51 @@ a {
 }
 .animate-slide-in-bottom {
   animation: toast-slide-in-bottom 0.25s ease-out;
+}
+
+/* ================= */
+/* ✨ ANIMATIONS */
+/* ================= */
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.float-slow {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-animate.animated {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.glass {
+  backdrop-filter: blur(12px);
+}
+
+.glow {
+  box-shadow: 0 0 40px rgba(232, 48, 32, 0.25);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 10s ease-in-out infinite reverse;
+  animation-delay: -2s;
 }

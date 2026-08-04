@@ -33,9 +33,9 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
-  sm: "h-[34px] px-[13px] text-[12.5px] rounded-lg gap-1.5",
-  md: "h-[42px] px-[18px] text-sm rounded-xl gap-2",
-  lg: "h-[50px] px-6 text-[15px] rounded-xl gap-2",
+  sm: "h-[34px] px-[16px] text-[12.5px] rounded-full gap-1.5",
+  md: "h-[42px] px-[22px] text-sm rounded-full gap-2",
+  lg: "h-[50px] px-7 text-[15px] rounded-full gap-2",
 };
 
 const SPINNER_BORDER: Record<ButtonVariant, string> = {

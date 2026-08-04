@@ -75,13 +75,13 @@ export default function OrderSuccessPage() {
           <div className="flex gap-3 mt-6">
             <Link
               to="/"
-              className="inline-flex items-center justify-center gap-2 font-bold text-sm rounded-xl px-6 py-3.5 border-[1.5px] border-brand text-brand hover:bg-brand-tint transition-colors"
+              className="inline-flex items-center justify-center gap-2 font-bold text-sm rounded-full px-6 py-3.5 border-[1.5px] border-brand text-brand hover:bg-brand-tint transition-colors"
             >
               Kembali ke Beranda
             </Link>
             <Link
               to="/akun/profil?tab=pesanan"
-              className="inline-flex items-center justify-center gap-2 font-bold text-sm rounded-xl px-6 py-3.5 bg-brand text-white hover:bg-brand-dark transition-colors"
+              className="inline-flex items-center gap-2 bg-brand !text-white font-bold text-sm px-8 py-3 rounded-full hover:bg-brand-dark transition-colors"
             >
               Lihat Pesanan Saya
             </Link>
