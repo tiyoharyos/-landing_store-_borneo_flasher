@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 export default function NotFoundPage() {
   return (
-    <div className="flex flex-col justify-center items-center h-screen text-center p-6 gap-2 bg-cream transition-colors duration-200">
+    <div className="flex flex-col justify-center items-center h-screen text-center p-6 gap-2 bg-cream">
       <Icon icon="mdi:tools" width={64} className="text-brand" />
       <h1 className="font-display font-extrabold text-[28px] mt-2 text-ink">404 — Halaman Tidak Ditemukan</h1>
       <p className="text-muted">

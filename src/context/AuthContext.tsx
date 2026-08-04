@@ -5,6 +5,8 @@ export interface User {
   name: string;
   email: string;
   phone?: string;
+  /** Foto profil, disimpan sebagai data URL (base64). */
+  avatar?: string;
 }
 
 interface AuthContextValue {
@@ -13,7 +15,7 @@ interface AuthContextValue {
   login: (email: string, password: string) => Promise<{ ok: boolean; message?: string }>;
   register: (name: string, email: string, password: string) => Promise<{ ok: boolean; message?: string }>;
   logout: () => void;
-  updateProfile: (input: { name: string; phone?: string }) => void;
+  updateProfile: (input: { name: string; phone?: string; avatar?: string | null }) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -24,7 +26,7 @@ const STORAGE_KEY = "bf_auth_user";
 // walau user logout lalu login lagi di sesi lain.
 const profileKey = (email: string) => `bf_profile:${email.trim().toLowerCase()}`;
 
-function loadProfileOverride(email: string): { name?: string; phone?: string } {
+function loadProfileOverride(email: string): { name?: string; phone?: string; avatar?: string } {
   try {
     const raw = localStorage.getItem(profileKey(email));
     return raw ? JSON.parse(raw) : {};
@@ -33,7 +35,7 @@ function loadProfileOverride(email: string): { name?: string; phone?: string } {
   }
 }
 
-function saveProfileOverride(email: string, data: { name: string; phone?: string }) {
+function saveProfileOverride(email: string, data: { name: string; phone?: string; avatar?: string }) {
   localStorage.setItem(profileKey(email), JSON.stringify(data));
 }
 
@@ -74,7 +76,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       };
     }
     const override = loadProfileOverride(matched.email);
-    persist({ name: override.name ?? matched.name, email: matched.email, phone: override.phone ?? matched.phone });
+    persist({
+      name: override.name ?? matched.name,
+      email: matched.email,
+      phone: override.phone ?? matched.phone,
+      avatar: override.avatar,
+    });
     return { ok: true };
   };
 
@@ -93,10 +100,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => persist(null);
 
-  const updateProfile: AuthContextValue["updateProfile"] = ({ name, phone }) => {
+  const updateProfile: AuthContextValue["updateProfile"] = ({ name, phone, avatar }) => {
     if (!user) return;
-    const next: User = { ...user, name: name.trim(), phone: phone?.trim() || undefined };
-    saveProfileOverride(user.email, { name: next.name, phone: next.phone });
+    const nextAvatar = avatar === null ? undefined : avatar !== undefined ? avatar : user.avatar;
+    const next: User = { ...user, name: name.trim(), phone: phone?.trim() || undefined, avatar: nextAvatar };
+    saveProfileOverride(user.email, { name: next.name, phone: next.phone, avatar: next.avatar });
     persist(next);
   };
 

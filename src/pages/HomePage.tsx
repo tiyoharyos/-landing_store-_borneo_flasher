@@ -81,7 +81,7 @@ export default function HomePage() {
         </div>
 
         {/* Kategori Teratas */}
-        <section className="py-7 border-b border-line last-of-type:border-b-0 transition-colors duration-200">
+        <section className="py-7 border-b border-line last-of-type:border-b-0">
           <div className="flex flex-wrap items-center justify-between gap-3 my-7 mb-[1.1rem]">
             <p className="font-display font-extrabold text-[1.1rem] text-ink">Kategori Teratas</p>
             <Link to="/kategori" className="text-[13.5px] font-bold text-brand hover:underline">
@@ -95,7 +95,7 @@ export default function HomePage() {
                 to={`/kategori/${c.key}`}
                 className="bg-surface border border-line rounded-2xl px-3 py-5 text-center transition-all hover:-translate-y-[3px] hover:shadow-lg"
               >
-                <span className="w-12 h-12 mx-auto mb-2.5 rounded-[14px] bg-brand-tint text-brand flex items-center justify-center transition-colors duration-200">
+                <span className="w-12 h-12 mx-auto mb-2.5 rounded-[14px] bg-brand-tint text-brand flex items-center justify-center">
                   <Icon icon={c.icon} width={26} />
                 </span>
                 <p className="font-display font-bold text-[13.5px] text-ink">{c.label}</p>
@@ -108,7 +108,7 @@ export default function HomePage() {
         </section>
 
         {/* Produk Pilihan */}
-        <section className="py-7 border-b border-line last-of-type:border-b-0 transition-colors duration-200">
+        <section className="py-7 border-b border-line last-of-type:border-b-0">
           <div className="flex flex-wrap items-center justify-between gap-3 my-7 mb-[1.1rem]">
             <div>
               <p className="font-display font-extrabold text-[1.1rem] text-ink mb-2">Produk Pilihan</p>
@@ -150,11 +150,11 @@ export default function HomePage() {
         </section>
 
         {/* Promo Section */}
-        {/* <section className="py-7 border-b border-line last-of-type:border-b-0 transition-colors duration-200">
+        <section className="py-7 border-b border-line last-of-type:border-b-0">
           <p className="font-display font-extrabold text-[1.1rem] text-ink mb-4">Baru untuk Anda</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {PROMO_CARDS.map((promo) => (
-              <div key={promo.title} className={`rounded-[18px] p-6 border border-line ${promo.tone} transition-colors duration-200`}>
+              <div key={promo.title} className={`rounded-[18px] p-6 border border-line ${promo.tone}`}>
                 <h3 className="font-display font-extrabold text-[1.05rem] text-ink mb-2">{promo.title}</h3>
                 <p className="text-[13px] text-ink-soft mb-[1.1rem] leading-relaxed">{promo.desc}</p>
                 <Link
@@ -166,10 +166,10 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-        </section> */}
+        </section>
 
         {/* Trusted Brands */}
-        {/* <section className="py-7 border-b border-line last-of-type:border-b-0 transition-colors duration-200">
+        <section className="py-7 border-b border-line last-of-type:border-b-0">
           <p className="font-display font-extrabold text-[1.1rem] text-ink text-center mb-6">
             Sparepart &amp; Tools Kompatibel Dengan Brand Terpercaya
           </p>
@@ -180,11 +180,11 @@ export default function HomePage() {
               </span>
             ))}
           </div>
-        </section> */}
+        </section>
       </div>
 
       {/* Newsletter */}
-      {/* <section className="bg-gradient-to-br from-brand to-brand-dark text-white py-14 mt-4">
+      <section className="bg-gradient-to-br from-brand to-brand-dark text-white py-14 mt-4">
         <div className="container text-center">
           <h2 className="font-display font-extrabold text-[1.6rem]">Dapatkan Penawaran Eksklusif!</h2>
           <p className="mt-2 text-[14.5px] opacity-90">
@@ -201,7 +201,7 @@ export default function HomePage() {
             </button>
           </div>
         </div>
-      </section> */}
+      </section>
     </div>
   );
 }

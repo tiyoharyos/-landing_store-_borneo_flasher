@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { useNavigate } from "react-router-dom";
 import { PRODUCTS, type Product } from "@/data/products";
 import { useAuth } from "@/context/AuthContext";
-import { alertNeedLogin } from "@/components/ui/alert";
+import { alertNeedLogin } from "@/components/ui/swal";
 
 export interface CartLine {
   productId: string;

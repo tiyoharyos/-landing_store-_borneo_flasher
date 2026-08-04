@@ -2,7 +2,8 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { useNavigate } from "react-router-dom";
 import { PRODUCTS, type Product } from "@/data/products";
 import { useAuth } from "@/context/AuthContext";
-import { alertNeedLogin, toastSuccess, toastInfo } from "@/components/ui/alert";
+import { alertNeedLogin } from "@/components/ui/swal";
+import { useToast } from "@/components/ui/Toast";
 
 interface WishlistContextValue {
   ids: string[];
@@ -23,6 +24,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   const [ids, setIds] = useState<string[]>([]);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     try {
@@ -56,10 +58,10 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     }
     setIds((prev) => {
       if (prev.includes(productId)) {
-        toastInfo("Dihapus dari wishlist");
+        toast.info("Dihapus dari wishlist");
         return prev.filter((id) => id !== productId);
       }
-      toastSuccess("Ditambahkan ke wishlist");
+      toast.success("Ditambahkan ke wishlist");
       return [...prev, productId];
     });
   };

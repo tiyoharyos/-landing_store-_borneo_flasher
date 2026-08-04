@@ -162,9 +162,9 @@ export default function KategoriPage() {
           <aside
             className={`${
               mobileFilterOpen ? "flex" : "hidden"
-            } lg:flex flex-col gap-6 bg-surface border border-line rounded-2xl p-5 self-start lg:sticky lg:top-[90px] transition-colors duration-200`}
+            } lg:flex flex-col gap-6 bg-surface border border-line rounded-2xl p-5 self-start lg:sticky lg:top-[90px]`}
           >
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
               <p className="font-display font-bold text-[13px] text-ink mb-2.5">Kategori</p>
               <ul className="list-none m-0 p-0 flex flex-col gap-0.5 max-h-[260px] overflow-y-auto">
                 <li>
@@ -172,7 +172,7 @@ export default function KategoriPage() {
                     type="button"
                     className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer ${
                       categoryFilter === "semua" ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
-                    } transition-colors duration-200`}
+                    }`}
                     onClick={() => goToCategory("semua")}
                   >
                     <Icon icon="mdi:view-grid-outline" width={16} />
@@ -188,7 +188,7 @@ export default function KategoriPage() {
                       type="button"
                       className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer ${
                         categoryFilter === c.key ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
-                      } transition-colors duration-200`}
+                      }`}
                       onClick={() => goToCategory(c.key)}
                     >
                       <Icon icon={c.icon} width={16} />
@@ -202,7 +202,7 @@ export default function KategoriPage() {
               </ul>
             </div>
 
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
               <p className="font-display font-bold text-[13px] text-ink mb-2.5">Ketersediaan</p>
               {(
                 [
@@ -224,7 +224,7 @@ export default function KategoriPage() {
               ))}
             </div>
 
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
               <p className="font-display font-bold text-[13px] text-ink mb-2.5">Kondisi</p>
               {(
                 [
@@ -246,7 +246,7 @@ export default function KategoriPage() {
               ))}
             </div>
 
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
               <p className="font-display font-bold text-[13px] text-ink mb-2.5">Range Harga</p>
               <div className="flex items-center gap-2">
                 <input
@@ -254,7 +254,7 @@ export default function KategoriPage() {
                   placeholder="Min"
                   value={priceMin}
                   onChange={(e) => setPriceMin(e.target.value)}
-                  className="flex-1 w-0 border border-line rounded-lg px-2.5 py-2 text-[13px] outline-none focus:border-brand transition-colors duration-200"
+                  className="flex-1 w-0 border border-line rounded-lg px-2.5 py-2 text-[13px] outline-none focus:border-brand"
                 />
                 <span className="text-muted">-</span>
                 <input
@@ -262,12 +262,12 @@ export default function KategoriPage() {
                   placeholder="Max"
                   value={priceMax}
                   onChange={(e) => setPriceMax(e.target.value)}
-                  className="flex-1 w-0 border border-line rounded-lg px-2.5 py-2 text-[13px] outline-none focus:border-brand transition-colors duration-200"
+                  className="flex-1 w-0 border border-line rounded-lg px-2.5 py-2 text-[13px] outline-none focus:border-brand"
                 />
               </div>
             </div>
 
-            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0 transition-colors duration-200">
+            <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
               <label className="flex items-center gap-2 text-[13.5px] text-ink-soft py-1.5 cursor-pointer">
                 <input
                   type="checkbox"
@@ -302,7 +302,7 @@ export default function KategoriPage() {
                     {activeFilters.map((f) => (
                       <button
                         key={f.label}
-                        className="inline-flex items-center gap-1.5 bg-brand-tint text-brand border-none rounded-full px-3 py-1.5 text-xs font-semibold cursor-pointer transition-colors duration-200"
+                        className="inline-flex items-center gap-1.5 bg-brand-tint text-brand border-none rounded-full px-3 py-1.5 text-xs font-semibold cursor-pointer"
                         onClick={f.onClear}
                       >
                         {f.label}
@@ -310,7 +310,7 @@ export default function KategoriPage() {
                       </button>
                     ))}
                     <button
-                      className="bg-transparent border-none text-warn text-[12.5px] font-bold cursor-pointer hover:underline transition-colors duration-200"
+                      className="bg-transparent border-none text-warn text-[12.5px] font-bold cursor-pointer hover:underline"
                       onClick={resetAllFilters}
                     >
                       Hapus Semua
@@ -331,7 +331,7 @@ export default function KategoriPage() {
                 {totalPages > 1 && (
                   <div className="flex flex-wrap justify-center gap-1.5 my-9 mb-12">
                     <button
-                      className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand transition-colors duration-200"
+                      className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand"
                       disabled={page === 1}
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
                       aria-label="Sebelumnya"
@@ -345,14 +345,14 @@ export default function KategoriPage() {
                           page === n
                             ? "bg-brand border-brand text-white"
                             : "border-line bg-surface text-ink-soft hover:border-brand hover:text-brand"
-                        } transition-colors duration-200`}
+                        }`}
                         onClick={() => setPage(n)}
                       >
                         {n}
                       </button>
                     ))}
                     <button
-                      className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand transition-colors duration-200"
+                      className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand"
                       disabled={page === totalPages}
                       onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       aria-label="Berikutnya"

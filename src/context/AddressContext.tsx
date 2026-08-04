@@ -9,7 +9,7 @@ import {
   type Address,
   type AddressInput,
 } from "@/data/addresses";
-import { toastSuccess, toastInfo } from "@/components/ui/alert";
+import { useToast } from "@/components/ui/Toast";
 
 interface AddressContextValue {
   addresses: Address[];
@@ -25,6 +25,7 @@ const AddressContext = createContext<AddressContextValue | null>(null);
 export function AddressProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [addresses, setAddresses] = useState<Address[]>([]);
+  const toast = useToast();
 
   // Muat ulang daftar alamat setiap kali akun yang aktif berganti.
   useEffect(() => {
@@ -35,7 +36,7 @@ export function AddressProvider({ children }: { children: ReactNode }) {
     if (!user) throw new Error("Harus masuk akun dulu untuk menambah alamat.");
     const created = createAddress(user.email, input, makePrimary);
     setAddresses(getAddresses(user.email));
-    toastSuccess("Alamat baru disimpan");
+    toast.success("Alamat baru disimpan");
     return created;
   };
 
@@ -43,14 +44,14 @@ export function AddressProvider({ children }: { children: ReactNode }) {
     if (!user) return;
     const next = updateAddress(user.email, id, input);
     setAddresses(next);
-    toastSuccess("Alamat diperbarui");
+    toast.success("Alamat diperbarui");
   };
 
   const removeAddress: AddressContextValue["removeAddress"] = (id) => {
     if (!user) return;
     const next = deleteAddress(user.email, id);
     setAddresses(next);
-    toastInfo("Alamat dihapus");
+    toast.info("Alamat dihapus");
   };
 
   const makePrimaryFn: AddressContextValue["makePrimary"] = (id) => {

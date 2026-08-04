@@ -4,7 +4,7 @@ import Modal from "@/components/ui/Modal";
 import AddressCard from "@/components/address/AddressCard";
 import AddressFormModal from "@/components/address/AddressFormModal";
 import { useAddresses } from "@/context/AddressContext";
-import { confirmDialog } from "@/components/ui/alert";
+import { confirmDialog } from "@/components/ui/swal";
 import type { Address } from "@/data/addresses";
 
 interface Props {

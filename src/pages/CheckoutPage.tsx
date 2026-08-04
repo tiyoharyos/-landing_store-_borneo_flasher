@@ -9,7 +9,8 @@ import { formatRupiah } from "@/data/products";
 import Button from "@/components/ui/Button";
 import AddressListModal from "@/components/address/AddressListModal";
 import AddressFormModal from "@/components/address/AddressFormModal";
-import { alertWarning, toastSuccess } from "@/components/ui/alert";
+import { alertWarning } from "@/components/ui/swal";
+import { useToast } from "@/components/ui/Toast";
 import type { Address } from "@/data/addresses";
 import {
   createOrder,
@@ -31,6 +32,7 @@ export default function CheckoutPage() {
   const [shippingMethod, setShippingMethod] = useState<ShippingMethodKey>("reguler");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodKey>("transfer");
   const [submitting, setSubmitting] = useState(false);
+  const toast = useToast();
 
   // Pilih otomatis alamat utama begitu daftar alamat termuat, kecuali user
   // sudah memilih alamat lain secara manual.
@@ -88,7 +90,7 @@ export default function CheckoutPage() {
         user.email
       );
       clear();
-      toastSuccess("Pesanan berhasil dibuat!");
+      toast.success("Pesanan berhasil dibuat!");
       navigate(`/pesanan/sukses/${order.id}`);
     }, 700);
   };
@@ -101,7 +103,7 @@ export default function CheckoutPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
           <div className="flex flex-col gap-4">
-            <div className="bg-surface border border-line rounded-2xl p-5 transition-colors duration-200">
+            <div className="bg-surface border border-line rounded-2xl p-5">
               <p className="flex items-center justify-between gap-2 mb-3">
                 <span className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink">
                   <Icon icon="mdi:map-marker-outline" width={18} /> Alamat Pengiriman
@@ -109,7 +111,7 @@ export default function CheckoutPage() {
                 {selectedAddress && (
                   <button
                     type="button"
-                    className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline transition-colors duration-200"
+                    className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline"
                     onClick={() => setAddressListOpen(true)}
                   >
                     Ganti
@@ -120,7 +122,7 @@ export default function CheckoutPage() {
               {selectedAddress ? (
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="inline-flex items-center gap-1 text-[12px] font-bold text-ink-soft bg-cream-deep rounded-full px-2.5 py-1 transition-colors duration-200">
+                    <span className="inline-flex items-center gap-1 text-[12px] font-bold text-ink-soft bg-cream-deep rounded-full px-2.5 py-1">
                       <Icon icon="mdi:home-outline" width={14} />
                       {selectedAddress.label}
                     </span>
@@ -150,7 +152,7 @@ export default function CheckoutPage() {
               )}
             </div>
 
-            <div className="bg-surface border border-line rounded-2xl p-5 transition-colors duration-200">
+            <div className="bg-surface border border-line rounded-2xl p-5">
               <p className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink mb-3">
                 <Icon icon="mdi:truck-outline" width={18} /> Metode Pengiriman
               </p>
@@ -160,7 +162,7 @@ export default function CheckoutPage() {
                     key={opt.key}
                     className={`flex items-center gap-3 border rounded-xl px-3.5 py-2.5 cursor-pointer ${
                       shippingMethod === opt.key ? "border-brand bg-brand-tint" : "border-line"
-                    } transition-colors duration-200`}
+                    }`}
                   >
                     <input
                       type="radio"
@@ -179,7 +181,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <div className="bg-surface border border-line rounded-2xl p-5 transition-colors duration-200">
+            <div className="bg-surface border border-line rounded-2xl p-5">
               <p className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink mb-3">
                 <Icon icon="mdi:credit-card-outline" width={18} /> Metode Pembayaran
               </p>
@@ -189,7 +191,7 @@ export default function CheckoutPage() {
                     key={opt.key}
                     className={`flex items-center gap-3 border rounded-xl px-3.5 py-2.5 cursor-pointer ${
                       paymentMethod === opt.key ? "border-brand bg-brand-tint" : "border-line"
-                    } transition-colors duration-200`}
+                    }`}
                   >
                     <input
                       type="radio"
@@ -208,7 +210,7 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px] transition-colors duration-200">
+          <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px]">
             <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Pesanan</p>
             {items.map((i) => (
               <div key={i.productId} className="flex justify-between text-[12.5px] text-muted py-1.5">
@@ -218,7 +220,7 @@ export default function CheckoutPage() {
                 <span>{formatRupiah(i.lineTotal)}</span>
               </div>
             ))}
-            <div className="h-px bg-line my-2 transition-colors duration-200" />
+            <div className="h-px bg-line my-2" />
             <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
               <span>Subtotal</span>
               <span>{formatRupiah(subtotal)}</span>
@@ -227,7 +229,7 @@ export default function CheckoutPage() {
               <span>Ongkos Kirim</span>
               <span>{formatRupiah(shippingCost)}</span>
             </div>
-            <div className="h-px bg-line my-2 transition-colors duration-200" />
+            <div className="h-px bg-line my-2" />
             <div className="flex justify-between text-[15px] font-extrabold text-ink py-1.5">
               <span>Total Bayar</span>
               <span>{formatRupiah(total)}</span>

@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           id={inputId}
           className={`${FIELD_BASE} ${icon ? "pl-10" : ""} ${
             error ? "border-warn focus:ring-warn/15" : "border-line"
-          } ${className} transition-colors duration-200`}
+          } ${className}`}
           {...rest}
         />
       </div>
@@ -72,7 +72,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
         rows={rows}
         className={`${FIELD_BASE} h-auto py-2.5 resize-y leading-relaxed ${
           error ? "border-warn focus:ring-warn/15" : "border-line"
-        } ${className} transition-colors duration-200`}
+        } ${className}`}
         {...rest}
       />
       {error ? (

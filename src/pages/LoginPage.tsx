@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardSubtitle, CardBody } from "@/component
 import { Input } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { Form } from "@/components/ui/FormLayout";
-import { alertError, toastSuccess } from "@/components/ui/alert";
+import { alertError, alertSuccess } from "@/components/ui/swal";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -27,7 +27,7 @@ export default function LoginPage() {
       alertError({ title: "Gagal Masuk", text: res.message ?? "Login gagal." });
       return;
     }
-    toastSuccess("Berhasil masuk. Selamat datang kembali!");
+    await alertSuccess({ title: "Berhasil Masuk", text: "Selamat datang kembali!" });
     navigate(next);
   };
 
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 </Button>
               </Form>
 
-              <div className="mt-1.5 bg-cream-deep rounded-xl px-3.5 py-2.5 flex flex-col gap-0.5 transition-colors duration-200">
+              <div className="mt-1.5 bg-cream-deep rounded-xl px-3.5 py-2.5 flex flex-col gap-0.5">
                 <p className="flex items-center gap-1.5 text-[11.5px] font-bold text-brand-dark mb-0.5">
                   <Icon icon="mdi:information-outline" width={15} /> Akun demo
                 </p>

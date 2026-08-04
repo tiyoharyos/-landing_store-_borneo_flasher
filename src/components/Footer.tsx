@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Logo from "./Logo";
+import logoLpks from "../assets/img/logo-lpks.png";
 import { ADDRESS, EMAIL, PHONE_DISPLAY, SOCIALS, waLink } from "@/config/config";
 
 const SOCIAL_ICONS: { key: keyof typeof SOCIALS; icon: string }[] = [
@@ -12,16 +12,14 @@ const SOCIAL_ICONS: { key: keyof typeof SOCIALS; icon: string }[] = [
 
 export default function Footer() {
   return (
-    <footer className="bg-footer-bg text-footer-text mt-auto relative transition-colors duration-200">
-      {/* Padding Y diperkecil saat mobile (py-8) dan kembali normal di desktop (md:py-14) */}
-      <div className="container py-8 md:py-14">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
+    <footer className="bg-footer-bg text-footer-text mt-auto">
+      <div className="container py-14">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
           <div className="md:col-span-4">
-            <Logo variant="light" className="mb-4" />
+            <img src={logoLpks} alt="LPKS Borneo Flasher" className="h-10 w-auto" />
             <p className="mt-4 text-[14px] leading-relaxed text-footer-muted">
-              Borneo Flasher Indonesia menghadirkan marketplace terpercaya untuk
-              kebutuhan sparepart smartphone, alat servis, dan perlengkapan teknisi
-              dengan produk berkualitas serta harga terbaik
+              Awali kesuksesan belajarmu bersama LPKS Borneo Flasher Indonesia —
+              dari nol sampai mahir, dibimbing sampai siap kerja.
             </p>
             <div className="flex gap-2 mt-5">
               {SOCIAL_ICONS.map((s) => (
@@ -72,14 +70,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-3 mt-10 pt-6 text-[13px] border-t border-footer-line text-footer-muted text-center md:text-left transition-colors duration-200">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-3 mt-10 pt-6 text-[13px] border-t border-footer-line text-footer-muted">
           <p>Copyright © 2026 LPKS Borneo Flasher Indonesia. All rights reserved.</p>
         </div>
       </div>
 
       <a
         href={waLink()}
-        className="fixed w-12 h-12 md:w-14 md:h-14 bottom-4 right-4 md:bottom-[26px] md:right-[26px] bg-[#25d366] text-white rounded-full flex items-center justify-center text-xl md:text-2xl shadow-lg z-[100] transition-transform hover:scale-110"
+        className="fixed w-14 h-14 bottom-[26px] right-[26px] bg-[#25d366] text-white rounded-full flex items-center justify-center text-2xl shadow-lg z-[100]"
         target="_blank"
         rel="noreferrer"
         title="Hubungi Admin"

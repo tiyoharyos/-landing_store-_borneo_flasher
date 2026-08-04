@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardSubtitle, CardBody } from "@/component
 import { Input } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { Form } from "@/components/ui/FormLayout";
-import { alertError, toastSuccess } from "@/components/ui/alert";
+import { alertError, alertSuccess } from "@/components/ui/swal";
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -28,7 +28,7 @@ export default function RegisterPage() {
       alertError({ title: "Gagal Daftar", text: res.message ?? "Registrasi gagal." });
       return;
     }
-    toastSuccess("Akun berhasil dibuat!");
+    await alertSuccess({ title: "Akun Berhasil Dibuat", text: "Selamat datang di Borneo Flasher Store!" });
     navigate(next);
   };
 

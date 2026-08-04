@@ -4,7 +4,7 @@ import { CATEGORIES } from "@/data/products";
 
 export default function CategorySidebar() {
   return (
-    <aside className="hidden md:block self-start sticky top-[90px] bg-surface border border-line rounded-2xl p-4 transition-colors duration-200">
+    <aside className="hidden md:block self-start sticky top-[90px] bg-surface border border-line rounded-2xl p-4">
       <p className="font-display font-bold text-sm text-muted uppercase tracking-wide mb-2.5">
         Kategori
       </p>

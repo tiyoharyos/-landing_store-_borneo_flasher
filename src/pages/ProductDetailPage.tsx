@@ -7,7 +7,7 @@ import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
-import { toastSuccess } from "@/components/ui/alert";
+import { useToast } from "@/components/ui/Toast";
 import {
   getProductBySlug,
   relatedProducts,
@@ -22,6 +22,7 @@ export default function ProductDetailPage() {
   const { addItem } = useCart();
   const { user } = useAuth();
   const { isWishlisted, toggle } = useWishlist();
+  const toast = useToast();
   const [qty, setQty] = useState(1);
 
   const product = slug ? getProductBySlug(slug) : undefined;
@@ -53,7 +54,7 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     addItem(product.id, qty);
-    if (user) toastSuccess("Ditambahkan ke keranjang");
+    if (user) toast.success("Ditambahkan ke keranjang");
   };
 
   const handleBuyNow = () => {
@@ -74,10 +75,10 @@ export default function ProductDetailPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] gap-7 pb-4">
-          <div className="relative rounded-[18px] overflow-hidden bg-cream-deep aspect-square self-start transition-colors duration-200">
+          <div className="relative rounded-[18px] overflow-hidden bg-cream-deep aspect-square self-start">
             <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
             {pct > 0 && (
-              <span className="absolute top-3 left-3 bg-brand text-white text-[13px] font-extrabold px-2.5 py-1 rounded-md transition-colors duration-200">
+              <span className="absolute top-3 left-3 bg-brand text-white text-[13px] font-extrabold px-2.5 py-1 rounded-md">
                 -{pct}%
               </span>
             )}
@@ -106,7 +107,7 @@ export default function ProductDetailPage() {
               <span
                 className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold whitespace-nowrap ${
                   product.condition === "Baru" ? "bg-ok/10 text-ok" : "bg-amber/15 text-amber-dark"
-                } transition-colors duration-200`}
+                }`}
               >
                 {product.condition}
               </span>
@@ -132,9 +133,9 @@ export default function ProductDetailPage() {
 
             <div className="flex items-center gap-3.5 mt-4">
               <span className="text-[13.5px] text-muted w-[70px]">Jumlah</span>
-              <div className="flex items-center border border-line rounded-[10px] overflow-hidden transition-colors duration-200">
+              <div className="flex items-center border border-line rounded-[10px] overflow-hidden">
                 <button
-                  className="w-[34px] h-[34px] bg-cream-deep border-none flex items-center justify-center cursor-pointer text-ink transition-colors duration-200"
+                  className="w-[34px] h-[34px] bg-cream-deep border-none flex items-center justify-center cursor-pointer text-ink"
                   onClick={() => setQty((q) => clampQty(q - 1))}
                 >
                   <Icon icon="mdi:minus" width={16} />
@@ -143,10 +144,10 @@ export default function ProductDetailPage() {
                   type="number"
                   value={qty}
                   onChange={(e) => setQty(clampQty(Number(e.target.value) || 1))}
-                  className="w-[46px] text-center border-none outline-none font-bold text-[13.5px] bg-surface text-ink transition-colors duration-200"
+                  className="w-[46px] text-center border-none outline-none font-bold text-[13.5px] bg-surface text-ink"
                 />
                 <button
-                  className="w-[34px] h-[34px] bg-cream-deep border-none flex items-center justify-center cursor-pointer text-ink transition-colors duration-200"
+                  className="w-[34px] h-[34px] bg-cream-deep border-none flex items-center justify-center cursor-pointer text-ink"
                   onClick={() => setQty((q) => clampQty(q + 1))}
                 >
                   <Icon icon="mdi:plus" width={16} />

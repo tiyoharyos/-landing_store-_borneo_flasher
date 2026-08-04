@@ -65,7 +65,7 @@ export function CardBody({ className = "", children, ...rest }: HTMLAttributes<H
 export function CardFooter({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={`mt-[1.1rem] pt-4 border-t border-line flex items-center justify-end gap-2.5 ${className} transition-colors duration-200`}
+      className={`mt-[1.1rem] pt-4 border-t border-line flex items-center justify-end gap-2.5 ${className}`}
       {...rest}
     >
       {children}

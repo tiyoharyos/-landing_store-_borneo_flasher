@@ -11,7 +11,7 @@ import { useWishlist } from "@/context/WishlistContext";
 import { useAddresses } from "@/context/AddressContext";
 import { getOrders, ORDER_STATUS_STYLES, type Order } from "@/data/orders";
 import { formatRupiah } from "@/data/products";
-import { confirmDialog } from "@/components/ui/alert";
+import { confirmDialog } from "@/components/ui/swal";
 import type { Address } from "@/data/addresses";
 
 type ProfileTab = "pesanan" | "wishlist" | "biodata" | "alamat";
@@ -70,6 +70,17 @@ export default function ProfilePage() {
     if (confirmed) removeAddress(address.id);
   };
 
+  const handleLogout = async () => {
+    const confirmed = await confirmDialog({
+      title: "Keluar dari akun?",
+      text: "Kamu perlu masuk lagi untuk mengakses akun dan pesananmu.",
+      confirmText: "Ya, keluar",
+      cancelText: "Batal",
+      icon: "question",
+    });
+    if (confirmed) logout();
+  };
+
   const navItemClass = (active: boolean, extra = "") =>
     `flex items-center gap-2.5 w-full text-left px-3 py-2.5 rounded-[10px] border-none bg-transparent text-[13.5px] font-semibold cursor-pointer ${
       active ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
@@ -84,11 +95,19 @@ export default function ProfilePage() {
     <div>
       <Navbar />
       <div className="container grid grid-cols-1 md:grid-cols-[260px_1fr] gap-4.5 gap-x-4 pt-6 pb-12 items-start">
-        <aside className="bg-surface border border-line rounded-2xl overflow-hidden transition-colors duration-200">
-          <div className="flex flex-col items-center text-center px-4 py-6 border-b border-line transition-colors duration-200">
-            <div className="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-display font-extrabold text-2xl mb-2.5 transition-colors duration-200">
-              {initial}
-            </div>
+        <aside className="bg-surface border border-line rounded-2xl overflow-hidden">
+          <div className="flex flex-col items-center text-center px-4 py-6 border-b border-line">
+            {user.avatar ? (
+              <img
+                src={user.avatar}
+                alt="Foto profil"
+                className="w-16 h-16 rounded-full object-cover border border-line mb-2.5"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-display font-extrabold text-2xl mb-2.5">
+                {initial}
+              </div>
+            )}
             <p className="font-bold text-[14.5px] text-ink">{user.name}</p>
             <p className="text-xs text-muted mt-0.5 break-all">{user.email}</p>
           </div>
@@ -98,7 +117,7 @@ export default function ProfilePage() {
               <Icon icon="mdi:receipt-text-outline" width={18} />
               Pesanan Saya
               {orders.length > 0 && (
-                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px] transition-colors duration-200">{orders.length}</span>
+                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px]">{orders.length}</span>
               )}
             </button>
 
@@ -106,7 +125,7 @@ export default function ProfilePage() {
               <Icon icon="mdi:heart-outline" width={18} />
               Wishlist Saya
               {wishlistCount > 0 && (
-                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px] transition-colors duration-200">{wishlistCount}</span>
+                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px]">{wishlistCount}</span>
               )}
             </button>
 
@@ -117,19 +136,19 @@ export default function ProfilePage() {
             <button type="button" className={navItemClass(tab === "alamat", "pl-5 font-medium")} onClick={() => changeTab("alamat")}>
               Alamat Tersimpan
               {addresses.length > 0 && (
-                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px] transition-colors duration-200">{addresses.length}</span>
+                <span className="ml-auto bg-brand text-white text-[10.5px] font-bold rounded-full px-[7px]">{addresses.length}</span>
               )}
             </button>
 
-            <button type="button" className={`${navItemClass(false)} text-warn mt-1.5`} onClick={logout}>
+            <button type="button" className={`${navItemClass(false)} text-warn mt-1.5`} onClick={handleLogout}>
               <Icon icon="mdi:logout" width={18} />
               Keluar
             </button>
           </nav>
         </aside>
 
-        <section className="bg-surface border border-line rounded-2xl overflow-hidden transition-colors duration-200">
-          <div className="flex gap-1 border-b border-line px-4 overflow-x-auto transition-colors duration-200">
+        <section className="bg-surface border border-line rounded-2xl overflow-hidden">
+          <div className="flex gap-1 border-b border-line px-4 overflow-x-auto">
             <button type="button" className={tabBtnClass(tab === "pesanan")} onClick={() => changeTab("pesanan")}>
               Pesanan Saya{orders.length > 0 ? ` (${orders.length})` : ""}
             </button>
@@ -158,8 +177,8 @@ export default function ProfilePage() {
               ) : (
                 <div className="flex flex-col gap-4">
                   {orders.map((o) => (
-                    <div key={o.id} className="bg-surface border border-line rounded-2xl px-5 py-4.5 transition-colors duration-200">
-                      <div className="flex justify-between items-center pb-2.5 border-b border-line mb-2.5 transition-colors duration-200">
+                    <div key={o.id} className="bg-surface border border-line rounded-2xl px-5 py-4.5">
+                      <div className="flex justify-between items-center pb-2.5 border-b border-line mb-2.5">
                         <div>
                           <p className="font-mono font-bold text-brand-dark">{o.id}</p>
                           <p className="text-xs text-muted mt-0.5">
@@ -179,7 +198,7 @@ export default function ProfilePage() {
                       <div className="flex flex-col gap-2">
                         {o.items.map((i) => (
                           <div key={i.productId} className="flex items-center gap-2.5 text-[13px]">
-                            <img src={i.image} alt={i.name} className="w-9 h-9 rounded-lg object-cover bg-cream-deep transition-colors duration-200" />
+                            <img src={i.image} alt={i.name} className="w-9 h-9 rounded-lg object-cover bg-cream-deep" />
                             <span className="flex-1">
                               {i.name} x{i.qty}
                             </span>
@@ -187,7 +206,7 @@ export default function ProfilePage() {
                           </div>
                         ))}
                       </div>
-                      <div className="flex justify-between mt-2.5 pt-2.5 border-t border-line text-[13.5px] font-bold transition-colors duration-200">
+                      <div className="flex justify-between mt-2.5 pt-2.5 border-t border-line text-[13.5px] font-bold">
                         <span>Total Bayar</span>
                         <span className="font-mono text-brand-dark">{formatRupiah(o.total)}</span>
                       </div>
@@ -200,24 +219,45 @@ export default function ProfilePage() {
 
           {tab === "biodata" && (
             <div className="p-5">
-              <p className="font-display font-extrabold text-base text-ink mb-4">Ubah Biodata Diri</p>
-
-              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap transition-colors duration-200">
-                <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nama</span>
-                <span className="text-[13.5px] text-ink font-semibold">{user.name}</span>
+              <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <p className="font-display font-extrabold text-base text-ink">Biodata Diri</p>
                 <button
                   type="button"
-                  className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline transition-colors duration-200"
+                  className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-brand text-white border-none text-[12.5px] font-bold cursor-pointer hover:bg-brand-dark transition-colors"
                   onClick={() => openBiodataModal("name")}
                 >
-                  Ubah
+                  <Icon icon="mdi:pencil-outline" width={16} />
+                  Edit Biodata
                 </button>
               </div>
 
-              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap transition-colors duration-200">
+              <div className="flex items-center gap-3.5 pb-4 mb-1.5 border-b border-line">
+                {user.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt="Foto profil"
+                    className="w-16 h-16 rounded-full object-cover border border-line"
+                  />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-display font-extrabold text-2xl">
+                    {initial}
+                  </div>
+                )}
+                <div>
+                  <p className="text-[13.5px] font-bold text-ink">{user.name}</p>
+                  <p className="text-xs text-muted mt-0.5">Foto profil & data diri kamu</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
+                <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nama</span>
+                <span className="text-[13.5px] text-ink font-semibold">{user.name}</span>
+              </div>
+
+              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
                 <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Email</span>
                 <span className="text-[13.5px] text-ink font-semibold">{user.email}</span>
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold bg-ok/10 text-ok transition-colors duration-200">Terverifikasi</span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold bg-ok/10 text-ok">Terverifikasi</span>
               </div>
 
               <div className="flex items-center gap-3 py-3.5 flex-wrap">
@@ -225,13 +265,6 @@ export default function ProfilePage() {
                 <span className={`text-[13.5px] font-medium ${user.phone ? "text-ink font-semibold" : "text-muted"}`}>
                   {user.phone || "Belum ditambahkan"}
                 </span>
-                <button
-                  type="button"
-                  className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline transition-colors duration-200"
-                  onClick={() => openBiodataModal("phone")}
-                >
-                  {user.phone ? "Ubah" : "Tambah"}
-                </button>
               </div>
             </div>
           )}

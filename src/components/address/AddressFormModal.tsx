@@ -144,7 +144,7 @@ export default function AddressFormModal({ open, onClose, editing, onSaved }: Pr
         Jadikan alamat utama
       </label>
 
-      <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-line transition-colors duration-200">
+      <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-line">
         <Button variant="subtle" onClick={onClose} type="button">
           Batal
         </Button>
