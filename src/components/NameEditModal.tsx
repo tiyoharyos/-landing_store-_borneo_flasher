@@ -8,22 +8,18 @@ import { useToast } from "@/components/ui/Toast";
 interface Props {
   open: boolean;
   onClose: () => void;
-  /** Field yang difokuskan saat modal dibuka */
-  initialField?: "name" | "phone";
 }
 
-export default function BiodataEditModal({ open, onClose, initialField = "name" }: Props) {
+export default function NameEditModal({ open, onClose }: Props) {
   const { user, updateProfile } = useAuth();
   const toast = useToast();
   const [name, setName] = useState(user?.name ?? "");
-  const [phone, setPhone] = useState(user?.phone ?? "");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (open) {
       setName(user?.name ?? "");
-      setPhone(user?.phone ?? "");
       setError("");
     }
   }, [open, user]);
@@ -34,31 +30,22 @@ export default function BiodataEditModal({ open, onClose, initialField = "name" 
       return;
     }
     setSubmitting(true);
-    updateProfile({ name: name.trim(), phone: phone.trim() });
+    updateProfile({ name: name.trim(), phone: user?.phone });
     setSubmitting(false);
-    toast.success("Biodata diperbarui");
+    toast.success("Nama berhasil diperbarui");
     onClose();
   };
 
   return (
-    <Modal open={open} onClose={onClose} title="Ubah Biodata Diri" maxWidth={420}>
-      <div className="flex flex-col gap-3.5">
-        <Input
-          label="Nama"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nama lengkap"
-          error={error}
-          autoFocus={initialField === "name"}
-        />
-        <Input
-          label="Nomor HP"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="08xxxxxxxxxx"
-          autoFocus={initialField === "phone"}
-        />
-      </div>
+    <Modal open={open} onClose={onClose} title="Ubah Nama" maxWidth={420}>
+      <Input
+        label="Nama"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Nama lengkap"
+        error={error}
+        autoFocus
+      />
 
       <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-line">
         <Button variant="subtle" onClick={onClose} type="button">

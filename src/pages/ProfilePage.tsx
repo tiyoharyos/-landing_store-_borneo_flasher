@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
-import BiodataEditModal from "@/components/BiodataEditModal";
+import NameEditModal from "@/components/NameEditModal";
+import PhoneEditModal from "@/components/PhoneEditModal";
 import AddressCard from "@/components/address/AddressCard";
 import AddressFormModal from "@/components/address/AddressFormModal";
 import { useAuth } from "@/context/AuthContext";
@@ -12,19 +13,24 @@ import { useAddresses } from "@/context/AddressContext";
 import { getOrders, ORDER_STATUS_STYLES, type Order } from "@/data/orders";
 import { formatRupiah } from "@/data/products";
 import { confirmDialog } from "@/components/ui/swal";
+import { useToast } from "@/components/ui/Toast";
+import { fileToDataUrl, validateAvatarFile } from "@/lib/file";
 import type { Address } from "@/data/addresses";
 
 type ProfileTab = "pesanan" | "wishlist" | "biodata" | "alamat";
 
 export default function ProfilePage() {
-  const { user, logout } = useAuth();
+  const { user, logout, updateProfile } = useAuth();
   const { items: wishlistItems, totalItems: wishlistCount } = useWishlist();
   const { addresses, removeAddress, makePrimary } = useAddresses();
   const [searchParams, setSearchParams] = useSearchParams();
   const [orders, setOrders] = useState<Order[]>([]);
+  const toast = useToast();
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
-  const [biodataModalOpen, setBiodataModalOpen] = useState(false);
-  const [biodataField, setBiodataField] = useState<"name" | "phone">("name");
+  const [nameModalOpen, setNameModalOpen] = useState(false);
+  const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [addressFormOpen, setAddressFormOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<Address | null>(null);
 
@@ -46,16 +52,38 @@ export default function ProfilePage() {
 
   const initial = user.name.trim().charAt(0).toUpperCase() || "U";
 
-  const openBiodataModal = (field: "name" | "phone") => {
-    setBiodataField(field);
-    setBiodataModalOpen(true);
+  const openNameModal = () => setNameModalOpen(true);
+  const openPhoneModal = () => setPhoneModalOpen(true);
+
+  const handlePickAvatar = () => avatarInputRef.current?.click();
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    const validation = validateAvatarFile(file);
+    if (!validation.ok) {
+      toast.error("File tidak valid", validation.message);
+      return;
+    }
+
+    setUploadingAvatar(true);
+    try {
+      const dataUrl = await fileToDataUrl(file);
+      updateProfile({ name: user.name, phone: user.phone, avatar: dataUrl });
+      toast.success("Foto profil diperbarui");
+    } catch {
+      toast.error("Gagal memuat foto", "Coba pilih file lain.");
+    } finally {
+      setUploadingAvatar(false);
+    }
   };
 
   const openAddAddress = () => {
     setEditingAddress(null);
     setAddressFormOpen(true);
   };
-
   const openEditAddress = (address: Address) => {
     setEditingAddress(address);
     setAddressFormOpen(true);
@@ -218,53 +246,79 @@ export default function ProfilePage() {
           )}
 
           {tab === "biodata" && (
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-                <p className="font-display font-extrabold text-base text-ink">Biodata Diri</p>
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-brand text-white border-none text-[12.5px] font-bold cursor-pointer hover:bg-brand-dark transition-colors"
-                  onClick={() => openBiodataModal("name")}
-                >
-                  <Icon icon="mdi:pencil-outline" width={16} />
-                  Edit Biodata
-                </button>
-              </div>
-
-              <div className="flex items-center gap-3.5 pb-4 mb-1.5 border-b border-line">
-                {user.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt="Foto profil"
-                    className="w-16 h-16 rounded-full object-cover border border-line"
-                  />
-                ) : (
-                  <div className="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-display font-extrabold text-2xl">
-                    {initial}
+            <div className="p-5 grid grid-cols-1 sm:grid-cols-[230px_1fr] gap-6 sm:gap-8">
+              {/* Kartu foto profil */}
+              <div>
+                <div className="w-full sm:w-[230px] border border-line rounded-2xl overflow-hidden flex flex-col">
+                  <div className="aspect-square w-full bg-cream-deep overflow-hidden">
+                    {user.avatar ? (
+                      <img src={user.avatar} alt="Foto profil" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-brand-tint text-brand font-display font-extrabold text-6xl">
+                        {initial}
+                      </div>
+                    )}
                   </div>
-                )}
-                <div>
-                  <p className="text-[13.5px] font-bold text-ink">{user.name}</p>
-                  <p className="text-xs text-muted mt-0.5">Foto profil & data diri kamu</p>
+                  <button
+                    type="button"
+                    onClick={handlePickAvatar}
+                    disabled={uploadingAvatar}
+                    className="border-t border-line py-3 text-[13px] font-bold text-ink bg-surface cursor-pointer hover:bg-cream-deep transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {uploadingAvatar ? "Mengunggah..." : "Pilih Foto"}
+                  </button>
                 </div>
+                <input
+                  ref={avatarInputRef}
+                  type="file"
+                  accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+                  className="hidden"
+                  onChange={handleAvatarChange}
+                />
+                <p className="text-xs text-muted mt-2.5 leading-relaxed">
+                  Besar file: maksimum 10.000.000 bytes (10 Megabytes).
+                  <br />
+                  Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG
+                </p>
               </div>
 
-              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
-                <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nama</span>
-                <span className="text-[13.5px] text-ink font-semibold">{user.name}</span>
-              </div>
+              {/* Biodata & kontak */}
+              <div>
+                <p className="font-display font-extrabold text-base text-ink mb-1">Ubah Biodata Diri</p>
 
-              <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
-                <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Email</span>
-                <span className="text-[13.5px] text-ink font-semibold">{user.email}</span>
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold bg-ok/10 text-ok">Terverifikasi</span>
-              </div>
+                <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
+                  <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nama</span>
+                  <span className="text-[13.5px] text-ink font-semibold">{user.name}</span>
+                  <button
+                    type="button"
+                    className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline"
+                    onClick={openNameModal}
+                  >
+                    Ubah
+                  </button>
+                </div>
 
-              <div className="flex items-center gap-3 py-3.5 flex-wrap">
-                <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nomor HP</span>
-                <span className={`text-[13.5px] font-medium ${user.phone ? "text-ink font-semibold" : "text-muted"}`}>
-                  {user.phone || "Belum ditambahkan"}
-                </span>
+                <p className="font-display font-extrabold text-base text-ink mt-5 mb-1">Ubah Kontak</p>
+
+                <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
+                  <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Email</span>
+                  <span className="text-[13.5px] text-ink font-semibold">{user.email}</span>
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold bg-ok/10 text-ok">Terverifikasi</span>
+                </div>
+
+                <div className="flex items-center gap-3 py-3.5 flex-wrap">
+                  <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nomor HP</span>
+                  <span className={`text-[13.5px] font-medium ${user.phone ? "text-ink font-semibold" : "text-muted"}`}>
+                    {user.phone || "Belum ditambahkan"}
+                  </span>
+                  <button
+                    type="button"
+                    className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline"
+                    onClick={openPhoneModal}
+                  >
+                    {user.phone ? "Ubah" : "Tambah"}
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -330,11 +384,8 @@ export default function ProfilePage() {
         </section>
       </div>
 
-      <BiodataEditModal
-        open={biodataModalOpen}
-        onClose={() => setBiodataModalOpen(false)}
-        initialField={biodataField}
-      />
+      <NameEditModal open={nameModalOpen} onClose={() => setNameModalOpen(false)} />
+      <PhoneEditModal open={phoneModalOpen} onClose={() => setPhoneModalOpen(false)} />
       <AddressFormModal
         open={addressFormOpen}
         onClose={() => setAddressFormOpen(false)}
