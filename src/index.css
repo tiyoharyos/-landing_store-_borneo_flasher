@@ -6,19 +6,22 @@
 
 
 :root {
-  /* ---- Palet: merah teknisi + amber sinyal (LIGHT) ---- */
-  --ink: #1c1613;
-  --ink-soft: #3a322d;
-  --cream: #faf6f1;
-  --cream-deep: #f2e9df;
+  /* ---- Palet: merah profesional + biru aksen (LIGHT) ---- */
+  --ink: #0f172a;
+  --ink-soft: #334155;
+  --cream: #f8fafc;
+  --cream-deep: #e2e8f0;
   --surface: #ffffff;
-  --brand: #c0272d;
-  --brand-dark: #8c1c21;
-  --brand-tint: #fdeeed;
+  --brand: #dc2626;
+  --brand-dark: #b91c1c;
+  --brand-tint: #fee2e2;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --accent-tint: #dbeafe;
   --amber: #f2a93b;
   --amber-dark: #c9821f;
-  --line: #e7ddd1;
-  --muted: #8a8078;
+  --line: #e2e8f0;
+  --muted: #64748b;
   --ok: #2f9e5b;
   --warn: #d94e3f;
 
@@ -26,25 +29,28 @@
   --font-poppins: 'Poppins', sans-serif;
 
   /* Footer & tombol WA selalu gelap, tidak ikut berganti tema */
-  --footer-bg: #1c1613;
-  --footer-text: #e7ddd1;
-  --footer-muted: #8a8078;
-  --footer-line: rgba(231, 221, 209, 0.15);
+  --footer-bg: #000e14;
+  --footer-text: #e2e8f0;
+  --footer-muted: #94a3b8;
+  --footer-line: rgba(226, 232, 240, 0.15);
 }
 
 [data-theme="dark"] {
-  --ink: #f3ede6;
-  --ink-soft: #cabfb5;
-  --cream: #16120f;
-  --cream-deep: #221c18;
-  --surface: #1e1815;
-  --brand: #e2534f;
-  --brand-dark: #f2837c;
-  --brand-tint: #3a201f;
+  --ink: #f8fafc;
+  --ink-soft: #cbd5e1;
+  --cream: #000e14;
+  --cream-deep: #1e293b;
+  --surface: #1e293b;
+  --brand: #ef4444;
+  --brand-dark: #dc2626;
+  --brand-tint: #450a0a;
+  --accent: #3b82f6;
+  --accent-dark: #2563eb;
+  --accent-tint: #1e3a5f;
   --amber: #f5be7c;
   --amber-dark: #e0a355;
-  --line: #362d27;
-  --muted: #9d9188;
+  --line: #334155;
+  --muted: #94a3b8;
   --ok: #4ade80;
   --warn: #f3766a;
 }
@@ -58,6 +64,9 @@
   --color-brand: var(--brand);
   --color-brand-dark: var(--brand-dark);
   --color-brand-tint: var(--brand-tint);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-tint: var(--accent-tint);
   --color-amber: var(--amber);
   --color-amber-dark: var(--amber-dark);
   --color-line: var(--line);
@@ -69,8 +78,8 @@
   --color-footer-muted: var(--footer-muted);
   --color-footer-line: var(--footer-line);
 
-  --font-display: "Sora", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --font-display: var(--font-poppins);
+  --font-body: var(--font-jakarta);
   --font-mono: "JetBrains Mono", monospace;
 }
 

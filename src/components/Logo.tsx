@@ -14,14 +14,14 @@ export default function Logo({ variant = "auto", className = "" }: LogoProps) {
       <div className="leading-tight">
         <p
           className={`font-display font-extrabold tracking-tight text-[15px] ${
-            isLight ? "text-[#faf6f1]" : "text-ink"
+            isLight ? "text-[var(--footer-text)]" : "text-ink"
           }`}
         >
           BORNEO FLASHER
         </p>
         <p
           className={`font-mono text-[9px] tracking-[0.18em] uppercase ${
-            isLight ? "text-[#e7ddd1]" : "text-muted"
+            isLight ? "text-[var(--footer-muted)]" : "text-muted"
           }`}
         >
           Web Store

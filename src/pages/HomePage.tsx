@@ -142,7 +142,8 @@ export default function HomePage() {
           <div className="flex justify-center mt-2">
             <Link
               to="/kategori"
-              className="inline-flex items-center gap-2 bg-brand text-white font-bold text-sm px-8 py-3 rounded-full hover:bg-brand-dark transition-colors"
+              className="inline-flex items-center gap-2 bg-brand !text-white font-bold text-sm px-8 py-3 rounded-full hover:bg-brand-dark transition-colors"
+              style={{ color: "#ffffff" }}
             >
               Lihat Semua Produk
             </Link>
