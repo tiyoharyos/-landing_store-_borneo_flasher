@@ -18,3 +18,6 @@ export type { AlertType } from "./ToastAlert";
 
 export { ToastProvider, useToast } from "./Toast";
 export type { ToastApi, ToastPosition } from "./Toast";
+
+export { default as CustomCursor } from "./CustomCursor";
+export { default as CursorStyleUpdater } from "./CursorStyleUpdater";

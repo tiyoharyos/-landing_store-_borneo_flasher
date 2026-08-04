@@ -6,6 +6,8 @@ import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { AddressProvider } from "@/context/AddressContext";
 import { ToastProvider } from "@/components/ui/Toast";
+import CustomCursor from "@/components/ui/CustomCursor";
+import CursorStyleUpdater from "@/components/ui/CursorStyleUpdater";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <CartProvider>
             <WishlistProvider>
               <div id="app">
+                <CustomCursor />
+                <CursorStyleUpdater />
                 <ScrollToTop />
                 <AppRouter />
                 <Footer />
