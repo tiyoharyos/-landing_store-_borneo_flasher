@@ -148,60 +148,7 @@ export default function HomePage() {
             </Link>
           </div>
         </section>
-
-        {/* Promo Section */}
-        <section className="py-7 border-b border-line last-of-type:border-b-0">
-          <p className="font-display font-extrabold text-[1.1rem] text-ink mb-4">Baru untuk Anda</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {PROMO_CARDS.map((promo) => (
-              <div key={promo.title} className={`rounded-[18px] p-6 border border-line ${promo.tone}`}>
-                <h3 className="font-display font-extrabold text-[1.05rem] text-ink mb-2">{promo.title}</h3>
-                <p className="text-[13px] text-ink-soft mb-[1.1rem] leading-relaxed">{promo.desc}</p>
-                <Link
-                  to={promo.to}
-                  className="inline-block border border-brand text-brand text-[13px] font-semibold rounded-full px-4 py-1.5 whitespace-nowrap hover:bg-white transition-colors"
-                >
-                  BELI SEKARANG
-                </Link>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Trusted Brands */}
-        <section className="py-7 border-b border-line last-of-type:border-b-0">
-          <p className="font-display font-extrabold text-[1.1rem] text-ink text-center mb-6">
-            Sparepart &amp; Tools Kompatibel Dengan Brand Terpercaya
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 gap-x-8 items-center justify-items-center">
-            {TRUSTED_BRANDS.map((brand) => (
-              <span key={brand} className="font-display font-extrabold text-[1.15rem] text-muted tracking-wide">
-                {brand}
-              </span>
-            ))}
-          </div>
-        </section>
       </div>
-
-      {/* Newsletter */}
-      <section className="bg-gradient-to-br from-brand to-brand-dark text-white py-14 mt-4">
-        <div className="container text-center">
-          <h2 className="font-display font-extrabold text-[1.6rem]">Dapatkan Penawaran Eksklusif!</h2>
-          <p className="mt-2 text-[14.5px] opacity-90">
-            Langganan info promo &amp; produk baru Borneo Flasher Store
-          </p>
-          <div className="mx-auto mt-6 flex gap-2 max-w-[440px]">
-            <input
-              type="email"
-              placeholder="Email Anda"
-              className="flex-1 border-none outline-none rounded-full px-[18px] h-[46px] text-sm text-ink"
-            />
-            <button className="rounded-full px-7 font-bold text-sm bg-white text-brand h-[46px] hover:bg-cream transition-colors">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
