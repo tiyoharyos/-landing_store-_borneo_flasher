@@ -7,7 +7,7 @@
 
 :root {
   /* ---- Palet: merah profesional + biru aksen (LIGHT) ---- */
-  --ink: #0f172a;
+  --ink: #03071e;
   --ink-soft: #334155;
   --cream: #f8fafc;
   --cream-deep: #e2e8f0;
@@ -29,7 +29,7 @@
   --font-poppins: 'Poppins', sans-serif;
 
   /* Footer & tombol WA selalu gelap, tidak ikut berganti tema */
-  --footer-bg: #0f172a;
+  --footer-bg: #000814;
   --footer-text: #e2e8f0;
   --footer-muted: #94a3b8;
   --footer-line: rgba(226, 232, 240, 0.15);
@@ -38,7 +38,7 @@
 [data-theme="dark"] {
   --ink: #f8fafc;
   --ink-soft: #cbd5e1;
-  --cream: #0f172a;
+  --cream: #000814;
   --cream-deep: #1e293b;
   --surface: #1e293b;
   --brand: #ef4444;

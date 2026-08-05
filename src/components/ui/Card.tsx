@@ -2,9 +2,7 @@ import type { HTMLAttributes, ReactNode } from "react";
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
-  /** Efek elevasi lebih terasa + sedikit naik saat hover */
   interactive?: boolean;
-  /** Tanpa padding bawaan, dipakai kalau isinya sudah punya section sendiri */
   noPadding?: boolean;
 }
 

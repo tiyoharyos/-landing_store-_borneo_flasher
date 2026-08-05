@@ -3,8 +3,6 @@ import type { FormHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   children?: ReactNode;
 }
-
-/** Wrapper <form> yang otomatis mencegah default submit (dipakai bersama onSubmit). */
 export function Form({ className = "", children, onSubmit, ...rest }: FormProps) {
   return (
     <form
@@ -21,7 +19,6 @@ export function Form({ className = "", children, onSubmit, ...rest }: FormProps)
 }
 
 interface FormRowProps extends HTMLAttributes<HTMLDivElement> {
-  /** Jumlah kolom pada layar besar. Otomatis menjadi 1 kolom di layar kecil. */
   columns?: 1 | 2 | 3;
   children?: ReactNode;
 }
@@ -32,7 +29,6 @@ const COLUMN_CLASSES: Record<1 | 2 | 3, string> = {
   3: "grid-cols-1 sm:grid-cols-3",
 };
 
-/** Grid responsif untuk menata beberapa field field berdampingan. */
 export function FormRow({ columns = 2, className = "", children, ...rest }: FormRowProps) {
   return (
     <div className={`grid gap-3.5 ${COLUMN_CLASSES[columns]} ${className}`} {...rest}>
@@ -48,7 +44,6 @@ interface FormSectionProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
-/** Grup field dengan judul kecil di atasnya — cocok untuk form panjang bertahap. */
 export function FormSection({ title, description, className = "", children, ...rest }: FormSectionProps) {
   return (
     <div className={`flex flex-col gap-1 ${className}`} {...rest}>
@@ -59,7 +54,6 @@ export function FormSection({ title, description, className = "", children, ...r
   );
 }
 
-/** Elemen full-width di dalam FormRow (mis. textarea alamat). */
 export function FormSpan({ className = "", children, ...rest }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div className={`col-span-full ${className}`} {...rest}>

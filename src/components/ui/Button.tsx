@@ -10,9 +10,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   fullWidth?: boolean;
   loading?: boolean;
-  /** Iconify icon id, ditampilkan sebelum label */
   icon?: string;
-  /** Iconify icon id, ditampilkan setelah label */
   iconRight?: string;
   children?: ReactNode;
 }
