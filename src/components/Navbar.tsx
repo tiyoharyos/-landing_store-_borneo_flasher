@@ -49,8 +49,8 @@ export default function Navbar() {
       showCancelButton: true,
       confirmButtonText: "Ya, Keluar",
       cancelButtonText: "Batal",
-      confirmButtonColor: "#dc2626",
-      cancelButtonColor: "#9ca3af",
+      confirmButtonColor: "var(--brand)",
+      cancelButtonColor: "var(--muted)",
       reverseButtons: true,
     });
 
@@ -70,16 +70,11 @@ export default function Navbar() {
   return (
     <nav className="bg-cream/90 backdrop-blur-md border-b border-line sticky top-0 z-50 shadow-[var(--shadow-xs)] transition-colors duration-200">
       <div className="container py-3">
-        {/* Bungkus utama dibuat flex-wrap agar search bar bisa turun ke bawah di mode mobile */}
         <div className="flex flex-wrap items-center justify-between gap-y-3 md:gap-[18px]">
-          
-          {/* LOGO - Urutan 1 */}
           <Link to="/" className="flex-shrink-0 order-1" onClick={() => setOpen(false)}>
-            {/* Tampil di Desktop, Sembunyi di Mobile */}
             <div className="hidden md:block">
               <Logo />
             </div>
-            {/* Tampil di Mobile, Sembunyi di Desktop */}
             <img 
               src={logoLpks} 
               alt="Logo LPKS" 
@@ -87,7 +82,6 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* SEARCH BAR - Turun ke baris baru (full width) di mobile, flex-1 di desktop - Urutan 3 (Mobile) / 2 (Desktop) */}
           <div className="w-full order-3 md:order-2 md:flex-1 flex items-center gap-2 bg-surface border border-line rounded-full py-1.5 pr-1.5 pl-[18px] min-w-0 transition-all duration-200 focus-within:border-brand focus-within:ring-[3.5px] focus-within:ring-brand/15">
             <Icon icon="mdi:magnify" width={19} className="text-muted flex-shrink-0" />
             <input
@@ -106,9 +100,8 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* ICONS & MENU TOGGLE - Urutan 2 (Mobile) / 3 (Desktop) */}
           <div className="order-2 md:order-3 flex items-center gap-3 sm:gap-3.5 flex-shrink-0">
-            <ThemeToggle className="hidden sm:flex" />
+            <ThemeToggle className="hidden sm:flex cursor-pointer" />
 
             <Link
               to="/akun/profil?tab=wishlist"
@@ -140,7 +133,6 @@ export default function Navbar() {
               {cartOpen && (
                 <>
                   <div className="absolute top-full right-0 w-[300px] h-3.5" />
-                  {/* Responsif pada lebar dropdown keranjang agar tidak off-screen di mobile */}
                   <div className="absolute top-[calc(100%+14px)] right-[-50px] sm:-right-2.5 w-[85vw] sm:w-[340px] max-w-[340px] bg-surface border border-line rounded-2xl shadow-[var(--shadow-lg)] z-[80] overflow-hidden animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)] origin-top-right">
                     <div className="flex items-center justify-between px-[18px] py-3.5 border-b border-line transition-colors duration-200">
                       <span className="font-display font-extrabold text-[14.5px] text-ink">
@@ -159,7 +151,6 @@ export default function Navbar() {
 
                     {items.length === 0 ? (
                       <div className="flex flex-col items-center text-center px-6 pt-7 pb-8">
-                        {/* Placeholder keranjang kosong (SVG dihilangkan agar ringkas, gunakan SVG Anda yang sebelumnya) */}
                         <p className="font-display font-extrabold text-[14.5px] text-ink mt-4">
                           Wah, keranjang belanjamu kosong
                         </p>
