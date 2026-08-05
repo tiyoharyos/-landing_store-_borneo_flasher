@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+import Swal from "sweetalert2";
 import Modal from "@/components/ui/Modal";
 import AddressCard from "@/components/address/AddressCard";
 import AddressFormModal from "@/components/address/AddressFormModal";
 import { useAddresses } from "@/context/AddressContext";
-import { confirmDialog } from "@/components/ui/swal";
 import type { Address } from "@/data/addresses";
 
 interface Props {
@@ -29,12 +29,16 @@ export default function AddressListModal({ open, onClose, onPick }: Props) {
   };
 
   const handleDelete = async (address: Address) => {
-    const confirmed = await confirmDialog({
+    const res = await Swal.fire({
+      icon: "question",
       title: "Hapus alamat ini?",
       text: `Alamat "${address.label}" akan dihapus dari daftar.`,
-      danger: true,
+      showCancelButton: true,
+      confirmButtonText: "Ya, lanjutkan",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#dc2626",
     });
-    if (confirmed) removeAddress(address.id);
+    if (res.isConfirmed) removeAddress(address.id);
   };
 
   return (

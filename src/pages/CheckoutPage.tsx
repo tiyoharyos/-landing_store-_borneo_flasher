@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link, Navigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import Swal from "sweetalert2";
 import Navbar from "@/components/Navbar";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
@@ -9,7 +10,6 @@ import { formatRupiah } from "@/data/products";
 import Button from "@/components/ui/Button";
 import AddressListModal from "@/components/address/AddressListModal";
 import AddressFormModal from "@/components/address/AddressFormModal";
-import { alertWarning } from "@/components/ui/swal";
 import { useToast } from "@/components/ui/Toast";
 import type { Address } from "@/data/addresses";
 import {
@@ -67,9 +67,11 @@ export default function CheckoutPage() {
 
   const handleSubmit = () => {
     if (!selectedAddress) {
-      alertWarning({
+      Swal.fire({
+        icon: "warning",
         title: "Alamat Belum Dipilih",
         text: "Pilih atau tambahkan alamat pengiriman dulu sebelum membuat pesanan.",
+        confirmButtonText: "Oke",
       });
       return;
     }

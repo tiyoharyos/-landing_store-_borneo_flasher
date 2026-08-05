@@ -22,10 +22,10 @@ export default function BannerCarousel() {
           }`}
         >
           <img src={b.image} alt={b.title} className="w-full h-full object-cover" />
-          <div className="absolute left-0 bottom-0 w-full px-8 py-6 text-white bg-gradient-to-t from-black/60 to-transparent">
+          {/* <div className="absolute left-0 bottom-0 w-full px-8 py-6 text-white bg-gradient-to-t from-black/60 to-transparent">
             <p className="font-display font-extrabold text-[clamp(18px,3vw,30px)]">{b.title}</p>
             <p className="text-[clamp(12px,1.5vw,15px)] opacity-90 mt-1">{b.subtitle}</p>
-          </div>
+          </div> */}
         </div>
       ))}
       <button

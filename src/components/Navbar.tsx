@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import Swal from "sweetalert2";
 import logoLpks from "../assets/img/logo-lpks.png";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
@@ -36,6 +37,34 @@ export default function Navbar() {
 
   const scheduleCloseCartDropdown = () => {
     cartCloseTimer.current = setTimeout(() => setCartOpen(false), 150);
+  };
+
+  const handleLogout = async () => {
+    setMenuOpen(false);
+
+    const result = await Swal.fire({
+      title: "Keluar dari akun?",
+      text: "Kamu perlu masuk lagi untuk mengakses akunmu.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Keluar",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#9ca3af",
+      reverseButtons: true,
+    });
+
+    if (result.isConfirmed) {
+      logout();
+      navigate("/");
+      Swal.fire({
+        title: "Berhasil Keluar",
+        text: "Sampai jumpa lagi!",
+        icon: "success",
+        timer: 1800,
+        showConfirmButton: false,
+      });
+    }
   };
 
   return (
@@ -248,11 +277,7 @@ export default function Navbar() {
                       <Icon icon="mdi:receipt-text-outline" width={17} /> Pesanan Saya
                     </Link>
                     <button
-                      onClick={() => {
-                        logout();
-                        setMenuOpen(false);
-                        navigate("/");
-                      }}
+                      onClick={handleLogout}
                       className="flex items-center gap-2 w-full text-left px-3.5 py-2.5 text-[13.5px] bg-transparent border-none cursor-pointer text-ink hover:bg-cream-deep transition-colors duration-200"
                     >
                       <Icon icon="mdi:logout" width={17} /> Keluar

@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { useNavigate } from "react-router-dom";
 import { PRODUCTS, type Product } from "@/data/products";
 import { useAuth } from "@/context/AuthContext";
-import { alertNeedLogin } from "@/components/ui/swal";
+import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
 
 interface WishlistContextValue {
@@ -10,8 +10,6 @@ interface WishlistContextValue {
   items: Product[];
   totalItems: number;
   isWishlisted: (productId: string) => boolean;
-  /** Menambah/menghapus produk dari wishlist. Butuh login — kalau belum
-   *  masuk, user akan diarahkan ke halaman login lewat dialog konfirmasi. */
   toggle: (productId: string) => void;
   remove: (productId: string) => void;
   clear: () => void;
@@ -51,8 +49,15 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
   const toggle: WishlistContextValue["toggle"] = (productId) => {
     if (!user) {
-      alertNeedLogin().then((wantsLogin) => {
-        if (wantsLogin) navigate("/masuk?next=/akun/profil");
+      Swal.fire({
+        icon: "info",
+        title: "Masuk dulu, yuk",
+        text: "Kamu perlu masuk ke akun untuk menambahkan produk ke keranjang.",
+        showCancelButton: true,
+        confirmButtonText: "Masuk Sekarang",
+        cancelButtonText: "Nanti Saja",
+      }).then((res) => {
+        if (res.isConfirmed) navigate("/masuk?next=/akun/profil");
       });
       return;
     }

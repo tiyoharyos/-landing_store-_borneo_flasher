@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { useNavigate } from "react-router-dom";
 import { PRODUCTS, type Product } from "@/data/products";
 import { useAuth } from "@/context/AuthContext";
-import { alertNeedLogin } from "@/components/ui/swal";
+import Swal from "sweetalert2";
 
 export interface CartLine {
   productId: string;
@@ -59,8 +59,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem: CartContextValue["addItem"] = (productId, qty = 1) => {
     if (!user) {
-      alertNeedLogin().then((wantsLogin) => {
-        if (wantsLogin) navigate("/masuk?next=/keranjang");
+      Swal.fire({
+        icon: "info",
+        title: "Masuk dulu, yuk",
+        text: "Kamu perlu masuk ke akun untuk menambahkan produk ke keranjang.",
+        showCancelButton: true,
+        confirmButtonText: "Masuk Sekarang",
+        cancelButtonText: "Nanti Saja",
+      }).then((res) => {
+        if (res.isConfirmed) navigate("/masuk?next=/keranjang");
       });
       return;
     }

@@ -12,7 +12,7 @@ import { useWishlist } from "@/context/WishlistContext";
 import { useAddresses } from "@/context/AddressContext";
 import { getOrders, ORDER_STATUS_STYLES, type Order } from "@/data/orders";
 import { formatRupiah } from "@/data/products";
-import { confirmDialog } from "@/components/ui/swal";
+import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
 import { fileToDataUrl, validateAvatarFile } from "@/lib/file";
 import type { Address } from "@/data/addresses";
@@ -90,23 +90,28 @@ export default function ProfilePage() {
   };
 
   const handleDeleteAddress = async (address: Address) => {
-    const confirmed = await confirmDialog({
+    const res = await Swal.fire({
+      icon: "question",
       title: "Hapus alamat ini?",
       text: `Alamat "${address.label}" akan dihapus dari daftar.`,
-      danger: true,
+      showCancelButton: true,
+      confirmButtonText: "Ya, lanjutkan",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#dc2626",
     });
-    if (confirmed) removeAddress(address.id);
+    if (res.isConfirmed) removeAddress(address.id);
   };
 
   const handleLogout = async () => {
-    const confirmed = await confirmDialog({
+    const res = await Swal.fire({
+      icon: "question",
       title: "Keluar dari akun?",
       text: "Kamu perlu masuk lagi untuk mengakses akun dan pesananmu.",
-      confirmText: "Ya, keluar",
-      cancelText: "Batal",
-      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Ya, keluar",
+      cancelButtonText: "Batal",
     });
-    if (confirmed) logout();
+    if (res.isConfirmed) logout();
   };
 
   const navItemClass = (active: boolean, extra = "") =>

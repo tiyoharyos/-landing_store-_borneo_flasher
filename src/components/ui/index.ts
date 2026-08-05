@@ -11,8 +11,6 @@ export type { SelectProps, SelectOption } from "./Select";
 
 export { Form, FormRow, FormSection, FormSpan } from "./FormLayout";
 
-export { alertSuccess, alertError, alertWarning, alertInfo, confirmDialog, alertNeedLogin } from "./swal";
-
 export { default as ToastAlert } from "./ToastAlert";
 export type { AlertType } from "./ToastAlert";
 

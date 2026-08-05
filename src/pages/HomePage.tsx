@@ -42,17 +42,6 @@ const PROMO_CARDS = [
   },
 ];
 
-const TRUSTED_BRANDS = [
-  "JCID",
-  "Mechanic",
-  "Sunshine",
-  "Qianli",
-  "Relife",
-  "Mijing",
-  "Youkiloon",
-  "AMOI",
-];
-
 export default function HomePage() {
   const [sort, setSort] = useState<SortKey>("terlaris");
 
@@ -144,7 +133,7 @@ export default function HomePage() {
               to="/kategori"
               className="inline-flex items-center gap-2 bg-brand !text-white font-bold text-sm px-8 py-3 rounded-full hover:bg-brand-dark transition-colors"
               style={{ color: "#ffffff" }}
-            >
+              >
               Lihat Semua Produk
             </Link>
           </div>

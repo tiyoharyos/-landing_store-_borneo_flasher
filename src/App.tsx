@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import AppRouter from "@/router/AppRouter";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -9,7 +10,13 @@ import { ToastProvider } from "@/components/ui/Toast";
 import CustomCursor from "@/components/ui/CustomCursor";
 import CursorStyleUpdater from "@/components/ui/CursorStyleUpdater";
 
+// Halaman yang tampil tanpa navbar & footer global (layout auth full-page sendiri)
+const NO_CHROME_ROUTES = ["/masuk", "/daftar"];
+
 function App() {
+  const { pathname } = useLocation();
+  const hideChrome = NO_CHROME_ROUTES.includes(pathname);
+
   return (
     <ToastProvider defaultPosition="top-right">
       <AuthProvider>
@@ -21,7 +28,7 @@ function App() {
                 <CursorStyleUpdater />
                 <ScrollToTop />
                 <AppRouter />
-                <Footer />
+                {!hideChrome && <Footer />}
               </div>
             </WishlistProvider>
           </CartProvider>

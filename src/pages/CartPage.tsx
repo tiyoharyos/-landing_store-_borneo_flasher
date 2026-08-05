@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatRupiah } from "@/data/products";
 import Button from "@/components/ui/Button";
-import { confirmDialog } from "@/components/ui/swal";
+import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
 
 export default function CartPage() {
@@ -23,14 +23,16 @@ export default function CartPage() {
   };
 
   const handleRemove = async (productId: string, name: string) => {
-    const ok = await confirmDialog({
+    const res = await Swal.fire({
+      icon: "warning",
       title: "Hapus produk ini?",
       text: `"${name}" akan dihapus dari keranjang kamu.`,
-      confirmText: "Ya, hapus",
-      icon: "warning",
-      danger: true,
+      showCancelButton: true,
+      confirmButtonText: "Ya, hapus",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#dc2626",
     });
-    if (ok) {
+    if (res.isConfirmed) {
       removeItem(productId);
       toast.success("Produk dihapus dari keranjang");
     }
