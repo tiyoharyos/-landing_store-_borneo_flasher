@@ -1,20 +1,30 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import { BANNERS } from "@/data/products";
+
+import banner1 from "@/assets/img/banner1.png";
+import banner2 from "@/assets/img/banner4.png";
+import banner3 from "@/assets/img/banner3.png";
+
+// Buat array baru menggunakan gambar yang di-import
+const BANNER_LIST = [
+  { image: banner1, title: "Banner 1", subtitle: "Deskripsi Banner 1" },
+  { image: banner2, title: "Banner 2", subtitle: "Deskripsi Banner 2" },
+  { image: banner3, title: "Banner 3", subtitle: "Deskripsi Banner 3" },
+];
 
 export default function BannerCarousel() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIndex((i) => (i + 1) % BANNERS.length), 4500);
+    const t = setInterval(() => setIndex((i) => (i + 1) % BANNER_LIST.length), 4500);
     return () => clearInterval(t);
   }, []);
 
-  const go = (dir: 1 | -1) => setIndex((i) => (i + dir + BANNERS.length) % BANNERS.length);
+  const go = (dir: 1 | -1) => setIndex((i) => (i + dir + BANNER_LIST.length) % BANNER_LIST.length);
 
   return (
     <div className="relative rounded-[20px] overflow-hidden bg-cream-deep aspect-[1400/500]">
-      {BANNERS.map((b, i) => (
+      {BANNER_LIST.map((b, i) => (
         <div
           key={i}
           className={`absolute inset-0 transition-opacity duration-500 ${
@@ -28,6 +38,7 @@ export default function BannerCarousel() {
           </div> */}
         </div>
       ))}
+      
       <button
         className="absolute top-1/2 -translate-y-1/2 left-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer text-ink"
         onClick={() => go(-1)}
@@ -35,6 +46,7 @@ export default function BannerCarousel() {
       >
         <Icon icon="mdi:chevron-left" width={22} />
       </button>
+      
       <button
         className="absolute top-1/2 -translate-y-1/2 right-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer text-ink"
         onClick={() => go(1)}
@@ -42,8 +54,9 @@ export default function BannerCarousel() {
       >
         <Icon icon="mdi:chevron-right" width={22} />
       </button>
+
       <div className="absolute bottom-3 right-4 flex gap-1.5">
-        {BANNERS.map((_, i) => (
+        {BANNER_LIST.map((_, i) => (
           <button
             key={i}
             className={`h-[7px] rounded-full bg-white/55 border-none cursor-pointer p-0 transition-all ${

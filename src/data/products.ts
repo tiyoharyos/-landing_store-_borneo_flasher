@@ -822,18 +822,6 @@ export const getCategory = (key: CategoryKey) => CATEGORIES.find((c) => c.key ==
 export const relatedProducts = (p: Product, count = 4) =>
   PRODUCTS.filter((x) => x.category === p.category && x.id !== p.id).slice(0, count);
 
-// -----------------------------
-// Banner promo (hero carousel)
-// -----------------------------
-export const BANNERS = [
-  { image: "https://picsum.photos/seed/promo-banner-1/1400/500", title: "Gajian Sale", subtitle: "Diskon alat servis hingga 25%" },
-  { image: "https://picsum.photos/seed/promo-banner-2/1400/500", title: "Sparepart iPhone Lengkap", subtitle: "Original & kondisi terbaik" },
-  { image: "https://picsum.photos/seed/promo-banner-3/1400/500", title: "Merchandise Alumni", subtitle: "Koleksi terbaru Borneo Flasher" },
-];
-
-// -----------------------------
-// Quick category icons (baris di bawah banner)
-// -----------------------------
 export const QUICK_ICONS: { label: string; icon: string; category: CategoryKey }[] = [
   { label: "Tools", icon: "mdi:toolbox-outline", category: "alat-tools" },
   { label: "iPhone", icon: "mdi:apple", category: "sparepart-iphone" },
