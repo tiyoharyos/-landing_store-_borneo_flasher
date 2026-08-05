@@ -30,7 +30,7 @@ export default function CartPage() {
       showCancelButton: true,
       confirmButtonText: "Ya, hapus",
       cancelButtonText: "Batal",
-      confirmButtonColor: "#dc2626",
+      confirmButtonColor: "var(--brand)",
     });
     if (res.isConfirmed) {
       removeItem(productId);

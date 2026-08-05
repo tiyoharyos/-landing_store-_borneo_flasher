@@ -27,11 +27,11 @@ export default function Modal({ open, onClose, title, children, maxWidth = 480 }
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center bg-ink/50 p-3 sm:p-5 overflow-y-auto"
+      className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center bg-overlay p-3 sm:p-5 overflow-y-auto"
       onMouseDown={onClose}
     >
       <div
-        className="w-full bg-surface rounded-2xl shadow-xl my-6 sm:my-0 max-h-[90vh] flex flex-col"
+        className="w-full bg-surface border border-line rounded-2xl shadow-[var(--shadow-lg)] my-6 sm:my-0 max-h-[90vh] flex flex-col"
         style={{ maxWidth }}
         onMouseDown={(e) => e.stopPropagation()}
         role="dialog"

@@ -12,13 +12,13 @@ const SOCIAL_ICONS: { key: keyof typeof SOCIALS; icon: string }[] = [
 
 export default function Footer() {
   return (
-    <footer className="bg-footer-bg text-footer-text mt-auto relative transition-colors duration-200">
+    <footer className="bg-cream-deep text-ink mt-auto relative border-t border-line transition-colors duration-200">
       {/* Padding Y diperkecil saat mobile (py-8) dan kembali normal di desktop (md:py-14) */}
       <div className="container py-8 md:py-14">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
           <div className="md:col-span-4">
-            <Logo variant="light" className="mb-4" />
-            <p className="mt-4 text-[14px] leading-relaxed text-footer-muted">
+            <Logo className="mb-4" />
+            <p className="mt-4 text-[14px] leading-relaxed text-muted">
               Borneo Flasher Indonesia menghadirkan marketplace terpercaya untuk
               kebutuhan sparepart smartphone, alat servis, dan perlengkapan teknisi
               dengan produk berkualitas serta harga terbaik.
@@ -30,7 +30,7 @@ export default function Footer() {
                   href={SOCIALS[s.key]}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-[38px] h-[38px] rounded-full border border-footer-line flex items-center justify-center transition-all duration-200 hover:bg-brand hover:border-brand hover:-translate-y-0.5 hover:shadow-[var(--shadow-brand)]"
+                  className="w-[38px] h-[38px] rounded-full border border-line flex items-center justify-center text-ink-soft transition-all duration-200 hover:bg-brand hover:border-brand hover:text-white hover:-translate-y-0.5 hover:shadow-[var(--shadow-brand)]"
                   aria-label={s.key}
                 >
                   <Icon icon={s.icon} width={18} />
@@ -40,39 +40,39 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-2">
-            <p className="font-display font-bold text-white mb-3 text-[15px]">Menu</p>
-            <div className="flex flex-col gap-2 text-[14px] text-footer-muted">
-              <Link to="/" className="w-fit transition-colors duration-200 hover:text-white">Beranda</Link>
-              <Link to="/kategori/alat-tools" className="w-fit transition-colors duration-200 hover:text-white">Alat & Tools</Link>
-              <Link to="/kategori/sparepart-iphone" className="w-fit transition-colors duration-200 hover:text-white">Sparepart iPhone</Link>
-              <Link to="/keranjang" className="w-fit transition-colors duration-200 hover:text-white">Keranjang</Link>
+            <p className="font-display font-bold text-ink mb-3 text-[15px]">Menu</p>
+            <div className="flex flex-col gap-2 text-[14px] text-muted">
+              <Link to="/" className="w-fit transition-colors duration-200 hover:text-brand">Beranda</Link>
+              <Link to="/kategori/alat-tools" className="w-fit transition-colors duration-200 hover:text-brand">Alat & Tools</Link>
+              <Link to="/kategori/sparepart-iphone" className="w-fit transition-colors duration-200 hover:text-brand">Sparepart iPhone</Link>
+              <Link to="/keranjang" className="w-fit transition-colors duration-200 hover:text-brand">Keranjang</Link>
             </div>
           </div>
 
           <div className="md:col-span-3">
-            <p className="font-display font-bold text-white mb-3 text-[15px]">Kontak</p>
-            <div className="flex flex-col gap-2.5 text-[14px] text-footer-muted">
+            <p className="font-display font-bold text-ink mb-3 text-[15px]">Kontak</p>
+            <div className="flex flex-col gap-2.5 text-[14px] text-muted">
               <span className="flex items-center gap-2">
-                <Icon icon="mdi:phone-outline" />
+                <Icon icon="mdi:phone-outline" className="text-brand" />
                 {PHONE_DISPLAY}
               </span>
               <span className="flex items-center gap-2">
-                <Icon icon="mdi:email-outline" />
+                <Icon icon="mdi:email-outline" className="text-brand" />
                 {EMAIL}
               </span>
             </div>
           </div>
 
           <div className="md:col-span-3">
-            <p className="font-display font-bold text-white mb-3 text-[15px]">Alamat</p>
-            <p className="flex items-start gap-2 text-[14px] leading-relaxed text-footer-muted">
-              <Icon icon="mdi:map-marker-outline" className="flex-shrink-0 mt-0.5" />
+            <p className="font-display font-bold text-ink mb-3 text-[15px]">Alamat</p>
+            <p className="flex items-start gap-2 text-[14px] leading-relaxed text-muted">
+              <Icon icon="mdi:map-marker-outline" className="flex-shrink-0 mt-0.5 text-brand" />
               {ADDRESS}
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-3 mt-10 pt-6 text-[13px] border-t border-footer-line text-footer-muted text-center md:text-left transition-colors duration-200">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-3 mt-10 pt-6 text-[13px] border-t border-line text-muted text-center md:text-left transition-colors duration-200">
           <p>Copyright © 2026 LPKS Borneo Flasher Indonesia. All rights reserved.</p>
         </div>
       </div>

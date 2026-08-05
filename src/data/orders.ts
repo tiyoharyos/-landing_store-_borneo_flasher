@@ -23,7 +23,6 @@ export interface OrderItemSnapshot {
 
 export interface Order {
   id: string;
-  /** Email akun yang membuat pesanan, dipakai untuk memfilter "Pesanan Saya" per akun. */
   userEmail: string;
   createdAt: string;
   items: OrderItemSnapshot[];

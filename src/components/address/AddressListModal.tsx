@@ -36,7 +36,7 @@ export default function AddressListModal({ open, onClose, onPick }: Props) {
       showCancelButton: true,
       confirmButtonText: "Ya, lanjutkan",
       cancelButtonText: "Batal",
-      confirmButtonColor: "#dc2626",
+      confirmButtonColor: "var(--brand)",
     });
     if (res.isConfirmed) removeAddress(address.id);
   };
