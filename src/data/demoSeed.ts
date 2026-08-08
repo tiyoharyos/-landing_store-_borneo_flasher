@@ -89,6 +89,15 @@ export const DEMO_ADDRESS_SEED: Record<string, AddressInput[]> = {
       city: "Balikpapan",
       postalCode: "76125",
     },
+  ], "bintang@borneoflasher.id": [
+    {
+      label: "Kantor",
+      recipientName: "Admin Borneo",
+      phone: "085611122233",
+      fullAddress: "Jl. Borneo Flasher Institute No. 1",
+      city: "Balikpapan",
+      postalCode: "76125",
+    },
   ],
 };
 

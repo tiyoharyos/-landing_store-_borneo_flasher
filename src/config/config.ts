@@ -6,13 +6,13 @@ export const WHATSAPP_TEXT =
 export const PHONE_DISPLAY = "0853-7776-7777";
 export const EMAIL = "info@borneoflasher.id";
 export const ADDRESS =
-  "Banjarsari, RT.001/010, Dusun 1, Penggung, Kec. Boyolali, Kabupaten Boyolali, Jawa Tengah 57316";
+  "Rt 01 Rw 10, Banjarsari, Penggung, Boyolali, Jawa Tengah , Boyolali, Indonesia, Boyolali, Indonesia, 57316";
 
 export const SOCIALS = {
-  facebook: "https://facebook.com",
-  instagram: "https://instagram.com",
-  youtube: "https://youtube.com",
-  tiktok: "https://tiktok.com",
+  facebook: "https://www.facebook.com/BorneoFlasherIndonesia?locale=id_ID",
+  instagram: "https://www.instagram.com/borneoflasherlpks/",
+  youtube: "https://www.youtube.com/@borneoflasher",
+  tiktok: "https://www.tiktok.com/@borne0flasher",
 };
 
 export const waLink = (text?: string) =>

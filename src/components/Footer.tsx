@@ -10,6 +10,8 @@ const SOCIAL_ICONS: { key: keyof typeof SOCIALS; icon: string }[] = [
   { key: "tiktok", icon: "ic:baseline-tiktok" },
 ];
 
+const MAPS_LINK = "https://maps.app.goo.gl/S1aJNh1cRAmLpoqF7";
+
 export default function Footer() {
   return (
     <footer className="bg-cream-deep text-ink mt-auto relative border-t border-line transition-colors duration-200">
@@ -65,10 +67,15 @@ export default function Footer() {
 
           <div className="md:col-span-3">
             <p className="font-display font-bold text-ink mb-3 text-[15px]">Alamat</p>
-            <p className="flex items-start gap-2 text-[14px] leading-relaxed text-muted">
+            <a
+              href={MAPS_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-start gap-2 text-[14px] leading-relaxed text-muted transition-colors duration-200 hover:text-brand"
+            >
               <Icon icon="mdi:map-marker-outline" className="flex-shrink-0 mt-0.5 text-brand" />
               {ADDRESS}
-            </p>
+            </a>
           </div>
         </div>
 

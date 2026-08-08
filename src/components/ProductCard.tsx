@@ -57,14 +57,14 @@ export default function ProductCard({ product }: { product: Product }) {
             </span>
           )}
         </div>
-        <div className="flex items-center gap-1.5 text-[11.5px] text-muted mt-1.5">
+        {/* <div className="flex items-center gap-1.5 text-[11.5px] text-muted mt-1.5">
           <span className="flex items-center gap-0.5 text-amber-dark font-bold">
             <Icon icon="mdi:star" width={13} />
             {product.rating.toFixed(1)}
           </span>
           <span className="text-line">•</span>
           <span>Terjual {product.sold}</span>
-        </div>
+        </div> */}
       </div>
     </Link>
   );

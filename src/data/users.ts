@@ -25,6 +25,13 @@ export const MOCK_USERS: MockUserRecord[] = [
     phone: "081234567890",
   },
   {
+    name: "Bintang Tatang",
+    email: "bintang@borneoflasher.id",
+    password: "12345678",
+    role: "member",
+    phone: "081234567890",
+  },
+  {
     name: "Siti Rahma",
     email: "siti@borneoflasher.id",
     password: "siti1234",
