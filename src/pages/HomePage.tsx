@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
+
+
+
+
 import Navbar from "@/components/Navbar";
 import BannerCarousel from "@/components/BannerCarousel";
 import ProductCard from "@/components/ProductCard";
-import { PRODUCTS, CATEGORIES, getProductsByCategory } from "@/data/products";
+import { PRODUCTS } from "@/data/products";
 
 type SortKey = "terlaris" | "termurah" | "termahal" | "terbaru";
 
@@ -13,33 +16,6 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: "terbaru", label: "Terbaru" },
   { key: "termurah", label: "Termurah" },
   { key: "termahal", label: "Termahal" },
-];
-
-const PROMO_CARDS = [
-  {
-    title: "SPAREPART IPHONE",
-    desc: "Mesin, plat BGA, sampai Face ID set — lengkap untuk servis harian.",
-    tone: "bg-brand-tint",
-    to: "/kategori/sparepart-iphone",
-  },
-  {
-    title: "TOOLS & ALAT SERVIS",
-    desc: "Solder, blower, microscope, sampai fixing tools favorit teknisi.",
-    tone: "bg-amber/15",
-    to: "/kategori/alat-tools",
-  },
-  {
-    title: "DISKON SPAREPART ANDROID",
-    desc: "Mesin dan plat universal berbagai brand, harga bersahabat.",
-    tone: "bg-cream-deep",
-    to: "/kategori/sparepart-android",
-  },
-  {
-    title: "MERCHANDISE ALUMNI",
-    desc: "Koleksi apparel terbaru khusus komunitas Borneo Flasher.",
-    tone: "bg-brand-tint",
-    to: "/kategori/merchandise",
-  },
 ];
 
 export default function HomePage() {
@@ -68,33 +44,6 @@ export default function HomePage() {
         <div className="mt-4">
           <BannerCarousel />
         </div>
-
-        {/* Kategori Teratas */}
-        <section className="py-7 border-b border-line last-of-type:border-b-0">
-          <div className="flex flex-wrap items-center justify-between gap-3 my-7 mb-[1.1rem]">
-            <p className="font-display font-extrabold text-[1.1rem] text-ink">Kategori Teratas</p>
-            <Link to="/kategori" className="text-[13.5px] font-bold text-brand hover:underline">
-              Lihat Semua
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-            {CATEGORIES.map((c) => (
-              <Link
-                key={c.key}
-                to={`/kategori/${c.key}`}
-                className="bg-surface border border-line rounded-2xl px-3 py-5 text-center transition-all hover:-translate-y-[3px] hover:shadow-lg"
-              >
-                <span className="w-12 h-12 mx-auto mb-2.5 rounded-[14px] bg-brand-tint text-brand flex items-center justify-center">
-                  <Icon icon={c.icon} width={26} />
-                </span>
-                <p className="font-display font-bold text-[13.5px] text-ink">{c.label}</p>
-                <p className="text-xs text-muted mt-0.5">
-                  {getProductsByCategory(c.key).length} produk
-                </p>
-              </Link>
-            ))}
-          </div>
-        </section>
 
         {/* Produk Pilihan */}
         <section className="py-7 border-b border-line last-of-type:border-b-0">

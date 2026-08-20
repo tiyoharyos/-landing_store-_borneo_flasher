@@ -1,5 +1,4 @@
-import type { ComponentType } from "react";
-import { FiX, FiCheck, FiInfo, FiAlertCircle } from "react-icons/fi";
+import { Icon } from "@iconify/react";
 
 export type AlertType = "success" | "warning" | "error" | "info";
 
@@ -9,7 +8,7 @@ interface AlertVariant {
   titleColor: string;
   descColor: string;
   iconBg: string;
-  icon: ComponentType<{ size?: number; className?: string }>;
+  icon: string;
   closeColor: string;
 }
 
@@ -20,7 +19,7 @@ const VARIANTS: Record<AlertType, AlertVariant> = {
     titleColor: "text-green-800 dark:text-green-200",
     descColor: "text-green-600 dark:text-green-400",
     iconBg: "bg-green-500 text-white",
-    icon: FiCheck,
+    icon: "feather:check",
     closeColor: "text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/40",
   },
   warning: {
@@ -29,7 +28,7 @@ const VARIANTS: Record<AlertType, AlertVariant> = {
     titleColor: "text-amber-800 dark:text-amber-200",
     descColor: "text-amber-600 dark:text-amber-400",
     iconBg: "bg-amber-500 text-white",
-    icon: FiAlertCircle,
+    icon: "feather:alert-circle",
     closeColor: "text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/40",
   },
   error: {
@@ -38,7 +37,7 @@ const VARIANTS: Record<AlertType, AlertVariant> = {
     titleColor: "text-red-800 dark:text-red-200",
     descColor: "text-red-600 dark:text-red-400",
     iconBg: "bg-red-500 text-white",
-    icon: FiX,
+    icon: "feather:x",
     closeColor: "text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/40",
   },
   info: {
@@ -47,7 +46,7 @@ const VARIANTS: Record<AlertType, AlertVariant> = {
     titleColor: "text-indigo-800 dark:text-indigo-200",
     descColor: "text-indigo-600 dark:text-indigo-400",
     iconBg: "bg-indigo-500 text-white",
-    icon: FiInfo,
+    icon: "feather:info",
     closeColor: "text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/40",
   },
 };
@@ -62,14 +61,13 @@ interface AlertProps {
 
 export default function Alert({ type = "success", title, message, onClose, className = "" }: AlertProps) {
   const config = VARIANTS[type] ?? VARIANTS.success;
-  const IconComp = config.icon;
 
   return (
     <div
       className={`flex items-start gap-4 p-4 rounded-3xl shadow-sm ${config.bg} ${config.border} w-full transition-all duration-300 ${className}`}
     >
       <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${config.iconBg}`}>
-        <IconComp size={16} className="stroke-[3]" />
+        <Icon icon={config.icon} width={16} height={16} />
       </div>
 
       <div className="flex-1 min-w-0 pt-0.5">
@@ -83,7 +81,7 @@ export default function Alert({ type = "success", title, message, onClose, class
           onClick={onClose}
           className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-colors cursor-pointer ${config.closeColor}`}
         >
-          <FiX size={14} className="stroke-[2.5]" />
+          <Icon icon="feather:x" width={14} height={14} />
         </button>
       )}
     </div>
