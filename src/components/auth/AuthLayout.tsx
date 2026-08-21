@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import Logo from "@/components/Logo";
 import logoLpks from "@/assets/img/logo-lpks.png";
 import { BRAND_NAME, waLink } from "@/config/config";
 
