@@ -40,15 +40,14 @@ export default function BannerCarousel() {
       ))}
       
       <button
-        className="absolute top-1/2 -translate-y-1/2 left-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer text-ink"
+        className="absolute top-1/2 -translate-y-1/2 left-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer"
         onClick={() => go(-1)}
         aria-label="Sebelumnya"
       >
         <Icon icon="mdi:chevron-left" width={22} />
       </button>
-      
       <button
-        className="absolute top-1/2 -translate-y-1/2 right-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer text-ink"
+        className="absolute top-1/2 -translate-y-1/2 right-3 w-[34px] h-[34px] rounded-full bg-white/85 border-none flex items-center justify-center cursor-pointer "
         onClick={() => go(1)}
         aria-label="Berikutnya"
       >

@@ -1,4 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import PageTransition from "@/components/PageTransition";
 import HomePage from "@/pages/HomePage";
 import KategoriPage from "@/pages/KategoriPage";
 import ProductDetailPage from "@/pages/ProductDetailPage";
@@ -12,20 +14,24 @@ import ProfilePage from "@/pages/ProfilePage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
 export default function AppRouter() {
+  const location = useLocation();
+
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/kategori" element={<KategoriPage />} />
-      <Route path="/kategori/:category" element={<KategoriPage />} />
-      <Route path="/produk/:slug" element={<ProductDetailPage />} />
-      <Route path="/keranjang" element={<CartPage />} />
-      <Route path="/checkout" element={<CheckoutPage />} />
-      <Route path="/pesanan/sukses/:orderId" element={<OrderSuccessPage />} />
-      <Route path="/masuk" element={<LoginPage />} />
-      <Route path="/daftar" element={<RegisterPage />} />
-      <Route path="/akun/pesanan" element={<AccountOrdersPage />} />
-      <Route path="/akun/profil" element={<ProfilePage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+        <Route path="/kategori" element={<PageTransition><KategoriPage /></PageTransition>} />
+        <Route path="/kategori/:category" element={<PageTransition><KategoriPage /></PageTransition>} />
+        <Route path="/produk/:slug" element={<PageTransition><ProductDetailPage /></PageTransition>} />
+        <Route path="/keranjang" element={<PageTransition><CartPage /></PageTransition>} />
+        <Route path="/checkout" element={<PageTransition><CheckoutPage /></PageTransition>} />
+        <Route path="/pesanan/sukses/:orderId" element={<PageTransition><OrderSuccessPage /></PageTransition>} />
+        <Route path="/masuk" element={<PageTransition><LoginPage /></PageTransition>} />
+        <Route path="/daftar" element={<PageTransition><RegisterPage /></PageTransition>} />
+        <Route path="/akun/pesanan" element={<PageTransition><AccountOrdersPage /></PageTransition>} />
+        <Route path="/akun/profil" element={<PageTransition><ProfilePage /></PageTransition>} />
+        <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
   );
 }
