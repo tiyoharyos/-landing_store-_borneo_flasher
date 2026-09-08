@@ -11,7 +11,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       to={`/produk/${product.slug}`}
-      className="block bg-surface border border-line rounded-[14px] overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5"
+      className="block bg-surface border border-line rounded-xl overflow-hidden transition-all hover:shadow-[var(--shadow-sm)] hover:border-ink/15"
     >
       <div className="relative aspect-square bg-cream-deep">
         <img
@@ -32,7 +32,7 @@ export default function ProductCard({ product }: { product: Product }) {
         )}
         <button
           type="button"
-          className={`absolute top-2 right-2 w-7 h-7 rounded-full border-none bg-white/92 flex items-center justify-center cursor-pointer shadow-md transition-transform hover:scale-110 z-[2] ${
+          className={`absolute top-2 right-2 w-7 h-7 rounded-full border-none bg-white/92 flex items-center justify-center cursor-pointer shadow-[var(--shadow-xs)] transition-transform hover:scale-105 z-[2] ${
             wished ? "text-brand" : "text-ink-soft"
           }`}
           aria-label={wished ? "Hapus dari wishlist" : "Tambah ke wishlist"}

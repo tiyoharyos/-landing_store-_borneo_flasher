@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { motion, useAnimation } from "framer-motion";
-import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -115,9 +114,8 @@ export default function ProductDetailPage() {
   if (loading) {
     return (
       <div>
-        <Navbar />
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] gap-7 pb-4 pt-5">
+        <div className="container pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] gap-7 pb-4">
             <div className="rounded-[18px] aspect-square bg-cream-deep animate-pulse" />
             <div className="flex flex-col gap-3 pt-2">
               <div className="h-6 w-3/4 bg-cream-deep rounded animate-pulse" />
@@ -134,14 +132,13 @@ export default function ProductDetailPage() {
   if (notFound || !product) {
     return (
       <div>
-        <Navbar />
         <div className="container text-center py-12 px-6">
           <Icon icon="mdi:package-variant-closed" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Produk Tidak Ditemukan</p>
           {error && <p className="text-muted text-sm mt-1">{error}</p>}
           <Link
             to="/"
-            className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-full px-6 py-2 hover:bg-brand-tint transition-colors"
+            className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors"
           >
             Kembali ke Beranda
           </Link>
@@ -168,9 +165,8 @@ export default function ProductDetailPage() {
 
   return (
     <div>
-      <Navbar />
-      <div className="container">
-        <div className="flex items-center gap-1.5 text-[12.5px] text-muted my-5 flex-wrap">
+      <div className="container pt-6">
+        <div className="flex items-center gap-1.5 text-[12.5px] text-muted mb-5 flex-wrap">
           <Link to="/" className="transition-colors hover:text-brand">Beranda</Link>
           <Icon icon="mdi:chevron-right" width={14} />
           {category && (

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import NameEditModal from "@/components/NameEditModal";
 import PhoneEditModal from "@/components/PhoneEditModal";
@@ -130,7 +129,6 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <Navbar />
       <div className="container grid grid-cols-1 md:grid-cols-[260px_1fr] gap-4.5 gap-x-4 pt-6 pb-12 items-start">
         <aside className="bg-surface border border-line rounded-2xl overflow-hidden">
           <div className="flex flex-col items-center text-center px-4 py-6 border-b border-line">
@@ -207,7 +205,7 @@ export default function ProfilePage() {
                   <Icon icon="mdi:receipt-text-outline" width={64} className="text-line inline-block" />
                   <p className="font-display font-bold text-[1.1rem] mt-4">Belum Ada Pesanan</p>
                   <p className="text-muted text-sm mt-1">Pesanan yang kamu buat akan muncul di sini.</p>
-                  <Link to="/" className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-full px-6 py-2 hover:bg-brand-tint transition-colors">
+                  <Link to="/" className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors">
                     Mulai Belanja
                   </Link>
                 </div>
@@ -377,7 +375,7 @@ export default function ProfilePage() {
                   <p className="text-muted text-sm mt-1">
                     Simpan produk favoritmu dengan tap ikon hati pada produk.
                   </p>
-                  <Link to="/" className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-full px-6 py-2 hover:bg-brand-tint transition-colors">
+                  <Link to="/" className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors">
                     Mulai Belanja
                   </Link>
                 </div>

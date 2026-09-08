@@ -23,7 +23,7 @@ export default function BannerCarousel() {
   const go = (dir: 1 | -1) => setIndex((i) => (i + dir + BANNER_LIST.length) % BANNER_LIST.length);
 
   return (
-    <div className="relative rounded-[20px] overflow-hidden bg-cream-deep aspect-[1400/500]">
+    <div className="relative rounded-2xl overflow-hidden bg-cream-deep aspect-[1400/500] border border-line">
       {BANNER_LIST.map((b, i) => (
         <div
           key={i}

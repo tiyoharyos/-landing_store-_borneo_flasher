@@ -68,7 +68,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-cream/90 backdrop-blur-md border-b border-line sticky top-0 z-50 shadow-[var(--shadow-xs)] transition-colors duration-200">
+    <nav className="bg-cream/95 backdrop-blur-md border-b border-line sticky top-0 z-50 transition-colors duration-200">
       <div className="container py-3">
         <div className="flex flex-wrap items-center justify-between gap-y-3 md:gap-[18px]">
           <Link to="/" className="flex-shrink-0 order-1" onClick={() => setOpen(false)}>
@@ -82,7 +82,7 @@ export default function Navbar() {
             />
           </Link>
 
-          <div className="w-full order-3 md:order-2 md:flex-1 flex items-center gap-2 bg-surface border border-line rounded-full py-1.5 pr-1.5 pl-[18px] min-w-0 transition-all duration-200 focus-within:border-brand focus-within:ring-[3.5px] focus-within:ring-brand/15">
+          <div className="w-full order-3 md:order-2 md:flex-1 flex items-center gap-2 bg-surface border border-line rounded-xl py-1.5 pr-1.5 pl-[18px] min-w-0 transition-all duration-200 focus-within:border-brand focus-within:ring-[3px] focus-within:ring-brand/15">
             <Icon icon="mdi:magnify" width={19} className="text-muted flex-shrink-0" />
             <input
               type="text"
@@ -94,7 +94,7 @@ export default function Navbar() {
             />
             <button
               onClick={submitSearch}
-              className="flex-shrink-0 rounded-full px-4 md:px-5 h-9 font-bold text-[13px] bg-brand text-white cursor-pointer whitespace-nowrap hover:bg-brand-dark active:scale-95 transition-all duration-200"
+              className="flex-shrink-0 rounded-lg px-4 md:px-5 h-9 font-bold text-[13px] bg-brand text-white cursor-pointer whitespace-nowrap hover:bg-brand-dark active:scale-95 transition-all duration-200"
             >
               Cari
             </button>
@@ -280,13 +280,13 @@ export default function Navbar() {
               <div className="flex gap-2 items-center">
                 <Link
                   to="/masuk"
-                  className="hidden sm:block border border-brand text-brand text-[13px] font-semibold rounded-full px-4 py-1.5 whitespace-nowrap hover:bg-brand-tint hover:-translate-y-px transition-all duration-200"
+                  className="hidden sm:block border border-brand text-brand text-[13px] font-semibold rounded-lg px-4 py-1.5 whitespace-nowrap hover:bg-brand-tint transition-all duration-200"
                 >
                   Masuk
                 </Link>
                 <Link
                   to="/daftar"
-                  className="bg-brand text-white text-[13px] font-semibold rounded-full px-3 md:px-4 py-1.5 whitespace-nowrap shadow-[var(--shadow-sm)] hover:bg-brand-dark hover:shadow-[var(--shadow-brand)] hover:-translate-y-px transition-all duration-200"
+                  className="bg-brand text-white text-[13px] font-semibold rounded-lg px-3 md:px-4 py-1.5 whitespace-nowrap hover:bg-brand-dark transition-all duration-200"
                 >
                   Daftar
                 </Link>

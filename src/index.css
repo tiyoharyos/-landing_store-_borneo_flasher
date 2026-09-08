@@ -1,57 +1,70 @@
-/* Google Fonts – Borneo Flasher design system: Oswald (heading) + Inter (body) */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+/* Borneo Flasher — Minimalist Design System */
+/* Satu keluarga font untuk seluruh tampilan: Plus Jakarta Sans */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-
-
 :root {
-  /* ---- Borneo Flasher Design System: Primary (merah) + Neutral (abu) + Semantik ---- */
-  --ink: #1a1a1a;          /* Base Black */
-  --ink-soft: #4b5563;     /* Dark Gray (teks sekunder) */
-  --cream: #f9fafb;        /* Background Gray */
-  --cream-deep: #eef0f3;
-  --surface: #ffffff;      /* Pure White */
-  --brand: #e51d24;        /* Primary Red */
-  --brand-dark: #c4171e;   /* Primary Hover */
-  --brand-tint: #fde8e9;
-  --accent: #1a1a1a;       /* aksen dipetakan ke Base Black */
+  /* ---- Palet netral minimalis + satu aksen (merah brand) ---- */
+  --ink: #18181b;          /* Teks utama, hampir hitam */
+  --ink-soft: #52525b;     /* Teks sekunder */
+  --cream: #fafafa;        /* Background halaman */
+  --cream-deep: #f4f4f5;   /* Background sekunder / hover */
+  --surface: #ffffff;      /* Kartu, permukaan */
+  --brand: #dc2626;        /* Aksen tunggal — merah brand */
+  --brand-dark: #b91c1c;
+  --brand-tint: #fef2f2;
+  --accent: #18181b;       /* aksen netral (tombol inverted) */
   --accent-dark: #000000;
-  --accent-tint: #e5e7eb;
-  --amber: #f59e0b;        /* Warning */
-  --amber-dark: #b45309;
-  --line: #e5e7eb;         /* Light Gray (border/stroke) */
-  --muted: #6b7280;
-  --ok: #10b981;           /* Success */
-  --warn: #ef4444;         /* Error */
+  --accent-tint: #e4e4e7;
+  --amber: #d97706;
+  --amber-dark: #92400e;
+  --line: #e4e4e7;         /* Border tipis */
+  --muted: #71717a;
+  --ok: #16a34a;
+  --warn: #dc2626;
+  --overlay: rgba(15, 15, 17, 0.45);
 
-  --font-oswald: 'Oswald', sans-serif;
-  --font-inter: 'Inter', sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+
+  /* Skala shadow — halus, minim, untuk kedalaman tipis saja */
+  --shadow-xs: 0 1px 2px rgba(15, 15, 17, 0.05);
+  --shadow-sm: 0 2px 8px rgba(15, 15, 17, 0.06);
+  --shadow-md: 0 6px 20px rgba(15, 15, 17, 0.08);
+  --shadow-lg: 0 16px 40px rgba(15, 15, 17, 0.12);
+  --shadow-brand: 0 10px 24px rgba(220, 38, 38, 0.20);
 
   /* Footer & tombol WA selalu gelap, tidak ikut berganti tema */
-  --footer-bg: #1a1a1a;
-  --footer-text: #f9fafb;
-  --footer-muted: #a6a6a6;
-  --footer-line: rgba(249, 250, 251, 0.15);
+  --footer-bg: #18181b;
+  --footer-text: #fafafa;
+  --footer-muted: #a1a1aa;
+  --footer-line: rgba(250, 250, 250, 0.12);
 }
 
 [data-theme="dark"] {
-  --ink: #f9fafb;          /* Base Black (dibalik utk gelap) */
-  --ink-soft: #d1d5db;
-  --cream: #18181b;        /* Background Gray (dibalik utk gelap) */
-  --cream-deep: #232327;
-  --surface: #202024;      /* Pure White (dibalik utk gelap) */
-  --brand: #ff4b50;        /* Primary Red, dicerahkan agar kontras di gelap */
-  --brand-dark: #e51d24;
-  --brand-tint: #3d0a0a;
-  --accent: #f9fafb;       /* aksen: kebalikan Base Black di dark mode */
+  --ink: #fafafa;
+  --ink-soft: #d4d4d8;
+  --cream: #131316;
+  --cream-deep: #1d1d21;
+  --surface: #1a1a1e;
+  --brand: #f0474d;
+  --brand-dark: #dc2626;
+  --brand-tint: #341012;
+  --accent: #fafafa;
   --accent-dark: #ffffff;
-  --accent-tint: #333333;
+  --accent-tint: #2c2c31;
   --amber: #fbbf24;
   --amber-dark: #f59e0b;
-  --line: #33363b;
-  --muted: #9ca3af;
+  --line: #2c2c31;
+  --muted: #9a9aa2;
   --ok: #34d399;
   --warn: #f87171;
+  --overlay: rgba(0, 0, 0, 0.65);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5);
+  --shadow-brand: 0 10px 24px rgba(240, 71, 77, 0.28);
 }
 
 @theme {
@@ -72,14 +85,16 @@
   --color-muted: var(--muted);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
+  --color-overlay: var(--overlay);
   --color-footer-bg: var(--footer-bg);
   --color-footer-text: var(--footer-text);
   --color-footer-muted: var(--footer-muted);
   --color-footer-line: var(--footer-line);
 
-  --font-display: var(--font-oswald);
-  --font-body: var(--font-inter);
-  --font-mono: "JetBrains Mono", monospace;
+  /* Satu keluarga font dipakai di semua peran tipografi */
+  --font-display: var(--font-jakarta);
+  --font-body: var(--font-jakarta);
+  --font-mono: var(--font-jakarta);
 }
 
 /* variant dark: masih disediakan untuk kasus khusus (mis. re-theme
@@ -102,7 +117,15 @@ body {
   background-color: var(--cream);
   color: var(--ink);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Angka (harga, jumlah) memakai figure tabular agar rapi tanpa perlu font terpisah */
+.font-mono,
+[class*="font-mono"] {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
 #root {
@@ -123,7 +146,7 @@ a {
   left: 0;
   width: 8px;
   height: 8px;
-  background-color: red;
+  background-color: var(--ink);
   border-radius: 50%;
   pointer-events: none;
   z-index: 1000;
@@ -190,4 +213,15 @@ a {
 }
 .animate-slide-in-bottom {
   animation: toast-slide-in-bottom 0.25s ease-out;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }

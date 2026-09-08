@@ -11,7 +11,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   containerClassName?: string;
 }
 
-const FIELD_BASE = "w-full h-11 border-[1.5px] rounded-xl bg-surface px-3.5 text-[13.75px] font-body text-ink outline-none transition-all placeholder:text-muted focus:border-brand focus:ring-[3.5px] focus:ring-brand/15";
+const FIELD_BASE = "w-full h-11 border rounded-xl bg-surface px-3.5 text-[13.75px] font-body text-ink outline-none transition-all placeholder:text-muted focus:border-brand focus:ring-[3.5px] focus:ring-brand/15";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   { label, error, hint, icon, className = "", containerClassName = "", id, ...rest },

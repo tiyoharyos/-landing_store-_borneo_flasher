@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link, Navigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
-import Navbar from "@/components/Navbar";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useAddresses } from "@/context/AddressContext";
@@ -52,7 +51,6 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div>
-        <Navbar />
         <div className="container text-center py-12 px-6">
           <Icon icon="mdi:cart-off" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Keranjang Kosong</p>
@@ -126,9 +124,8 @@ export default function CheckoutPage() {
 
   return (
     <div>
-      <Navbar />
-      <div className="container">
-        <p className="font-display font-extrabold text-[1.1rem] text-ink mt-6 mb-4">Checkout</p>
+      <div className="container pt-6">
+        <p className="font-display font-extrabold text-[1.1rem] text-ink mb-4">Checkout</p>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
           <div className="flex flex-col gap-4">

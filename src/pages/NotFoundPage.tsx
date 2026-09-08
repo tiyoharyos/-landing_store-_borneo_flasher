@@ -11,7 +11,7 @@ export default function NotFoundPage() {
       </p>
       <Link
         to="/"
-        className="font-mono text-[13px] font-semibold px-6 py-3 rounded-full text-white bg-brand mt-2 hover:bg-brand-dark transition-colors"
+        className="font-body text-[13px] font-semibold px-6 py-3 rounded-lg text-white bg-brand mt-2 hover:bg-brand-dark transition-colors"
       >
         Kembali ke Beranda
       </Link>

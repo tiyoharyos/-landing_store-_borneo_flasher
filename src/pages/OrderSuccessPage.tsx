@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Navbar from "@/components/Navbar";
 import { getOrderById } from "@/data/orders";
 import { formatRupiah } from "@/data/products";
 
@@ -11,13 +10,12 @@ export default function OrderSuccessPage() {
   if (!order) {
     return (
       <div>
-        <Navbar />
         <div className="container text-center py-12 px-6">
           <Icon icon="mdi:receipt-text-remove-outline" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Pesanan Tidak Ditemukan</p>
           <Link
             to="/"
-            className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-full px-6 py-2 hover:bg-brand-tint transition-colors"
+            className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors"
           >
             Kembali ke Beranda
           </Link>
@@ -28,7 +26,6 @@ export default function OrderSuccessPage() {
 
   return (
     <div>
-      <Navbar />
       <div className="container">
         <div className="max-w-[480px] mx-auto my-12 text-center flex flex-col items-center">
           <Icon icon="mdi:check-decagram" width={64} className="text-ok" />

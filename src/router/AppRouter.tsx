@@ -3,7 +3,9 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import PageLoader from "@/components/PageLoader";
+import Navbar from "@/components/Navbar";
 import HomePage from "@/pages/HomePage";
+import { NO_CHROME_ROUTES, routeGroupKey } from "@/router/routeChrome";
 
 // Halaman selain Home di-lazy-load per rute: mengecilkan bundle awal
 // supaya render pertama & transisi antar halaman lebih ringan/mulus.
@@ -21,12 +23,17 @@ const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
 
 export default function AppRouter() {
   const location = useLocation();
+  const showChrome = !NO_CHROME_ROUTES.includes(location.pathname);
 
   return (
     <div className="relative">
+      {/* Navbar dirender sekali di sini, di luar area yang di-key/animasikan,
+          supaya dia TIDAK ikut remount tiap pindah halaman (search box,
+          dropdown keranjang, dll tetap dalam keadaannya). */}
+      {showChrome && <Navbar />}
       <Suspense fallback={<PageLoader />}>
         <AnimatePresence mode="popLayout" initial={false}>
-          <Routes location={location} key={location.pathname}>
+          <Routes location={location} key={routeGroupKey(location.pathname)}>
             <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
             <Route path="/kategori" element={<PageTransition><KategoriPage /></PageTransition>} />
             <Route path="/kategori/:category" element={<PageTransition><KategoriPage /></PageTransition>} />

@@ -31,7 +31,7 @@ export default function Modal({ open, onClose, title, children, maxWidth = 480 }
       onMouseDown={onClose}
     >
       <div
-        className="w-full bg-surface border border-line rounded-2xl shadow-[var(--shadow-lg)] my-6 sm:my-0 max-h-[90vh] flex flex-col"
+        className="w-full bg-surface border border-line rounded-2xl shadow-[var(--shadow-lg)] my-6 sm:my-0 max-h-[90vh] flex flex-col animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)]"
         style={{ maxWidth }}
         onMouseDown={(e) => e.stopPropagation()}
         role="dialog"

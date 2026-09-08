@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Navbar from "@/components/Navbar";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatRupiah } from "@/data/products";
@@ -40,9 +39,8 @@ export default function CartPage() {
 
   return (
     <div>
-      <Navbar />
-      <div className="container">
-        <p className="font-display font-extrabold text-[1.1rem] text-ink mt-6 mb-4">Keranjang Belanja</p>
+      <div className="container pt-6">
+        <p className="font-display font-extrabold text-[1.1rem] text-ink mb-4">Keranjang Belanja</p>
 
         {!user && (
           <div className="flex items-center gap-2 bg-brand-tint text-brand-dark border border-brand/25 rounded-xl px-3.5 py-2.5 text-[12.75px] font-semibold mb-4">

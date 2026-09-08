@@ -9,9 +9,7 @@ import { AddressProvider } from "@/context/AddressContext";
 import { ToastProvider } from "@/components/ui/Toast";
 import CustomCursor from "@/components/ui/CustomCursor";
 import CursorStyleUpdater from "@/components/ui/CursorStyleUpdater";
-
-// Halaman yang tampil tanpa navbar & footer global (layout auth full-page sendiri)
-const NO_CHROME_ROUTES = ["/masuk", "/daftar", "/verifikasi"];
+import { NO_CHROME_ROUTES } from "@/router/routeChrome";
 
 function App() {
   const { pathname } = useLocation();

@@ -15,17 +15,14 @@ const slugify = (text: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)+/g, "");
 
-/**
- * Backend belum punya field slug/rating/sold/condition/weightGram,
- * jadi field itu diisi nilai default supaya tetap kompatibel dengan
- * ProductCard & komponen lain yang sudah ada.
- *
- * `category` diisi id_kategori (di-cast ke CategoryKey) karena kategori
- * sekarang dinamis dari backend, bukan enum tetap di data/products.ts.
- * Kalau nanti mau filter/label kategori, pakai `mapCategoryLabels`
- * di bawah, jangan andalkan CATEGORIES dari data/products.ts.
- */
 export function mapApiProductToProduct(p: ApiProduct): Product {
+  const hargaNormal = Number(p.harga_normal) || 0;
+  const hargaSpesial =
+    p.harga_spesial !== null && p.harga_spesial !== undefined && p.harga_spesial !== ""
+      ? Number(p.harga_spesial)
+      : null;
+  const isDiscounted = hargaSpesial !== null && hargaSpesial > 0 && hargaSpesial < hargaNormal;
+
   return {
     id: String(p.id_produk),
     slug: `${slugify(p.nama_produk)}-${p.id_produk}`,
@@ -33,7 +30,8 @@ export function mapApiProductToProduct(p: ApiProduct): Product {
     name: p.nama_produk,
     description: p.supplier ? `Supplier: ${p.supplier}` : "",
     image: resolveUploadUrl(p.image, "produk") || FALLBACK_IMAGE,
-    price: Number(p.harga_normal) || 0,
+    price: isDiscounted ? hargaSpesial! : hargaNormal,
+    priceOriginal: isDiscounted ? hargaNormal : undefined,
     stock: Number(p.kuantitas) || 0,
     sold: 0,
     rating: 0,
@@ -46,12 +44,6 @@ export function mapApiProductsToProducts(list: ApiProduct[]): Product[] {
   return list.map(mapApiProductToProduct);
 }
 
-/**
- * Wishlist_model->getByUser_get() diasumsikan join ke tabel produk.
- * Field id produk di respons wishlist belum pasti namanya (id_produk atau
- * id_product), jadi dinormalisasi dulu sebelum dipetakan lewat
- * mapApiProductToProduct.
- */
 export function mapApiWishlistToProducts(list: ApiWishlistItem[]): Product[] {
   return list.map((item) =>
     mapApiProductToProduct({
@@ -61,17 +53,6 @@ export function mapApiWishlistToProducts(list: ApiWishlistItem[]): Product[] {
   );
 }
 
-/**
- * Cart_model->getByUser_get() diasumsikan join ke tabel produk (sama seperti
- * wishlist). id produk dinormalisasi dulu (id_product atau id_produk) sebelum
- * dipetakan lewat mapApiProductToProduct.
- *
- * `price` produk diisi `price_used` (harga_spesial kalau ada, kalau tidak
- * harga_normal — sudah dihitung backend di controller Cart index_get),
- * supaya harga yang tampil di keranjang selalu harga yang benar-benar
- * dikenakan. `priceOriginal` diisi harga_normal supaya badge diskon otomatis
- * muncul kalau memang sedang ada harga_spesial.
- */
 export function mapApiCartItemToView(item: ApiCartItem): CartItemView {
   const idProduct = String(item.id_product ?? item.id_produk ?? "");
   const hargaNormal = Number(item.harga_normal) || 0;
@@ -89,6 +70,7 @@ export function mapApiCartItemToView(item: ApiCartItem): CartItemView {
     kuantitas: item.kuantitas ?? 0,
     harga_modal: 0,
     harga_normal: hargaNormal,
+    harga_spesial: hargaSpesial ?? undefined,
     lokasi_penyimpanan: "",
     supplier: "",
     id_kategori: item.id_kategori ?? null,

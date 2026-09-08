@@ -32,7 +32,7 @@ export default function Footer() {
                   href={SOCIALS[s.key]}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-[38px] h-[38px] rounded-full border border-line flex items-center justify-center text-ink-soft transition-all duration-200 hover:bg-brand hover:border-brand hover:text-white hover:-translate-y-0.5 hover:shadow-[var(--shadow-brand)]"
+                  className="w-[38px] h-[38px] rounded-full border border-line flex items-center justify-center text-ink-soft transition-all duration-200 hover:bg-brand hover:border-brand hover:text-white"
                   aria-label={s.key}
                 >
                   <Icon icon={s.icon} width={18} />

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "@/components/Navbar";
 import BannerCarousel from "@/components/BannerCarousel";
 import ProductCard from "@/components/ProductCard";
 import { type Product } from "@/data/products";
@@ -63,11 +62,10 @@ export default function HomePage() {
 
   return (
     <div>
-      <Navbar />
 
-      <div className="container">
+      <div className="container pt-6">
         {/* Hero (banner carousel dipertahankan) */}
-        <div className="mt-4">
+        <div>
           <BannerCarousel />
         </div>
 
@@ -100,7 +98,7 @@ export default function HomePage() {
           {loading && (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="aspect-square rounded-[14px] bg-cream-deep animate-pulse" />
+                <div key={i} className="aspect-square rounded-xl bg-cream-deep animate-pulse" />
               ))}
             </div>
           )}
@@ -120,7 +118,7 @@ export default function HomePage() {
               <div className="flex justify-center mt-2">
                 <Link
                   to="/kategori"
-                  className="inline-flex items-center gap-2 bg-brand !text-white font-bold text-sm px-8 py-3 rounded-full hover:bg-brand-dark transition-colors"
+                  className="inline-flex items-center gap-2 bg-brand !text-white font-bold text-sm px-8 py-3 rounded-xl hover:bg-brand-dark transition-colors"
                   style={{ color: "#ffffff" }}
                 >
                   Lihat Semua Produk

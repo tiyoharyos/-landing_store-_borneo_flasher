@@ -64,7 +64,7 @@ export default function Alert({ type = "success", title, message, onClose, class
 
   return (
     <div
-      className={`flex items-start gap-4 p-4 rounded-3xl shadow-sm ${config.bg} ${config.border} w-full transition-all duration-300 ${className}`}
+      className={`flex items-start gap-4 p-4 rounded-2xl shadow-[var(--shadow-xs)] ${config.bg} ${config.border} w-full transition-all duration-300 ${className}`}
     >
       <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${config.iconBg}`}>
         <Icon icon={config.icon} width={16} height={16} />

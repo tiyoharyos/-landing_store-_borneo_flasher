@@ -43,9 +43,9 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
-  sm: "h-[34px] px-[16px] text-[12.5px] rounded-full gap-1.5",
-  md: "h-[42px] px-[22px] text-sm rounded-full gap-2",
-  lg: "h-[50px] px-7 text-[15px] rounded-full gap-2",
+  sm: "h-[34px] px-[15px] text-[12.5px] rounded-lg gap-1.5",
+  md: "h-[42px] px-[20px] text-sm rounded-lg gap-2",
+  lg: "h-[50px] px-6 text-[15px] rounded-xl gap-2",
 };
 
 const SPINNER_BORDER: Record<ButtonVariant, string> = {
@@ -75,7 +75,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   ref
 ) {
   const classes = [
-    "inline-flex items-center justify-center border-[1.5px] font-semibold whitespace-nowrap select-none cursor-pointer transition-colors active:translate-y-px active:scale-[0.99] focus-visible:outline-none focus-visible:ring-[3.5px] focus-visible:ring-brand/15",
+    "inline-flex items-center justify-center border font-semibold whitespace-nowrap select-none cursor-pointer transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand/15",
     VARIANT_CLASSES[variant],
     SIZE_CLASSES[size],
     fullWidth ? "flex w-full" : "",

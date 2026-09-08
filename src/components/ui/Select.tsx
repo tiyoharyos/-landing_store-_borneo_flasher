@@ -34,7 +34,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         <select
           ref={ref}
           id={selectId}
-          className={`w-full h-11 border-[1.5px] rounded-xl bg-surface pl-3.5 pr-9 text-[13.75px] font-body text-ink outline-none appearance-none cursor-pointer transition-all focus:border-brand focus:ring-[3.5px] focus:ring-brand/15 ${
+          className={`w-full h-11 border rounded-xl bg-surface pl-3.5 pr-9 text-[13.75px] font-body text-ink outline-none appearance-none cursor-pointer transition-all focus:border-brand focus:ring-[3.5px] focus:ring-brand/15 ${
             error ? "border-warn focus:ring-warn/15" : "border-line"
           } ${className}`}
           {...rest}
