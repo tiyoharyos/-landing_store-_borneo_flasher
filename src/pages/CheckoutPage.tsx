@@ -12,6 +12,8 @@ import AddressListModal from "@/components/address/AddressListModal";
 import AddressFormModal from "@/components/address/AddressFormModal";
 import { useToast } from "@/components/ui/Toast";
 import type { Address } from "@/data/addresses";
+import { checkout } from "@/services/checkoutService";
+import { getApiErrorMessage } from "@/lib/axios";
 import {
   createOrder,
   SHIPPING_OPTIONS,
@@ -21,9 +23,12 @@ import {
 } from "@/data/orders";
 
 export default function CheckoutPage() {
-  const { items, subtotal, clear } = useCart();
+  const { items, subtotal, refresh: refreshCart } = useCart();
   const { user } = useAuth();
-  const { addresses, primaryAddress } = useAddresses();
+  // primaryAddress = alamat yang ditandai utama (fallback ke alamat pertama
+  // kalau belum ada yang ditandai utama) — otomatis jadi alamat terpilih
+  // begitu daftar alamat termuat dari backend, lihat useEffect di bawah.
+  const { addresses, primaryAddress, loading: addressesLoading } = useAddresses();
   const navigate = useNavigate();
 
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
@@ -65,7 +70,7 @@ export default function CheckoutPage() {
   const shippingCost = SHIPPING_OPTIONS.find((s) => s.key === shippingMethod)?.cost ?? 0;
   const total = subtotal + shippingCost;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!selectedAddress) {
       Swal.fire({
         icon: "warning",
@@ -77,7 +82,15 @@ export default function CheckoutPage() {
     }
 
     setSubmitting(true);
-    setTimeout(() => {
+    try {
+      // Backend Checkout/ ambil isi cart langsung dari server (bukan dari
+      // body request), cek stok, buat order, kurangi stok, lalu kosongkan
+      // cart user. Alamat/metode kirim/metode bayar belum didukung backend
+      // (endpoint-nya belum menerima field itu), jadi tetap disimpan
+      // sebagai catatan pesanan di sisi frontend saja.
+      const res = await checkout();
+      const idOrder = res.data?.id_order;
+
       const order = createOrder(
         items,
         {
@@ -85,16 +98,30 @@ export default function CheckoutPage() {
           phone: selectedAddress.phone,
           fullAddress: selectedAddress.fullAddress,
           city: selectedAddress.city,
+          province: selectedAddress.province,
           postalCode: selectedAddress.postalCode,
         },
         shippingMethod,
         paymentMethod,
-        user.email
+        user.email,
+        idOrder !== undefined ? String(idOrder) : undefined
       );
-      clear();
+
+      // Cart sudah dikosongkan di server, sinkronkan ulang state lokal
+      // (bukan clear() manual, supaya tidak ada request DELETE dobel).
+      refreshCart();
       toast.success("Pesanan berhasil dibuat!");
       navigate(`/pesanan/sukses/${order.id}`);
-    }, 700);
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Checkout Gagal",
+        text: getApiErrorMessage(err, "Checkout gagal, coba lagi."),
+        confirmButtonText: "Oke",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -131,9 +158,14 @@ export default function CheckoutPage() {
                     <span className="text-[13.5px] font-bold text-ink">{selectedAddress.recipientName}</span>
                   </div>
                   <p className="text-[12.5px] text-ink-soft leading-relaxed">
-                    {selectedAddress.fullAddress}, {selectedAddress.city} {selectedAddress.postalCode},{" "}
-                    {selectedAddress.phone}
+                    {selectedAddress.fullAddress}, {selectedAddress.city}, {selectedAddress.province}{" "}
+                    {selectedAddress.postalCode}, {selectedAddress.phone}
                   </p>
+                </div>
+              ) : addressesLoading ? (
+                <div className="flex items-center justify-center gap-2 py-6 text-muted text-[13px]">
+                  <Icon icon="mdi:loading" width={18} className="animate-spin" />
+                  Memuat alamat...
                 </div>
               ) : addresses.length > 0 ? (
                 <button

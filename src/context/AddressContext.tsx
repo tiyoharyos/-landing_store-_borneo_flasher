@@ -5,19 +5,21 @@ import {
   createAddress,
   updateAddress,
   deleteAddress,
-  setPrimaryAddress,
-  type Address,
-  type AddressInput,
-} from "@/data/addresses";
+} from "@/services/addressService";
+import { mapApiAddressesToAddresses, buildAddressPayload } from "@/lib/mapAddress";
+import { getApiErrorMessage } from "@/lib/axios";
+import type { Address, AddressInput } from "@/data/addresses";
 import { useToast } from "@/components/ui/Toast";
 
 interface AddressContextValue {
   addresses: Address[];
   primaryAddress: Address | undefined;
-  addAddress: (input: AddressInput, makePrimary?: boolean) => Address;
-  editAddress: (id: string, input: AddressInput) => void;
+  loading: boolean;
+  addAddress: (input: AddressInput, makePrimary?: boolean) => Promise<Address | null>;
+  editAddress: (id: string, input: AddressInput, makePrimary?: boolean) => Promise<void>;
   removeAddress: (id: string) => void;
   makePrimary: (id: string) => void;
+  refresh: () => void;
 }
 
 const AddressContext = createContext<AddressContextValue | null>(null);
@@ -25,39 +27,108 @@ const AddressContext = createContext<AddressContextValue | null>(null);
 export function AddressProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [addresses, setAddresses] = useState<Address[]>([]);
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
+
+  const loadAddresses = () => {
+    if (!user) {
+      setAddresses([]);
+      return;
+    }
+    setLoading(true);
+    getAddresses()
+      .then((res) => setAddresses(mapApiAddressesToAddresses(res.data ?? [])))
+      .catch(() => {
+        // Gagal muat alamat tetap lanjut dengan daftar kosong,
+        // supaya halaman lain tidak ikut error.
+      })
+      .finally(() => setLoading(false));
+  };
 
   // Muat ulang daftar alamat setiap kali akun yang aktif berganti.
   useEffect(() => {
-    setAddresses(user ? getAddresses(user.email) : []);
+    if (!user) {
+      setAddresses([]);
+      return;
+    }
+
+    let active = true;
+    setLoading(true);
+    getAddresses()
+      .then((res) => {
+        if (!active) return;
+        setAddresses(mapApiAddressesToAddresses(res.data ?? []));
+      })
+      .catch(() => {
+        // ignore, biarkan daftar kosong
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const addAddress: AddressContextValue["addAddress"] = (input, makePrimary = false) => {
-    if (!user) throw new Error("Harus masuk akun dulu untuk menambah alamat.");
-    const created = createAddress(user.email, input, makePrimary);
-    setAddresses(getAddresses(user.email));
-    toast.success("Alamat baru disimpan");
-    return created;
+  const addAddress: AddressContextValue["addAddress"] = async (input, makePrimary = false) => {
+    if (!user) return null;
+    try {
+      // Alamat pertama otomatis jadi utama, sama seperti perilaku sebelumnya.
+      const shouldBePrimary = makePrimary || addresses.length === 0;
+      const res = await createAddress(buildAddressPayload(input, shouldBePrimary));
+      loadAddresses();
+      toast.success("Alamat baru disimpan");
+      return { ...input, id: String(res.data?.id_address ?? ""), isPrimary: shouldBePrimary };
+    } catch (err) {
+      toast.error(getApiErrorMessage(err, "Gagal menyimpan alamat."));
+      return null;
+    }
   };
 
-  const editAddress: AddressContextValue["editAddress"] = (id, input) => {
+  const editAddress: AddressContextValue["editAddress"] = async (id, input, makePrimary) => {
     if (!user) return;
-    const next = updateAddress(user.email, id, input);
-    setAddresses(next);
-    toast.success("Alamat diperbarui");
+    try {
+      await updateAddress(id, buildAddressPayload(input, makePrimary));
+      loadAddresses();
+      toast.success("Alamat diperbarui");
+    } catch (err) {
+      toast.error(getApiErrorMessage(err, "Gagal memperbarui alamat."));
+    }
   };
 
   const removeAddress: AddressContextValue["removeAddress"] = (id) => {
-    if (!user) return;
-    const next = deleteAddress(user.email, id);
-    setAddresses(next);
-    toast.info("Alamat dihapus");
+    const prev = addresses;
+    setAddresses((cur) => cur.filter((a) => a.id !== id));
+    deleteAddress(id)
+      .then(() => toast.info("Alamat dihapus"))
+      .catch((err) => {
+        setAddresses(prev);
+        toast.error(getApiErrorMessage(err, "Gagal menghapus alamat."));
+      });
   };
 
   const makePrimaryFn: AddressContextValue["makePrimary"] = (id) => {
-    if (!user) return;
-    const next = setPrimaryAddress(user.email, id);
-    setAddresses(next);
+    const target = addresses.find((a) => a.id === id);
+    if (!target) return;
+    const prev = addresses;
+    setAddresses((cur) => cur.map((a) => ({ ...a, isPrimary: a.id === id })));
+    updateAddress(id, buildAddressPayload(
+      {
+        label: target.label,
+        recipientName: target.recipientName,
+        phone: target.phone,
+        fullAddress: target.fullAddress,
+        city: target.city,
+        province: target.province,
+        postalCode: target.postalCode,
+      },
+      true
+    )).catch((err) => {
+      setAddresses(prev);
+      toast.error(getApiErrorMessage(err, "Gagal menjadikan alamat utama."));
+    });
   };
 
   const primaryAddress = addresses.find((a) => a.isPrimary) ?? addresses[0];
@@ -67,10 +138,12 @@ export function AddressProvider({ children }: { children: ReactNode }) {
       value={{
         addresses,
         primaryAddress,
+        loading,
         addAddress,
         editAddress,
         removeAddress,
         makePrimary: makePrimaryFn,
+        refresh: loadAddresses,
       }}
     >
       {children}

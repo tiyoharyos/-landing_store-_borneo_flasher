@@ -68,7 +68,7 @@ export default function OrderSuccessPage() {
             <p className="text-[13px] text-ink-soft leading-relaxed">
               {order.address.name} — {order.address.phone}
               <br />
-              {order.address.fullAddress}, {order.address.city} {order.address.postalCode}
+              {order.address.fullAddress}, {order.address.city}, {order.address.province} {order.address.postalCode}
             </p>
           </div>
 

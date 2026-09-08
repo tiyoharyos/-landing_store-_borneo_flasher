@@ -21,6 +21,7 @@ const emptyForm: AddressInput = {
   phone: "",
   fullAddress: "",
   city: "",
+  province: "",
   postalCode: "",
 };
 
@@ -59,12 +60,13 @@ export default function AddressFormModal({ open, onClose, editing, onSaved }: Pr
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const nextErrors: Record<string, string> = {};
     if (!form.recipientName.trim()) nextErrors.recipientName = "Nama penerima wajib diisi.";
     if (!form.phone.trim()) nextErrors.phone = "No. HP wajib diisi.";
     if (!form.fullAddress.trim()) nextErrors.fullAddress = "Alamat lengkap wajib diisi.";
     if (!form.city.trim()) nextErrors.city = "Kota/kabupaten wajib diisi.";
+    if (!form.province.trim()) nextErrors.province = "Provinsi wajib diisi.";
     if (!form.postalCode.trim()) nextErrors.postalCode = "Kode pos wajib diisi.";
 
     setErrors(nextErrors);
@@ -73,11 +75,11 @@ export default function AddressFormModal({ open, onClose, editing, onSaved }: Pr
     setSubmitting(true);
     try {
       if (editing) {
-        editAddress(editing.id, form);
+        await editAddress(editing.id, form, makePrimary || editing.isPrimary);
         onSaved?.({ ...editing, ...form, isPrimary: makePrimary || editing.isPrimary });
       } else {
-        const created = addAddress(form, makePrimary);
-        onSaved?.(created);
+        const created = await addAddress(form, makePrimary);
+        if (created) onSaved?.(created);
       }
       onClose();
     } finally {
@@ -124,6 +126,13 @@ export default function AddressFormModal({ open, onClose, editing, onSaved }: Pr
           onChange={setField("city")}
           placeholder="Contoh: Boyolali"
           error={errors.city}
+        />
+        <Input
+          label="Provinsi"
+          value={form.province}
+          onChange={setField("province")}
+          placeholder="Contoh: Jawa Tengah"
+          error={errors.province}
         />
         <Input
           label="Kode Pos"

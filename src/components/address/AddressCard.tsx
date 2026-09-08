@@ -36,7 +36,7 @@ export default function AddressCard({
       <p className="text-[13.5px] font-bold text-ink mt-1">{address.recipientName}</p>
       <p className="text-[12.5px] text-muted">{address.phone}</p>
       <p className="text-[12.5px] text-ink-soft leading-relaxed">
-        {address.fullAddress}, {address.city} {address.postalCode}
+        {address.fullAddress}, {address.city}, {address.province} {address.postalCode}
       </p>
 
       <div className="flex items-center gap-3.5 flex-wrap mt-2 pt-2.5 border-t border-line">

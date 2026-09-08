@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
 
 export default function CartPage() {
-  const { items, subtotal, removeItem, setQty } = useCart();
+  const { items, subtotal, loading, removeItem, setQty } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
   const toast = useToast();
@@ -54,7 +54,12 @@ export default function CartPage() {
           </div>
         )}
 
-        {items.length === 0 ? (
+        {loading && items.length === 0 ? (
+          <div className="flex flex-col items-center justify-center gap-3 py-20 text-muted">
+            <Icon icon="mdi:loading" width={32} className="animate-spin" />
+            <span className="text-[13px]">Memuat keranjang...</span>
+          </div>
+        ) : items.length === 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
             <div className="flex flex-col items-center text-center bg-surface border border-line rounded-2xl px-6 py-14 shadow-sm">
               <div className="w-[140px] h-[140px] flex items-center justify-center text-line">

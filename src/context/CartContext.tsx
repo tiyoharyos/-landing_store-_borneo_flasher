@@ -1,89 +1,122 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { PRODUCTS, type Product } from "@/data/products";
+import { type Product } from "@/data/products";
 import { useAuth } from "@/context/AuthContext";
+import { getCart, addToCart, setCartQuantity, removeFromCart } from "@/services/cartService";
+import { mapApiCartToItems } from "@/lib/mapProduct";
+import { getApiErrorMessage } from "@/lib/axios";
 import Swal from "sweetalert2";
+import { useToast } from "@/components/ui/Toast";
 
-export interface CartLine {
+export interface CartItemView {
   productId: string;
   qty: number;
-}
-
-export interface CartItemView extends CartLine {
   product: Product;
   lineTotal: number;
 }
 
 interface CartContextValue {
-  lines: CartLine[];
   items: CartItemView[];
   totalItems: number;
   subtotal: number;
-  /** Menambahkan produk ke keranjang. Butuh login — kalau belum masuk,
-   *  user akan diarahkan ke halaman login lewat dialog konfirmasi. */
-  addItem: (productId: string, qty?: number) => void;
+  loading: boolean;
+  /** Menambahkan produk ke keranjang lewat API. Butuh login — kalau belum
+   *  masuk, user akan diarahkan ke halaman login lewat dialog konfirmasi.
+   *  Resolve `true` kalau produk berhasil ditambahkan, `false` kalau tidak
+   *  (belum login / request gagal — pesan error sudah ditampilkan lewat toast). */
+  addItem: (productId: string, qty?: number) => Promise<boolean>;
   removeItem: (productId: string) => void;
   setQty: (productId: string, qty: number) => void;
+  refresh: () => void;
   clear: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "bf_cart";
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [lines, setLines] = useState<CartLine[]>([]);
+  const [items, setItems] = useState<CartItemView[]>([]);
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const toast = useToast();
 
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setLines(JSON.parse(raw));
-    } catch {
-      // ignore corrupted storage
+  const loadCart = () => {
+    if (!user) {
+      setItems([]);
+      return;
     }
-  }, []);
+    setLoading(true);
+    getCart()
+      .then((res) => {
+        setItems(mapApiCartToItems(res.data?.items ?? []));
+      })
+      .catch(() => {
+        // Gagal muat keranjang tetap lanjut dengan keranjang kosong,
+        // supaya halaman lain tidak ikut error.
+      })
+      .finally(() => setLoading(false));
+  };
 
+  // Ambil keranjang dari backend tiap kali user login. Kalau logout,
+  // kosongkan keranjang lokal (server sudah tidak lagi mengembalikan Authorization).
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
-  }, [lines]);
-
-  // Kalau user logout sementara ada isi keranjang, kosongkan supaya
-  // keranjang benar-benar "tidak bisa diisi" tanpa akun yang aktif.
-  useEffect(() => {
-    if (!user && lines.length > 0) {
-      setLines([]);
+    if (!user) {
+      setItems([]);
+      return;
     }
+
+    let active = true;
+    setLoading(true);
+    getCart()
+      .then((res) => {
+        if (!active) return;
+        setItems(mapApiCartToItems(res.data?.items ?? []));
+      })
+      .catch(() => {
+        // ignore, biarkan keranjang kosong
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const addItem: CartContextValue["addItem"] = (productId, qty = 1) => {
+  const addItem: CartContextValue["addItem"] = async (productId, qty = 1) => {
     if (!user) {
-      Swal.fire({
+      const res = await Swal.fire({
         icon: "info",
         title: "Masuk dulu, yuk",
         text: "Kamu perlu masuk ke akun untuk menambahkan produk ke keranjang.",
         showCancelButton: true,
         confirmButtonText: "Masuk Sekarang",
         cancelButtonText: "Nanti Saja",
-      }).then((res) => {
-        if (res.isConfirmed) navigate("/masuk?next=/keranjang");
       });
-      return;
+      if (res.isConfirmed) navigate("/masuk?next=/keranjang");
+      return false;
     }
-    setLines((prev) => {
-      const existing = prev.find((l) => l.productId === productId);
-      if (existing) {
-        return prev.map((l) =>
-          l.productId === productId ? { ...l, qty: l.qty + qty } : l
-        );
-      }
-      return [...prev, { productId, qty }];
-    });
+
+    try {
+      await addToCart(productId, qty);
+      loadCart();
+      toast.success("Ditambahkan ke keranjang");
+      return true;
+    } catch (err) {
+      toast.error(getApiErrorMessage(err, "Gagal menambahkan ke keranjang."));
+      return false;
+    }
   };
 
   const removeItem: CartContextValue["removeItem"] = (productId) => {
-    setLines((prev) => prev.filter((l) => l.productId !== productId));
+    const prevItems = items;
+    setItems((prev) => prev.filter((i) => i.productId !== productId));
+    removeFromCart(productId).catch((err) => {
+      setItems(prevItems);
+      toast.error(getApiErrorMessage(err, "Gagal menghapus produk dari keranjang."));
+    });
   };
 
   const setQty: CartContextValue["setQty"] = (productId, qty) => {
@@ -91,25 +124,37 @@ export function CartProvider({ children }: { children: ReactNode }) {
       removeItem(productId);
       return;
     }
-    setLines((prev) => prev.map((l) => (l.productId === productId ? { ...l, qty } : l)));
+
+    const prevItems = items;
+    setItems((prev) =>
+      prev.map((i) =>
+        i.productId === productId ? { ...i, qty, lineTotal: i.product.price * qty } : i
+      )
+    );
+
+    setCartQuantity(productId, qty).catch((err) => {
+      setItems(prevItems);
+      toast.error(getApiErrorMessage(err, "Gagal mengubah jumlah produk."));
+    });
   };
 
-  const clear = () => setLines([]);
-
-  const items: CartItemView[] = lines
-    .map((l) => {
-      const product = PRODUCTS.find((p) => p.id === l.productId);
-      if (!product) return null;
-      return { ...l, product, lineTotal: product.price * l.qty };
-    })
-    .filter((x): x is CartItemView => x !== null);
+  // Tidak ada endpoint bulk-clear di backend, jadi keranjang dikosongkan
+  // dengan menghapus item satu per satu (dipakai setelah checkout berhasil).
+  const clear = () => {
+    const prevItems = items;
+    setItems([]);
+    Promise.all(prevItems.map((i) => removeFromCart(i.productId))).catch(() => {
+      // Best-effort: kalau ada yang gagal dihapus di server, sinkronkan ulang.
+      loadCart();
+    });
+  };
 
   const totalItems = items.reduce((sum, i) => sum + i.qty, 0);
   const subtotal = items.reduce((sum, i) => sum + i.lineTotal, 0);
 
   return (
     <CartContext.Provider
-      value={{ lines, items, totalItems, subtotal, addItem, removeItem, setQty, clear }}
+      value={{ items, totalItems, subtotal, loading, addItem, removeItem, setQty, refresh: loadCart, clear }}
     >
       {children}
     </CartContext.Provider>

@@ -1,7 +1,9 @@
 import type { ApiProduct } from "@/services/productsService";
 import type { ApiCategory } from "@/services/categoriesService";
 import type { ApiWishlistItem } from "@/services/wishlistService";
+import type { ApiCartItem } from "@/services/cartService";
 import type { Product, CategoryKey } from "@/data/products";
+import type { CartItemView } from "@/context/CartContext";
 import { resolveUploadUrl } from "@/lib/uploads";
 
 const FALLBACK_IMAGE = "https://picsum.photos/seed/borneo-flasher-fallback/600/600";
@@ -57,6 +59,58 @@ export function mapApiWishlistToProducts(list: ApiWishlistItem[]): Product[] {
       id_produk: item.id_produk ?? item.id_product ?? "",
     } as ApiProduct)
   );
+}
+
+/**
+ * Cart_model->getByUser_get() diasumsikan join ke tabel produk (sama seperti
+ * wishlist). id produk dinormalisasi dulu (id_product atau id_produk) sebelum
+ * dipetakan lewat mapApiProductToProduct.
+ *
+ * `price` produk diisi `price_used` (harga_spesial kalau ada, kalau tidak
+ * harga_normal — sudah dihitung backend di controller Cart index_get),
+ * supaya harga yang tampil di keranjang selalu harga yang benar-benar
+ * dikenakan. `priceOriginal` diisi harga_normal supaya badge diskon otomatis
+ * muncul kalau memang sedang ada harga_spesial.
+ */
+export function mapApiCartItemToView(item: ApiCartItem): CartItemView {
+  const idProduct = String(item.id_product ?? item.id_produk ?? "");
+  const hargaNormal = Number(item.harga_normal) || 0;
+  const hargaSpesial =
+    item.harga_spesial !== null && item.harga_spesial !== undefined && item.harga_spesial !== ""
+      ? Number(item.harga_spesial)
+      : null;
+  const priceUsed = item.price_used !== undefined ? Number(item.price_used) : hargaSpesial ?? hargaNormal;
+  const qty = Number(item.quantity) || 0;
+
+  const product = mapApiProductToProduct({
+    id_produk: idProduct,
+    nama_produk: item.nama_produk ?? "Produk",
+    kode_produk: item.kode_produk ?? "",
+    kuantitas: item.kuantitas ?? 0,
+    harga_modal: 0,
+    harga_normal: hargaNormal,
+    lokasi_penyimpanan: "",
+    supplier: "",
+    id_kategori: item.id_kategori ?? null,
+    nama_kategori: item.nama_kategori,
+    image: item.image ?? null,
+  } as ApiProduct);
+
+  product.price = priceUsed;
+  if (hargaSpesial !== null && hargaSpesial < hargaNormal) {
+    product.priceOriginal = hargaNormal;
+  }
+
+  return {
+    productId: idProduct,
+    qty,
+    product,
+    lineTotal: item.subtotal !== undefined ? Number(item.subtotal) : priceUsed * qty,
+  };
+}
+
+export function mapApiCartToItems(list: ApiCartItem[]): CartItemView[] {
+  return list.map(mapApiCartItemToView);
 }
 
 export interface CategoryOption {

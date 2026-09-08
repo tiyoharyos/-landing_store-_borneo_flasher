@@ -1,13 +1,13 @@
 // ==========================================================
 // MOCK DATA — Seed Akun Demo (Borneo Flasher Store)
-// Data awal (alamat & riwayat pesanan) yang otomatis muncul
-// begitu akun demo di src/data/users.ts login pertama kali,
-// supaya profil terasa "sudah terisi" alih-alih kosong melompong.
-// Setelah muncul, data ini tersimpan di localStorage seperti
-// biasa dan bisa diubah/dihapus normal lewat UI.
+// Data awal riwayat pesanan yang otomatis muncul begitu akun demo
+// di src/data/users.ts login pertama kali, supaya profil terasa
+// "sudah terisi" alih-alih kosong melompong. Setelah muncul, data
+// ini tersimpan di localStorage seperti biasa.
+// (Alamat sudah tidak di-seed lagi di sini — sekarang alamat
+// diambil langsung dari backend lewat endpoint Addresses/.)
 // ==========================================================
 
-import type { AddressInput } from "@/data/addresses";
 import type { Order, OrderItemSnapshot, PaymentMethodKey, ShippingMethodKey } from "@/data/orders";
 import { PRODUCTS } from "@/data/products";
 
@@ -50,57 +50,6 @@ function buildOrder(input: SeedOrderInput): Order {
   };
 }
 
-// ---------------- Alamat demo ----------------
-export const DEMO_ADDRESS_SEED: Record<string, AddressInput[]> = {
-  "andi@borneoflasher.id": [
-    {
-      label: "Rumah",
-      recipientName: "Andi Saputra",
-      phone: "081234567890",
-      fullAddress: "Jl. Melati No. 12, RT 03 / RW 05, Kel. Sungai Pinang",
-      city: "Samarinda",
-      postalCode: "75117",
-    },
-    {
-      label: "Kantor",
-      recipientName: "Andi Saputra",
-      phone: "081234567890",
-      fullAddress: "Ruko Borneo Trade Center Blok C No. 8, Jl. Ahmad Yani",
-      city: "Samarinda",
-      postalCode: "75242",
-    },
-  ],
-  "siti@borneoflasher.id": [
-    {
-      label: "Rumah",
-      recipientName: "Siti Rahma",
-      phone: "082198765432",
-      fullAddress: "Jl. Merdeka Gg. Aster No. 5",
-      city: "Balikpapan",
-      postalCode: "76114",
-    },
-  ],
-  "admin@borneoflasher.id": [
-    {
-      label: "Kantor",
-      recipientName: "Admin Borneo",
-      phone: "085611122233",
-      fullAddress: "Jl. Borneo Flasher Institute No. 1",
-      city: "Balikpapan",
-      postalCode: "76125",
-    },
-  ], "bintang@borneoflasher.id": [
-    {
-      label: "Kantor",
-      recipientName: "Admin Borneo",
-      phone: "085611122233",
-      fullAddress: "Jl. Borneo Flasher Institute No. 1",
-      city: "Balikpapan",
-      postalCode: "76125",
-    },
-  ],
-};
-
 // ---------------- Pesanan demo ----------------
 export const DEMO_ORDER_SEED: Record<string, Order[]> = {
   "andi@borneoflasher.id": [
@@ -114,6 +63,7 @@ export const DEMO_ORDER_SEED: Record<string, Order[]> = {
         phone: "081234567890",
         fullAddress: "Jl. Melati No. 12, RT 03 / RW 05, Kel. Sungai Pinang",
         city: "Samarinda",
+        province: "Kalimantan Timur",
         postalCode: "75117",
       },
       shippingMethod: "instant",
@@ -131,6 +81,7 @@ export const DEMO_ORDER_SEED: Record<string, Order[]> = {
         phone: "081234567890",
         fullAddress: "Ruko Borneo Trade Center Blok C No. 8, Jl. Ahmad Yani",
         city: "Samarinda",
+        province: "Kalimantan Timur",
         postalCode: "75242",
       },
       shippingMethod: "reguler",
@@ -148,6 +99,7 @@ export const DEMO_ORDER_SEED: Record<string, Order[]> = {
         phone: "081234567890",
         fullAddress: "Jl. Melati No. 12, RT 03 / RW 05, Kel. Sungai Pinang",
         city: "Samarinda",
+        province: "Kalimantan Timur",
         postalCode: "75117",
       },
       shippingMethod: "kargo",
@@ -167,6 +119,7 @@ export const DEMO_ORDER_SEED: Record<string, Order[]> = {
         phone: "082198765432",
         fullAddress: "Jl. Merdeka Gg. Aster No. 5",
         city: "Balikpapan",
+        province: "Kalimantan Timur",
         postalCode: "76114",
       },
       shippingMethod: "reguler",
@@ -184,6 +137,7 @@ export const DEMO_ORDER_SEED: Record<string, Order[]> = {
         phone: "082198765432",
         fullAddress: "Jl. Merdeka Gg. Aster No. 5",
         city: "Balikpapan",
+        province: "Kalimantan Timur",
         postalCode: "76114",
       },
       shippingMethod: "instant",
@@ -203,6 +157,7 @@ export const DEMO_ORDER_SEED: Record<string, Order[]> = {
         phone: "085611122233",
         fullAddress: "Jl. Borneo Flasher Institute No. 1",
         city: "Balikpapan",
+        province: "Kalimantan Timur",
         postalCode: "76125",
       },
       shippingMethod: "instant",
@@ -220,6 +175,7 @@ export const DEMO_ORDER_SEED: Record<string, Order[]> = {
         phone: "085611122233",
         fullAddress: "Jl. Borneo Flasher Institute No. 1",
         city: "Balikpapan",
+        province: "Kalimantan Timur",
         postalCode: "76125",
       },
       shippingMethod: "reguler",
@@ -229,10 +185,6 @@ export const DEMO_ORDER_SEED: Record<string, Order[]> = {
     }),
   ],
 };
-
-export function getDemoAddressSeed(email: string): AddressInput[] | undefined {
-  return DEMO_ADDRESS_SEED[emailKey(email)];
-}
 
 export function getDemoOrderSeed(email: string): Order[] | undefined {
   return DEMO_ORDER_SEED[emailKey(email)];

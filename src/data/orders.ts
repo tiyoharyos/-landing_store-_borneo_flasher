@@ -6,6 +6,7 @@ export interface ShippingAddress {
   phone: string;
   fullAddress: string;
   city: string;
+  province: string;
   postalCode: string;
 }
 
@@ -92,12 +93,16 @@ export function createOrder(
   address: ShippingAddress,
   shippingMethod: ShippingMethodKey,
   paymentMethod: PaymentMethodKey,
-  userEmail: string
+  userEmail: string,
+  /** ID order asli dari backend (Checkout/), dipakai kalau ada supaya nomor
+   *  pesanan yang tampil di UI konsisten dengan data di server. Kalau tidak
+   *  diisi, dibuatkan id lokal seperti sebelumnya. */
+  orderId?: string
 ): Order {
   const shippingCost = SHIPPING_OPTIONS.find((s) => s.key === shippingMethod)?.cost ?? 0;
   const subtotal = items.reduce((sum, i) => sum + i.lineTotal, 0);
   const order: Order = {
-    id: genOrderId(),
+    id: orderId ?? genOrderId(),
     userEmail,
     createdAt: new Date().toISOString(),
     items: items.map((i) => ({

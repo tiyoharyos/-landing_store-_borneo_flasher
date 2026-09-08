@@ -5,29 +5,36 @@ import { motion, useAnimation } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/CartContext";
-import { useAuth } from "@/context/AuthContext";
 import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
-import { useToast } from "@/components/ui/Toast";
-import {
-  getProductBySlug,
-  relatedProducts,
-  formatRupiah,
-  discountPercent,
-  getCategory,
-} from "@/data/products";
+import { type Product, formatRupiah, discountPercent } from "@/data/products";
+import { getProductDetail, getProducts } from "@/services/productsService";
+import { getCategories } from "@/services/categoriesService";
+import { mapApiProductToProduct, mapApiProductsToProducts, mapCategoryOptions, type CategoryOption } from "@/lib/mapProduct";
+import { getApiErrorMessage } from "@/lib/axios";
+
+// Slug digenerate di frontend sebagai `${slugify(nama)}-${id_produk}`
+// (lihat src/lib/mapProduct.ts), jadi id produk selalu ada di segmen
+// terakhir setelah tanda hubung paling akhir.
+function extractIdFromSlug(slug: string): string {
+  const parts = slug.split("-");
+  return parts[parts.length - 1];
+}
 
 export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { addItem } = useCart();
-  const { user } = useAuth();
   const { isWishlisted, toggle } = useWishlist();
-  const toast = useToast();
   const [qty, setQty] = useState(1);
   const qtyPulse = useAnimation();
 
-  const product = slug ? getProductBySlug(slug) : undefined;
+  const [product, setProduct] = useState<Product | null>(null);
+  const [categories, setCategories] = useState<CategoryOption[]>([]);
+  const [related, setRelated] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Reset jumlah tiap ganti produk (mis. klik produk terkait) supaya
   // navigasi antar produk terasa bersih, bukan bawa-bawa state lama.
@@ -41,13 +48,97 @@ export default function ProductDetailPage() {
     qtyPulse.start({ scale: [1, 1.12, 1], transition: { duration: 0.22, ease: "easeOut" } });
   }, [qty, qtyPulse]);
 
-  if (!product) {
+  // Ambil daftar kategori sekali di awal, dipakai buat label breadcrumb.
+  useEffect(() => {
+    let active = true;
+    getCategories()
+      .then((res) => {
+        if (!active) return;
+        setCategories(mapCategoryOptions(res.data ?? []));
+      })
+      .catch(() => {
+        // Breadcrumb kategori opsional, gagal muat tetap lanjut.
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Fetch detail produk (Products/detail/:id) tiap kali slug berubah.
+  useEffect(() => {
+    if (!slug) return;
+    const id = extractIdFromSlug(slug);
+
+    let active = true;
+    setLoading(true);
+    setError(null);
+    setNotFound(false);
+    setRelated([]);
+
+    getProductDetail(id)
+      .then((res) => {
+        if (!active) return;
+        if (!res.status || !res.data) {
+          setNotFound(true);
+          return;
+        }
+        const mapped = mapApiProductToProduct(res.data);
+        setProduct(mapped);
+
+        // Ambil produk terkait dari kategori yang sama.
+        getProducts({ id_kategori: mapped.category })
+          .then((relRes) => {
+            if (!active) return;
+            const relatedItems = mapApiProductsToProducts(relRes.data ?? []).filter(
+              (p) => p.id !== mapped.id
+            );
+            setRelated(relatedItems.slice(0, 4));
+          })
+          .catch(() => {
+            // Produk terkait opsional, gagal muat tetap lanjut.
+          });
+      })
+      .catch((err) => {
+        if (!active) return;
+        setNotFound(true);
+        setError(getApiErrorMessage(err, "Gagal memuat detail produk."));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div>
+        <Navbar />
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] gap-7 pb-4 pt-5">
+            <div className="rounded-[18px] aspect-square bg-cream-deep animate-pulse" />
+            <div className="flex flex-col gap-3 pt-2">
+              <div className="h-6 w-3/4 bg-cream-deep rounded animate-pulse" />
+              <div className="h-4 w-1/2 bg-cream-deep rounded animate-pulse" />
+              <div className="h-8 w-1/3 bg-cream-deep rounded animate-pulse" />
+              <div className="h-20 w-full bg-cream-deep rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (notFound || !product) {
     return (
       <div>
         <Navbar />
         <div className="container text-center py-12 px-6">
           <Icon icon="mdi:package-variant-closed" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Produk Tidak Ditemukan</p>
+          {error && <p className="text-muted text-sm mt-1">{error}</p>}
           <Link
             to="/"
             className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-full px-6 py-2 hover:bg-brand-tint transition-colors"
@@ -60,20 +151,19 @@ export default function ProductDetailPage() {
   }
 
   const pct = discountPercent(product);
-  const category = getCategory(product.category);
-  const related = relatedProducts(product);
+  const category = categories.find((c) => c.key === product.category);
   const wished = isWishlisted(product.id);
 
   const clampQty = (n: number) => Math.max(1, Math.min(product.stock, n));
 
   const handleAddToCart = () => {
+    // Toast sukses/gagal sudah ditangani di dalam CartContext.addItem.
     addItem(product.id, qty);
-    if (user) toast.success("Ditambahkan ke keranjang");
   };
 
-  const handleBuyNow = () => {
-    addItem(product.id, qty);
-    if (user) navigate("/keranjang");
+  const handleBuyNow = async () => {
+    const added = await addItem(product.id, qty);
+    if (added) navigate("/keranjang");
   };
 
   return (
@@ -135,19 +225,12 @@ export default function ProductDetailPage() {
           >
             <p className="font-display font-extrabold text-[1.4rem] text-ink">{product.name}</p>
             <div className="flex items-center gap-2 text-[13px] text-muted mt-2">
-              <span className="flex items-center gap-1 text-amber-dark font-bold">
-                <Icon icon="mdi:star" width={15} />
-                {product.rating.toFixed(1)}
-              </span>
-              <span className="text-line">•</span>
-              <span>Terjual {product.sold}</span>
-              <span className="text-line">•</span>
               <span
                 className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold whitespace-nowrap ${
-                  product.condition === "Baru" ? "bg-ok/10 text-ok" : "bg-amber/15 text-amber-dark"
+                  product.stock > 0 ? "bg-ok/10 text-ok" : "bg-amber/15 text-amber-dark"
                 }`}
               >
-                {product.condition}
+                {product.stock > 0 ? "Tersedia" : "Stok Habis"}
               </span>
             </div>
 
@@ -158,15 +241,13 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            <p className="mt-3.5 text-sm leading-relaxed text-ink-soft">{product.description}</p>
+            {product.description && (
+              <p className="mt-3.5 text-sm leading-relaxed text-ink-soft">{product.description}</p>
+            )}
 
             <div className="flex gap-2.5 text-[13.5px] mt-2 text-ink-soft">
               <span className="w-[70px] text-muted flex-shrink-0">Stok</span>
               <span>{product.stock} unit tersedia</span>
-            </div>
-            <div className="flex gap-2.5 text-[13.5px] mt-2 text-ink-soft">
-              <span className="w-[70px] text-muted flex-shrink-0">Berat</span>
-              <span>{product.weightGram} gram</span>
             </div>
 
             <div className="flex items-center gap-3.5 mt-4">
