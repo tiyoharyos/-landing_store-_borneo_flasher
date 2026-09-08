@@ -1,9 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-
-
-
 import Navbar from "@/components/Navbar";
 import BannerCarousel from "@/components/BannerCarousel";
 import ProductCard from "@/components/ProductCard";

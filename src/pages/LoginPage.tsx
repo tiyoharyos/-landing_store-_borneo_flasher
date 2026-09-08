@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import AuthLayout from "@/components/auth/AuthLayout";
 import { useAuth } from "@/context/AuthContext";
@@ -52,7 +51,7 @@ export default function LoginPage() {
             <div>
               <CardTitle>Masuk ke Akun Kamu</CardTitle>
               <CardSubtitle>
-                Simulasi login (mock) — coba salah satu akun demo, atau daftar akun baru.
+                Masuk dengan akun yang sudah kamu daftarkan & verifikasi.
               </CardSubtitle>
             </div>
           </CardHeader>
@@ -82,14 +81,6 @@ export default function LoginPage() {
                 Masuk
               </Button>
             </Form>
-
-            <div className="mt-1.5 bg-cream-deep rounded-xl px-3.5 py-2.5 flex flex-col gap-0.5">
-              <p className="flex items-center gap-1.5 text-[11.5px] font-bold text-brand-dark mb-0.5">
-                <Icon icon="mdi:information-outline" width={15} /> Akun demo
-              </p>
-              <p className="font-mono text-[11.5px] text-ink-soft">andi@borneoflasher.id / andi1234</p>
-              <p className="font-mono text-[11.5px] text-ink-soft">siti@borneoflasher.id / siti1234</p>
-            </div>
 
             <p className="text-center text-[13px] text-muted mt-1.5">
               Belum punya akun?{" "}

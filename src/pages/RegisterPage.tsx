@@ -17,9 +17,12 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
+
+
     setLoading(true);
     const res = await register(name, email, password);
     setLoading(false);
@@ -34,11 +37,11 @@ export default function RegisterPage() {
     }
     await Swal.fire({
       icon: "success",
-      title: "Akun Berhasil Dibuat",
-      text: "Selamat datang di Borneo Flasher Store!",
+      title: "Registrasi Berhasil",
+      text: res.message ?? "Silakan cek email kamu untuk verifikasi akun sebelum login.",
       confirmButtonText: "Oke",
     });
-    navigate(next);
+    navigate(`/masuk${next !== "/" ? `?next=${encodeURIComponent(next)}` : ""}`);
   };
 
   return (
@@ -52,7 +55,7 @@ export default function RegisterPage() {
             <div>
               <CardTitle>Daftar Akun Baru</CardTitle>
               <CardSubtitle>
-                Simulasi registrasi (mock) — data disimpan lokal di sesi browser kamu saja.
+                Daftar akun baru untuk mulai belanja & servis di Borneo Flasher Store.
               </CardSubtitle>
             </div>
           </CardHeader>
@@ -82,7 +85,7 @@ export default function RegisterPage() {
                 icon="mdi:lock-outline"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Minimal 4 karakter"
+                placeholder="Minimal 8 karakter"
                 autoComplete="new-password"
               />
 

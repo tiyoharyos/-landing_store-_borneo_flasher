@@ -1,57 +1,57 @@
-/* Google Fonts – ganti next/font/google */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* Google Fonts – Borneo Flasher design system: Oswald (heading) + Inter (body) */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 
 
 :root {
-  /* ---- Palet resmi: Primary (merah) + Secondary (hitam) + Tertiary (putih) + Neutral (abu) ---- */
-  --ink: #1a1a1a;          /* Secondary */
-  --ink-soft: #4d4d4d;
-  --cream: #f2f2f2;        /* Neutral */
-  --cream-deep: #e5e5e5;
-  --surface: #ffffff;      /* Tertiary */
-  --brand: #ff0000;        /* Primary */
-  --brand-dark: #cc0000;
-  --brand-tint: #ffe0e0;
-  --accent: #1a1a1a;       /* aksen dipetakan ke Secondary (hitam) */
+  /* ---- Borneo Flasher Design System: Primary (merah) + Neutral (abu) + Semantik ---- */
+  --ink: #1a1a1a;          /* Base Black */
+  --ink-soft: #4b5563;     /* Dark Gray (teks sekunder) */
+  --cream: #f9fafb;        /* Background Gray */
+  --cream-deep: #eef0f3;
+  --surface: #ffffff;      /* Pure White */
+  --brand: #e51d24;        /* Primary Red */
+  --brand-dark: #c4171e;   /* Primary Hover */
+  --brand-tint: #fde8e9;
+  --accent: #1a1a1a;       /* aksen dipetakan ke Base Black */
   --accent-dark: #000000;
-  --accent-tint: #e5e5e5;
-  --amber: #f2a93b;
-  --amber-dark: #c9821f;
-  --line: #e0e0e0;
-  --muted: #737373;
-  --ok: #2f9e5b;
-  --warn: #d94e3f;
+  --accent-tint: #e5e7eb;
+  --amber: #f59e0b;        /* Warning */
+  --amber-dark: #b45309;
+  --line: #e5e7eb;         /* Light Gray (border/stroke) */
+  --muted: #6b7280;
+  --ok: #10b981;           /* Success */
+  --warn: #ef4444;         /* Error */
 
-  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
-  --font-poppins: 'Plus Jakarta Sans', sans-serif;
+  --font-oswald: 'Oswald', sans-serif;
+  --font-inter: 'Inter', sans-serif;
 
   /* Footer & tombol WA selalu gelap, tidak ikut berganti tema */
   --footer-bg: #1a1a1a;
-  --footer-text: #f2f2f2;
+  --footer-text: #f9fafb;
   --footer-muted: #a6a6a6;
-  --footer-line: rgba(242, 242, 242, 0.15);
+  --footer-line: rgba(249, 250, 251, 0.15);
 }
 
 [data-theme="dark"] {
-  --ink: #f2f2f2;          /* Secondary (dibalik utk gelap) */
-  --ink-soft: #cccccc;
-  --cream: #1a1a1a;        /* Neutral (dibalik utk gelap) */
-  --cream-deep: #262626;
-  --surface: #262626;      /* Tertiary (dibalik utk gelap) */
-  --brand: #ff3333;        /* Primary */
-  --brand-dark: #ff0000;
+  --ink: #f9fafb;          /* Base Black (dibalik utk gelap) */
+  --ink-soft: #d1d5db;
+  --cream: #18181b;        /* Background Gray (dibalik utk gelap) */
+  --cream-deep: #232327;
+  --surface: #202024;      /* Pure White (dibalik utk gelap) */
+  --brand: #ff4b50;        /* Primary Red, dicerahkan agar kontras di gelap */
+  --brand-dark: #e51d24;
   --brand-tint: #3d0a0a;
-  --accent: #f2f2f2;       /* aksen: kebalikan Secondary di dark mode */
+  --accent: #f9fafb;       /* aksen: kebalikan Base Black di dark mode */
   --accent-dark: #ffffff;
   --accent-tint: #333333;
-  --amber: #f5be7c;
-  --amber-dark: #e0a355;
-  --line: #333333;
-  --muted: #999999;
-  --ok: #4ade80;
-  --warn: #f3766a;
+  --amber: #fbbf24;
+  --amber-dark: #f59e0b;
+  --line: #33363b;
+  --muted: #9ca3af;
+  --ok: #34d399;
+  --warn: #f87171;
 }
 
 @theme {
@@ -77,8 +77,8 @@
   --color-footer-muted: var(--footer-muted);
   --color-footer-line: var(--footer-line);
 
-  --font-display: var(--font-poppins);
-  --font-body: var(--font-jakarta);
+  --font-display: var(--font-oswald);
+  --font-body: var(--font-inter);
   --font-mono: "JetBrains Mono", monospace;
 }
 
@@ -92,6 +92,8 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -99,6 +101,7 @@ body {
   font-family: var(--font-body);
   background-color: var(--cream);
   color: var(--ink);
+  overflow-x: hidden;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -106,6 +109,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: clip;
 }
 
 a {

@@ -1,9 +1,9 @@
 export const BRAND_NAME = "LPKS Borneo Flasher Indonesia";
 export const BRAND_SHORT = "Borneo Flasher";
-export const WHATSAPP_NUMBER = "6285377767777";
+export const WHATSAPP_NUMBER = "6281273417555";
 export const WHATSAPP_TEXT =
-  "Halo admin, saya ingin tahu lebih lanjut tentang jadwal dan biaya kelas training.";
-export const PHONE_DISPLAY = "0853-7776-7777";
+  "Halo Admin Borneo Flasher, saya mau tanya-tanya soal produk yang ada di toko ini. Boleh dibantu?";
+export const PHONE_DISPLAY = "0812-7341-7555";
 export const EMAIL = "info@borneoflasher.id";
 export const ADDRESS =
   "Rt 01 Rw 10, Banjarsari, Penggung, Boyolali, Jawa Tengah , Boyolali, Indonesia, Boyolali, Indonesia, 57316";

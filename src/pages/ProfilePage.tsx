@@ -71,7 +71,11 @@ export default function ProfilePage() {
     setUploadingAvatar(true);
     try {
       const dataUrl = await fileToDataUrl(file);
-      updateProfile({ name: user.name, phone: user.phone, avatar: dataUrl });
+      const res = await updateProfile({ name: user.name, phone: user.phone, avatar: dataUrl });
+      if (!res.ok) {
+        toast.error("Gagal memperbarui foto", res.message);
+        return;
+      }
       toast.success("Foto profil diperbarui");
     } catch {
       toast.error("Gagal memuat foto", "Coba pilih file lain.");

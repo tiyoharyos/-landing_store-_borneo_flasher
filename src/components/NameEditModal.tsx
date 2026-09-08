@@ -24,14 +24,19 @@ export default function NameEditModal({ open, onClose }: Props) {
     }
   }, [open, user]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name.trim()) {
       setError("Nama tidak boleh kosong.");
       return;
     }
     setSubmitting(true);
-    updateProfile({ name: name.trim(), phone: user?.phone });
+    const res = await updateProfile({ name: name.trim(), phone: user?.phone });
     setSubmitting(false);
+
+    if (!res.ok) {
+      toast.error("Gagal memperbarui nama", res.message);
+      return;
+    }
     toast.success("Nama berhasil diperbarui");
     onClose();
   };

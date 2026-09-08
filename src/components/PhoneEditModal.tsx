@@ -24,11 +24,16 @@ export default function PhoneEditModal({ open, onClose }: Props) {
     }
   }, [open, user]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!user) return;
     setSubmitting(true);
-    updateProfile({ name: user.name, phone: phone.trim() });
+    const res = await updateProfile({ name: user.name, phone: phone.trim() });
     setSubmitting(false);
+
+    if (!res.ok) {
+      toast.error("Gagal memperbarui nomor HP", res.message);
+      return;
+    }
     toast.success("Nomor HP berhasil diperbarui");
     onClose();
   };
