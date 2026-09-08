@@ -11,7 +11,7 @@ import CustomCursor from "@/components/ui/CustomCursor";
 import CursorStyleUpdater from "@/components/ui/CursorStyleUpdater";
 
 // Halaman yang tampil tanpa navbar & footer global (layout auth full-page sendiri)
-const NO_CHROME_ROUTES = ["/masuk", "/daftar"];
+const NO_CHROME_ROUTES = ["/masuk", "/daftar", "/verifikasi"];
 
 function App() {
   const { pathname } = useLocation();

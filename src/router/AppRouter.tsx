@@ -14,6 +14,7 @@ const CheckoutPage = lazy(() => import("@/pages/CheckoutPage"));
 const OrderSuccessPage = lazy(() => import("@/pages/OrderSuccessPage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
+const VerifyPage = lazy(() => import("@/pages/VerifyPage"));
 const AccountOrdersPage = lazy(() => import("@/pages/AccountOrdersPage"));
 const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
@@ -35,6 +36,7 @@ export default function AppRouter() {
             <Route path="/pesanan/sukses/:orderId" element={<PageTransition><OrderSuccessPage /></PageTransition>} />
             <Route path="/masuk" element={<PageTransition><LoginPage /></PageTransition>} />
             <Route path="/daftar" element={<PageTransition><RegisterPage /></PageTransition>} />
+            <Route path="/verifikasi" element={<PageTransition><VerifyPage /></PageTransition>} />
             <Route path="/akun/pesanan" element={<PageTransition><AccountOrdersPage /></PageTransition>} />
             <Route path="/akun/profil" element={<PageTransition><ProfilePage /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />

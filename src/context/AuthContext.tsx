@@ -27,7 +27,12 @@ interface AuthContextValue {
     email: string,
     password: string,
     gender: Gender
-  ) => Promise<{ ok: boolean; message?: string; needsVerification?: boolean }>;
+  ) => Promise<{
+    ok: boolean;
+    message?: string;
+    needsVerification?: boolean;
+    verificationToken?: string;
+  }>;
   logout: () => void;
   updateProfile: (input: {
     name: string;
@@ -153,7 +158,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { ok: false, message: res.message || "Registrasi gagal." };
       }
 
-      return { ok: true, message: res.message, needsVerification: true };
+      // Backend saat ini belum kirim email verifikasi sungguhan — token-nya
+      // langsung dibalikin di response register. Diteruskan ke UI supaya
+      // pengguna bisa langsung diarahkan ke /verifikasi?token=... untuk testing.
+      return {
+        ok: true,
+        message: res.message,
+        needsVerification: true,
+        verificationToken: res.data?.verification_token,
+      };
     } catch (err) {
       return { ok: false, message: getApiErrorMessage(err, "Gagal daftar, coba lagi.") };
     }

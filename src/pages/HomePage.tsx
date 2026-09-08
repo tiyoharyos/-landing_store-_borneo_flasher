@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import BannerCarousel from "@/components/BannerCarousel";
 import ProductCard from "@/components/ProductCard";
-import { PRODUCTS } from "@/data/products";
+import { type Product } from "@/data/products";
+import { getProducts } from "@/services/productsService";
+import { mapApiProductsToProducts } from "@/lib/mapProduct";
+import { getApiErrorMessage } from "@/lib/axios";
 
 type SortKey = "terlaris" | "termurah" | "termahal" | "terbaru";
 
@@ -16,15 +19,42 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
 
 export default function HomePage() {
   const [sort, setSort] = useState<SortKey>("terlaris");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const sorted = [...PRODUCTS].sort((a, b) => {
+  useEffect(() => {
+    let active = true;
+
+    async function fetchProducts() {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await getProducts();
+        if (!active) return;
+        setProducts(mapApiProductsToProducts(res.data ?? []));
+      } catch (err) {
+        if (!active) return;
+        setError(getApiErrorMessage(err, "Gagal memuat produk."));
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    fetchProducts();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const sorted = [...products].sort((a, b) => {
     switch (sort) {
       case "termurah":
         return a.price - b.price;
       case "termahal":
         return b.price - a.price;
       case "terbaru":
-        return a.id.localeCompare(b.id);
+        return b.id.localeCompare(a.id);
       case "terlaris":
       default:
         return b.sold - a.sold;
@@ -67,21 +97,37 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
-            {sorted.slice(0, 12).map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
+          {loading && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="aspect-square rounded-[14px] bg-cream-deep animate-pulse" />
+              ))}
+            </div>
+          )}
 
-          <div className="flex justify-center mt-2">
-            <Link
-              to="/kategori"
-              className="inline-flex items-center gap-2 bg-brand !text-white font-bold text-sm px-8 py-3 rounded-full hover:bg-brand-dark transition-colors"
-              style={{ color: "#ffffff" }}
-              >
-              Lihat Semua Produk
-            </Link>
-          </div>
+          {!loading && error && (
+            <p className="text-center text-warn text-sm py-8">{error}</p>
+          )}
+
+          {!loading && !error && (
+            <>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
+                {sorted.slice(0, 12).map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+
+              <div className="flex justify-center mt-2">
+                <Link
+                  to="/kategori"
+                  className="inline-flex items-center gap-2 bg-brand !text-white font-bold text-sm px-8 py-3 rounded-full hover:bg-brand-dark transition-colors"
+                  style={{ color: "#ffffff" }}
+                >
+                  Lihat Semua Produk
+                </Link>
+              </div>
+            </>
+          )}
         </section>
       </div>
     </div>

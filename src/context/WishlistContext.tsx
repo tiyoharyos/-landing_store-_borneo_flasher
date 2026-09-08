@@ -1,7 +1,10 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { PRODUCTS, type Product } from "@/data/products";
+import { type Product } from "@/data/products";
 import { useAuth } from "@/context/AuthContext";
+import { getWishlist, addToWishlist, removeFromWishlist } from "@/services/wishlistService";
+import { mapApiWishlistToProducts } from "@/lib/mapProduct";
+import { getApiErrorMessage } from "@/lib/axios";
 import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
 
@@ -9,6 +12,7 @@ interface WishlistContextValue {
   ids: string[];
   items: Product[];
   totalItems: number;
+  loading: boolean;
   isWishlisted: (productId: string) => boolean;
   toggle: (productId: string) => void;
   remove: (productId: string) => void;
@@ -16,33 +20,42 @@ interface WishlistContextValue {
 }
 
 const WishlistContext = createContext<WishlistContextValue | null>(null);
-const STORAGE_KEY = "bf_wishlist";
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const [ids, setIds] = useState<string[]>([]);
+  const [items, setItems] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
   const toast = useToast();
 
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setIds(JSON.parse(raw));
-    } catch {
-      // ignore corrupted storage
-    }
-  }, []);
+  const ids = items.map((p) => p.id);
 
+  // Ambil wishlist dari backend tiap kali user login. Kalau logout,
+  // kosongkan wishlist lokal (server sudah tidak lagi mengembalikan Authorization).
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
-  }, [ids]);
-
-  // Kalau user logout, kosongkan wishlist supaya konsisten dengan keranjang.
-  useEffect(() => {
-    if (!user && ids.length > 0) {
-      setIds([]);
+    if (!user) {
+      setItems([]);
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    let active = true;
+    setLoading(true);
+    getWishlist()
+      .then((res) => {
+        if (!active) return;
+        setItems(mapApiWishlistToProducts(res.data ?? []));
+      })
+      .catch(() => {
+        // Gagal muat wishlist tetap lanjut dengan wishlist kosong,
+        // supaya halaman lain tidak ikut error.
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   }, [user]);
 
   const isWishlisted = (productId: string) => ids.includes(productId);
@@ -52,7 +65,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
       Swal.fire({
         icon: "info",
         title: "Masuk dulu, yuk",
-        text: "Kamu perlu masuk ke akun untuk menambahkan produk ke keranjang.",
+        text: "Kamu perlu masuk ke akun untuk menambahkan produk ke wishlist.",
         showCancelButton: true,
         confirmButtonText: "Masuk Sekarang",
         cancelButtonText: "Nanti Saja",
@@ -61,29 +74,48 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
       });
       return;
     }
-    setIds((prev) => {
-      if (prev.includes(productId)) {
-        toast.info("Dihapus dari wishlist");
-        return prev.filter((id) => id !== productId);
-      }
-      toast.success("Ditambahkan ke wishlist");
-      return [...prev, productId];
-    });
+
+    const alreadyWishlisted = isWishlisted(productId);
+
+    if (alreadyWishlisted) {
+      // Optimistic update: hapus dulu dari UI, rollback kalau gagal.
+      const prevItems = items;
+      setItems((prev) => prev.filter((p) => p.id !== productId));
+      removeFromWishlist(productId)
+        .then(() => toast.info("Dihapus dari wishlist"))
+        .catch((err) => {
+          setItems(prevItems);
+          toast.error(getApiErrorMessage(err, "Gagal menghapus dari wishlist."));
+        });
+      return;
+    }
+
+    addToWishlist(productId)
+      .then(() => {
+        toast.success("Ditambahkan ke wishlist");
+        // Backend cuma balas pesan sukses (tanpa data produk), jadi refresh
+        // ulang daftar wishlist supaya data produknya lengkap.
+        return getWishlist().then((res) => setItems(mapApiWishlistToProducts(res.data ?? [])));
+      })
+      .catch((err) => {
+        toast.error(getApiErrorMessage(err, "Gagal menambahkan ke wishlist."));
+      });
   };
 
   const remove: WishlistContextValue["remove"] = (productId) => {
-    setIds((prev) => prev.filter((id) => id !== productId));
+    const prevItems = items;
+    setItems((prev) => prev.filter((p) => p.id !== productId));
+    removeFromWishlist(productId).catch((err) => {
+      setItems(prevItems);
+      toast.error(getApiErrorMessage(err, "Gagal menghapus dari wishlist."));
+    });
   };
 
-  const clear = () => setIds([]);
-
-  const items: Product[] = ids
-    .map((id) => PRODUCTS.find((p) => p.id === id))
-    .filter((p): p is Product => Boolean(p));
+  const clear = () => setItems([]);
 
   return (
     <WishlistContext.Provider
-      value={{ ids, items, totalItems: ids.length, isWishlisted, toggle, remove, clear }}
+      value={{ ids, items, totalItems: ids.length, loading, isWishlisted, toggle, remove, clear }}
     >
       {children}
     </WishlistContext.Provider>
