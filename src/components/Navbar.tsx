@@ -68,7 +68,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-cream/95 backdrop-blur-md border-b border-line sticky top-0 z-50 transition-colors duration-200">
+    <nav className="bg-cream/95 backdrop-blur-sm border-b border-line sticky top-0 z-50 transition-colors duration-200">
       <div className="container py-3">
         <div className="flex flex-wrap items-center justify-between gap-y-3 md:gap-[18px]">
           <Link to="/" className="flex-shrink-0 order-1" onClick={() => setOpen(false)}>
@@ -105,12 +105,12 @@ export default function Navbar() {
 
             <Link
               to="/akun/profil?tab=wishlist"
-              className="relative text-ink-soft flex"
+              className="relative text-ink-soft flex hover:text-ink transition-colors"
               aria-label="Wishlist"
             >
-              <Icon icon="mdi:heart-outline" width={23} className="transition-transform duration-200 group-hover:scale-110" />
+              <Icon icon="mdi:heart-outline" width={23} />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 bg-brand text-white text-[10px] font-bold rounded-full px-1 min-w-[16px] text-center shadow-[var(--shadow-xs)] animate-[modalIn_0.2s_cubic-bezier(0.16,1,0.3,1)]">
+                <span className="absolute -top-1.5 -right-2 bg-brand text-white text-[10px] font-bold rounded-full px-1 min-w-[16px] text-center animate-[modalIn_0.2s_cubic-bezier(0.16,1,0.3,1)]">
                   {wishlistCount}
                 </span>
               )}
@@ -124,7 +124,7 @@ export default function Navbar() {
               <Link to="/keranjang" className="relative text-ink-soft flex" aria-label="Keranjang">
                 <Icon icon="mdi:cart-outline" width={24} />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-brand text-white text-[10px] font-bold rounded-full px-1 min-w-[16px] text-center shadow-[var(--shadow-xs)] animate-[modalIn_0.2s_cubic-bezier(0.16,1,0.3,1)]">
+                  <span className="absolute -top-1.5 -right-2 bg-brand text-white text-[10px] font-bold rounded-full px-1 min-w-[16px] text-center animate-[modalIn_0.2s_cubic-bezier(0.16,1,0.3,1)]">
                     {totalItems}
                   </span>
                 )}
@@ -133,7 +133,7 @@ export default function Navbar() {
               {cartOpen && (
                 <>
                   <div className="absolute top-full right-0 w-[300px] h-3.5" />
-                  <div className="absolute top-[calc(100%+14px)] right-[-50px] sm:-right-2.5 w-[85vw] sm:w-[340px] max-w-[340px] bg-surface border border-line rounded-2xl shadow-[var(--shadow-lg)] z-[80] overflow-hidden animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)] origin-top-right">
+                  <div className="absolute top-[calc(100%+14px)] right-[-50px] sm:-right-2.5 w-[85vw] sm:w-[340px] max-w-[340px] bg-surface border border-line rounded-xl shadow-[var(--shadow-md)] z-[80] overflow-hidden animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)] origin-top-right">
                     <div className="flex items-center justify-between px-[18px] py-3.5 border-b border-line transition-colors duration-200">
                       <span className="font-display font-extrabold text-[14.5px] text-ink">
                         Keranjang{totalItems > 0 ? ` (${totalItems})` : ""}
@@ -252,7 +252,7 @@ export default function Navbar() {
                   <Icon icon="mdi:chevron-down" width={16} />
                 </button>
                 {menuOpen && (
-                  <div className="absolute right-0 top-[calc(100%+8px)] bg-surface border border-line rounded-xl shadow-[var(--shadow-lg)] min-w-[180px] overflow-hidden z-[60] animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)] origin-top-right">
+                  <div className="absolute right-0 top-[calc(100%+8px)] bg-surface border border-line rounded-xl shadow-[var(--shadow-md)] min-w-[180px] overflow-hidden z-[60] animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)] origin-top-right">
                     <Link
                       to="/akun/profil"
                       onClick={() => setMenuOpen(false)}

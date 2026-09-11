@@ -59,7 +59,7 @@ export default function CartPage() {
           </div>
         ) : items.length === 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
-            <div className="flex flex-col items-center text-center bg-surface border border-line rounded-2xl px-6 py-14 shadow-sm">
+            <div className="flex flex-col items-center text-center bg-surface border border-line rounded-xl px-6 py-14 shadow-sm">
               <div className="w-[140px] h-[140px] flex items-center justify-center text-line">
                 <Icon icon="mdi:basket-outline" width={56} />
               </div>
@@ -76,7 +76,7 @@ export default function CartPage() {
               </Link>
             </div>
 
-            <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px] opacity-70">
+            <div className="bg-surface border border-line rounded-xl p-5 sticky top-[90px] opacity-70">
               <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Belanja</p>
               <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
                 <span>Total</span>
@@ -98,7 +98,7 @@ export default function CartPage() {
           <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
             <div className="flex flex-col gap-3">
               {items.map((item) => (
-                <div key={item.productId} className="flex gap-3.5 bg-surface border border-line rounded-2xl p-3.5 items-center">
+                <div key={item.productId} className="flex gap-3.5 bg-surface border border-line rounded-xl p-3.5 items-center">
                   <Link to={`/produk/${item.product.slug}`} className="w-[72px] h-[72px] rounded-[10px] overflow-hidden flex-shrink-0 bg-cream-deep">
                     <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
                   </Link>
@@ -139,7 +139,7 @@ export default function CartPage() {
               ))}
             </div>
 
-            <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px]">
+            <div className="bg-surface border border-line rounded-xl p-5 sticky top-[90px]">
               <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Belanja</p>
               <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
                 <span>Subtotal</span>

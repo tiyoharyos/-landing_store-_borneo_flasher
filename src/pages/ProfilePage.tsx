@@ -130,7 +130,7 @@ export default function ProfilePage() {
   return (
     <div>
       <div className="container grid grid-cols-1 md:grid-cols-[260px_1fr] gap-4.5 gap-x-4 pt-6 pb-12 items-start">
-        <aside className="bg-surface border border-line rounded-2xl overflow-hidden">
+        <aside className="bg-surface border border-line rounded-xl overflow-hidden">
           <div className="flex flex-col items-center text-center px-4 py-6 border-b border-line">
             {user.avatar ? (
               <img
@@ -182,7 +182,7 @@ export default function ProfilePage() {
           </nav>
         </aside>
 
-        <section className="bg-surface border border-line rounded-2xl overflow-hidden">
+        <section className="bg-surface border border-line rounded-xl overflow-hidden">
           <div className="flex gap-1 border-b border-line px-4 overflow-x-auto">
             <button type="button" className={tabBtnClass(tab === "pesanan")} onClick={() => changeTab("pesanan")}>
               Pesanan Saya{orders.length > 0 ? ` (${orders.length})` : ""}
@@ -212,7 +212,7 @@ export default function ProfilePage() {
               ) : (
                 <div className="flex flex-col gap-4">
                   {orders.map((o) => (
-                    <div key={o.id} className="bg-surface border border-line rounded-2xl px-5 py-4.5">
+                    <div key={o.id} className="bg-surface border border-line rounded-xl px-5 py-4.5">
                       <div className="flex justify-between items-center pb-2.5 border-b border-line mb-2.5">
                         <div>
                           <p className="font-mono font-bold text-brand-dark">{o.id}</p>
@@ -256,7 +256,7 @@ export default function ProfilePage() {
             <div className="p-5 grid grid-cols-1 sm:grid-cols-[230px_1fr] gap-6 sm:gap-8">
               {/* Kartu foto profil */}
               <div>
-                <div className="w-full sm:w-[230px] border border-line rounded-2xl overflow-hidden flex flex-col">
+                <div className="w-full sm:w-[230px] border border-line rounded-xl overflow-hidden flex flex-col">
                   <div className="aspect-square w-full bg-cream-deep overflow-hidden">
                     {user.avatar ? (
                       <img src={user.avatar} alt="Foto profil" className="w-full h-full object-cover" />
@@ -380,7 +380,7 @@ export default function ProfilePage() {
                   </Link>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                   {wishlistItems.map((p) => (
                     <ProductCard key={p.id} product={p} />
                   ))}

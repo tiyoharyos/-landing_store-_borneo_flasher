@@ -11,7 +11,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       to={`/produk/${product.slug}`}
-      className="block bg-surface border border-line rounded-xl overflow-hidden transition-all hover:shadow-[var(--shadow-sm)] hover:border-ink/15"
+      className="block bg-surface border border-line rounded-xl overflow-hidden transition-colors hover:border-ink/20"
     >
       <div className="relative aspect-square bg-cream-deep">
         <img
@@ -21,18 +21,18 @@ export default function ProductCard({ product }: { product: Product }) {
           className="w-full h-full object-cover"
         />
         {pct > 0 && (
-          <span className="absolute top-2 left-2 bg-brand text-white text-[10.5px] font-extrabold px-[7px] py-0.5 rounded-md">
+          <span className="absolute top-2 left-2 bg-surface text-brand-dark text-[10.5px] font-bold px-[7px] py-0.5 rounded-md border border-line">
             -{pct}%
           </span>
         )}
         {product.condition === "Bekas Layak Pakai" && (
-          <span className="absolute bottom-2 left-2 bg-black/65 text-white text-[10px] font-bold px-[7px] py-0.5 rounded-md">
+          <span className="absolute bottom-2 left-2 bg-surface/95 text-ink-soft text-[10px] font-semibold px-[7px] py-0.5 rounded-md border border-line">
             Bekas
           </span>
         )}
         <button
           type="button"
-          className={`absolute top-2 right-2 w-7 h-7 rounded-full border-none bg-white/92 flex items-center justify-center cursor-pointer shadow-[var(--shadow-xs)] transition-transform hover:scale-105 z-[2] ${
+          className={`absolute top-2 right-2 w-7 h-7 rounded-full border border-line bg-surface/95 flex items-center justify-center cursor-pointer transition-colors z-[2] ${
             wished ? "text-brand" : "text-ink-soft"
           }`}
           aria-label={wished ? "Hapus dari wishlist" : "Tambah ke wishlist"}
@@ -45,12 +45,12 @@ export default function ProductCard({ product }: { product: Product }) {
           <Icon icon={wished ? "mdi:heart" : "mdi:heart-outline"} width={16} />
         </button>
       </div>
-      <div className="px-3 pt-2.5 pb-3">
-        <p className="text-[13px] font-semibold text-ink leading-[1.35] line-clamp-2 min-h-[35px]">
+      <div className="px-3.5 pt-3 pb-3.5">
+        <p className="text-[13px] font-semibold text-ink leading-[1.4] line-clamp-2 min-h-[35px]">
           {product.name}
         </p>
-        <div className="flex flex-col mt-1.5">
-          <span className="font-mono font-bold text-brand-dark">{formatRupiah(product.price)}</span>
+        <div className="flex flex-col mt-2 gap-0.5">
+          <span className="font-mono font-bold text-ink">{formatRupiah(product.price)}</span>
           {product.priceOriginal && (
             <span className="line-through text-muted text-xs block">
               {formatRupiah(product.priceOriginal)}

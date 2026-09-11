@@ -63,25 +63,27 @@ export default function HomePage() {
   return (
     <div>
 
-      <div className="container pt-6">
-        {/* Hero (banner carousel dipertahankan) */}
+      <div className="container pt-8">
+        {/* Hero */}
         <div>
           <BannerCarousel />
         </div>
 
         {/* Produk Pilihan */}
-        <section className="py-7 border-b border-line last-of-type:border-b-0">
-          <div className="flex flex-wrap items-center justify-between gap-3 my-7 mb-[1.1rem]">
+        <section className="py-10 md:py-14">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
             <div>
-              <p className="font-display font-extrabold text-[1.1rem] text-ink mb-2">Produk Pilihan</p>
-              <div className="flex gap-[18px] flex-wrap">
+              <p className="font-display font-extrabold text-[1.35rem] text-ink mb-3 tracking-tight">
+                Produk Pilihan
+              </p>
+              <div className="flex gap-6 flex-wrap">
                 {SORT_OPTIONS.map((s) => (
                   <button
                     key={s.key}
-                    className={`bg-transparent border-none pb-2 text-[13.5px] font-semibold cursor-pointer border-b-2 transition-colors ${
+                    className={`bg-transparent border-none pb-1.5 text-[13.5px] font-medium cursor-pointer border-b-2 transition-colors ${
                       sort === s.key
-                        ? "text-brand border-brand"
-                        : "text-muted border-transparent hover:text-brand"
+                        ? "text-ink border-ink font-semibold"
+                        : "text-muted border-transparent hover:text-ink"
                     }`}
                     onClick={() => setSort(s.key)}
                   >
@@ -90,13 +92,13 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-            <Link to="/kategori" className="text-[13.5px] font-bold text-brand hover:underline">
+            <Link to="/kategori" className="text-[13.5px] font-semibold text-ink-soft hover:text-ink transition-colors">
               Lihat Semua
             </Link>
           </div>
 
           {loading && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
               {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="aspect-square rounded-xl bg-cream-deep animate-pulse" />
               ))}
@@ -109,17 +111,16 @@ export default function HomePage() {
 
           {!loading && !error && (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-10">
                 {sorted.slice(0, 12).map((p) => (
                   <ProductCard key={p.id} product={p} />
                 ))}
               </div>
 
-              <div className="flex justify-center mt-2">
+              <div className="flex justify-center">
                 <Link
                   to="/kategori"
-                  className="inline-flex items-center gap-2 bg-brand !text-white font-bold text-sm px-8 py-3 rounded-xl hover:bg-brand-dark transition-colors"
-                  style={{ color: "#ffffff" }}
+                  className="inline-flex items-center gap-2 border border-ink text-ink font-semibold text-sm px-8 py-3 rounded-xl hover:bg-ink hover:text-white transition-colors"
                 >
                   Lihat Semua Produk
                 </Link>

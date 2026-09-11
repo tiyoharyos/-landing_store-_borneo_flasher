@@ -14,9 +14,9 @@ export function Card({
   ...rest
 }: CardProps) {
   const classes = [
-    "bg-surface border border-line rounded-2xl shadow-[var(--shadow-xs)] transition-all",
+    "bg-surface border border-line rounded-xl transition-colors",
     noPadding ? "" : "p-[1.4rem]",
-    interactive ? "cursor-pointer hover:shadow-[var(--shadow-sm)] hover:border-ink/15" : "",
+    interactive ? "cursor-pointer hover:border-ink/20" : "",
     className,
   ]
     .filter(Boolean)

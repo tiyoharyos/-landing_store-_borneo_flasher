@@ -184,7 +184,7 @@ export default function ProductDetailPage() {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="relative rounded-[18px] overflow-hidden bg-cream-deep aspect-square self-start"
+            className="relative rounded-xl overflow-hidden bg-cream-deep aspect-square self-start border border-line"
           >
             <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
             {pct > 0 && (
@@ -195,7 +195,7 @@ export default function ProductDetailPage() {
             <motion.button
               type="button"
               whileTap={{ scale: 0.88 }}
-              className={`absolute top-3 right-3 w-10 h-10 rounded-full border-none bg-white/92 flex items-center justify-center cursor-pointer shadow-md transition-transform hover:scale-110 ${
+              className={`absolute top-3 right-3 w-10 h-10 rounded-full border border-line bg-surface/95 flex items-center justify-center cursor-pointer transition-colors ${
                 wished ? "text-brand" : "text-ink-soft"
               }`}
               aria-label={wished ? "Hapus dari wishlist" : "Tambah ke wishlist"}
@@ -231,7 +231,7 @@ export default function ProductDetailPage() {
             </div>
 
             <div className="mt-3.5 flex items-baseline gap-2.5">
-              <span className="font-mono font-extrabold text-2xl text-brand-dark">{formatRupiah(product.price)}</span>
+              <span className="font-mono font-extrabold text-2xl text-ink">{formatRupiah(product.price)}</span>
               {product.priceOriginal && (
                 <span className="line-through text-muted text-xs">{formatRupiah(product.priceOriginal)}</span>
               )}
@@ -288,7 +288,7 @@ export default function ProductDetailPage() {
           <div className="mt-10 pb-16">
             <p className="font-display font-extrabold text-[1.1rem] text-ink mb-4">Produk Terkait</p>
             <motion.div
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8"
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8"
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-40px" }}

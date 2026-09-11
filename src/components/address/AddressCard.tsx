@@ -20,7 +20,7 @@ export default function AddressCard({
   onMakePrimary,
 }: Props) {
   return (
-    <div className="border border-line rounded-2xl p-4 bg-surface flex flex-col gap-1.5">
+    <div className="border border-line rounded-xl p-4 bg-surface flex flex-col gap-1.5">
       <div className="flex items-center gap-2 flex-wrap">
         <span className="inline-flex items-center gap-1 text-[12px] font-bold text-ink-soft bg-cream-deep rounded-full px-2.5 py-1">
           <Icon icon="mdi:home-outline" width={14} />

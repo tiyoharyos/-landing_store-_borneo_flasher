@@ -313,7 +313,7 @@ export default function KategoriPage() {
       <div className="container pt-6">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6 pb-16">
           {/* Filter sidebar — hanya tampil di desktop, menetap saat scroll */}
-          <aside className="hidden lg:flex flex-col gap-6 bg-surface border border-line rounded-2xl p-5 self-start lg:sticky lg:top-[90px]">
+          <aside className="hidden lg:flex flex-col gap-6 bg-surface border border-line rounded-xl p-5 self-start lg:sticky lg:top-[90px]">
             {filterContent}
           </aside>
 
@@ -426,7 +426,7 @@ export default function KategoriPage() {
             )}
 
             {loading && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
                 {Array.from({ length: 8 }).map((_, i) => (
                   <div key={i} className="aspect-square rounded-xl bg-cream-deep animate-pulse" />
                 ))}
@@ -440,7 +440,7 @@ export default function KategoriPage() {
             {!loading && !error && (
               paged.length ? (
                 <>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 pb-8">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
                     {paged.map((p) => (
                       <ProductCard key={p.id} product={p} />
                     ))}

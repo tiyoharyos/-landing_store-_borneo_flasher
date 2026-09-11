@@ -129,7 +129,7 @@ export default function CheckoutPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
           <div className="flex flex-col gap-4">
-            <div className="bg-surface border border-line rounded-2xl p-5">
+            <div className="bg-surface border border-line rounded-xl p-5">
               <p className="flex items-center justify-between gap-2 mb-3">
                 <span className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink">
                   <Icon icon="mdi:map-marker-outline" width={18} /> Alamat Pengiriman
@@ -183,7 +183,7 @@ export default function CheckoutPage() {
               )}
             </div>
 
-            <div className="bg-surface border border-line rounded-2xl p-5">
+            <div className="bg-surface border border-line rounded-xl p-5">
               <p className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink mb-3">
                 <Icon icon="mdi:truck-outline" width={18} /> Metode Pengiriman
               </p>
@@ -212,7 +212,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <div className="bg-surface border border-line rounded-2xl p-5">
+            <div className="bg-surface border border-line rounded-xl p-5">
               <p className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink mb-3">
                 <Icon icon="mdi:credit-card-outline" width={18} /> Metode Pembayaran
               </p>
@@ -241,7 +241,7 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="bg-surface border border-line rounded-2xl p-5 sticky top-[90px]">
+          <div className="bg-surface border border-line rounded-xl p-5 sticky top-[90px]">
             <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Pesanan</p>
             {items.map((i) => (
               <div key={i.productId} className="flex justify-between text-[12.5px] text-muted py-1.5">

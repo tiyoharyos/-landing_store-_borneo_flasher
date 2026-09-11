@@ -35,7 +35,7 @@ export default function OrderSuccessPage() {
           </p>
           <p className="text-muted text-[13.5px] mt-1">Status: {order.status} (simulasi, belum ada pembayaran nyata)</p>
 
-          <div className="w-full bg-surface border border-line rounded-2xl p-5 mt-6 text-left">
+          <div className="w-full bg-surface border border-line rounded-xl p-5 mt-6 text-left">
             <p className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink mb-3">Ringkasan Pesanan</p>
             {order.items.map((i) => (
               <div key={i.productId} className="flex justify-between text-[12.5px] text-muted py-1.5">
