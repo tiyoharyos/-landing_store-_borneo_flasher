@@ -27,8 +27,12 @@ export function mapApiProductToProduct(p: ApiProduct): Product {
     id: String(p.id_produk),
     slug: `${slugify(p.nama_produk)}-${p.id_produk}`,
     category: String(p.id_kategori ?? "tanpa-kategori") as CategoryKey,
+    categoryName: p.nama_kategori || undefined,
     name: p.nama_produk,
-    description: p.supplier ? `Supplier: ${p.supplier}` : "",
+    code: p.kode_produk || undefined,
+    description: "",
+    supplier: p.supplier || undefined,
+    location: p.lokasi_penyimpanan || undefined,
     image: resolveUploadUrl(p.image, "produk") || FALLBACK_IMAGE,
     price: isDiscounted ? hargaSpesial! : hargaNormal,
     priceOriginal: isDiscounted ? hargaNormal : undefined,
@@ -37,6 +41,7 @@ export function mapApiProductToProduct(p: ApiProduct): Product {
     rating: 0,
     condition: "Baru",
     weightGram: 0,
+    createdAt: p.created_at,
   };
 }
 

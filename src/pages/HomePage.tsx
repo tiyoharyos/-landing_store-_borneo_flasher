@@ -117,10 +117,10 @@ export default function HomePage() {
                 ))}
               </div>
 
-              <div className="flex justify-center">
+              <div className="flex justify-center text-white">
                 <Link
                   to="/kategori"
-                  className="inline-flex items-center gap-2 border border-ink text-ink font-semibold text-sm px-8 py-3 rounded-xl hover:bg-ink hover:text-white transition-colors"
+                  className="rounded-lg px-4 md:px-5 h-9 inline-flex items-center gap-2 bg-brand text-white  cursor-pointer whitespace-nowrap hover:bg-brand-dark active:scale-95 transition-all duration-200"
                 >
                   Lihat Semua Produk
                 </Link>

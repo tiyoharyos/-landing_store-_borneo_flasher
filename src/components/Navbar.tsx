@@ -315,7 +315,7 @@ export default function Navbar() {
           </li>
           <li>
             <NavLink to="/kategori" className={navLinkClass} onClick={() => setOpen(false)}>
-              Kategori
+              Catalog
             </NavLink>
           </li>
           <li className="sm:hidden mt-2 border-t border-line pt-2 w-full transition-colors duration-200">

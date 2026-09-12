@@ -1,5 +1,4 @@
 import type { CartItemView } from "@/context/CartContext";
-import { getDemoOrderSeed } from "@/data/demoSeed";
 
 export interface ShippingAddress {
   name: string;
@@ -76,18 +75,6 @@ function writeAll(orders: Order[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
 }
 
-// Suntik data demo (kalau ada) begitu akun tersebut belum punya
-// pesanan sama sekali, supaya akun demo terasa "sudah dipakai".
-function ensureSeeded(all: Order[], emailLower: string): Order[] {
-  const hasAny = all.some((o) => o.userEmail?.toLowerCase() === emailLower);
-  if (hasAny) return all;
-  const seed = getDemoOrderSeed(emailLower);
-  if (!seed || seed.length === 0) return all;
-  const merged = [...seed, ...all];
-  writeAll(merged);
-  return merged;
-}
-
 export function createOrder(
   items: CartItemView[],
   address: ShippingAddress,
@@ -127,12 +114,11 @@ export function createOrder(
   return order;
 }
 
-/** Ambil pesanan milik satu akun (terbaru dulu), auto-seed data demo kalau kosong. */
+/** Ambil pesanan milik satu akun (terbaru dulu). */
 export function getOrders(email: string): Order[] {
   if (!email) return [];
   const emailLower = email.trim().toLowerCase();
-  const all = ensureSeeded(readAll(), emailLower);
-  return all
+  return readAll()
     .filter((o) => o.userEmail?.toLowerCase() === emailLower)
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }

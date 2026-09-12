@@ -16,16 +16,22 @@ export interface ApiProduct {
   id_produk: number | string;
   nama_produk: string;
   kode_produk: string;
-  kuantitas: number;
-  harga_modal: number;
-  harga_normal: number;
+  kuantitas: number | string;
+  harga_modal: number | string;
+  harga_normal: number | string;
+  // Harga promo/diskon, bisa null/"" kalau produk tidak sedang didiskon.
+  harga_spesial?: number | string | null;
   lokasi_penyimpanan: string;
   supplier: string;
   id_kategori: number | string | null;
+  id_sub_kategori?: number | string | null;
+  id_supplier?: number | string | null;
   // Beberapa backend CI4 join nama kategori langsung di query list produk.
   // Field ini opsional, dipakai kalau tersedia dari backend.
-  nama_kategori?: string;
+  nama_kategori?: string | null;
   image: string | null;
+  created_at?: string;
+  updated_at?: string;
 }
 
 // ---------- GET ALL PRODUCTS ----------
