@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import Button from "./Button";
 
 export type AlertType = "success" | "warning" | "error" | "info";
 
@@ -76,13 +77,17 @@ export default function Alert({ type = "success", title, message, onClose, class
       </div>
 
       {onClose && (
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="sm"
+          icon="feather:x"
           onClick={onClose}
-          className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-colors cursor-pointer ${config.closeColor}`}
-        >
-          <Icon icon="feather:x" width={14} height={14} />
-        </button>
+          aria-label="Tutup"
+          className={`w-6! h-6! p-0! rounded-full! shrink-0 bg-transparent! border-transparent! ${config.closeColor
+            .split(" ")
+            .map((c) => `${c}!`)
+            .join(" ")}`}
+        />
       )}
     </div>
   );

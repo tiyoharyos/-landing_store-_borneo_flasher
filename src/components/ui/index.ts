@@ -1,6 +1,9 @@
 export { default as Button } from "./Button";
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./Button";
 
+export { default as ButtonLink, ExternalButtonLink } from "./ButtonLink";
+export type { ButtonLinkProps, ExternalButtonLinkProps } from "./ButtonLink";
+
 export { Card, CardHeader, CardTitle, CardSubtitle, CardBody, CardFooter } from "./Card";
 
 export { Input, Textarea } from "./Input";

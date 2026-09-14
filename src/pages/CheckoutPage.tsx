@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link, Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import { useCart } from "@/context/CartContext";
@@ -7,6 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useAddresses } from "@/context/AddressContext";
 import { formatRupiah } from "@/data/products";
 import Button from "@/components/ui/Button";
+import ButtonLink from "@/components/ui/ButtonLink";
 import AddressListModal from "@/components/address/AddressListModal";
 import AddressFormModal from "@/components/address/AddressFormModal";
 import { useToast } from "@/components/ui/Toast";
@@ -55,11 +56,9 @@ export default function CheckoutPage() {
           <Icon icon="mdi:cart-off" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Keranjang Kosong</p>
           <p className="text-muted text-sm mt-1">Tambahkan produk ke keranjang sebelum checkout.</p>
-          <Link to="/" className="inline-block mt-4">
-            <Button variant="primary" icon="mdi:storefront-outline">
-              Kembali Belanja
-            </Button>
-          </Link>
+          <ButtonLink to="/" icon="mdi:storefront-outline" className="mt-4">
+            Kembali Belanja
+          </ButtonLink>
         </div>
       </div>
     );
@@ -135,13 +134,13 @@ export default function CheckoutPage() {
                   <Icon icon="mdi:map-marker-outline" width={18} /> Alamat Pengiriman
                 </span>
                 {selectedAddress && (
-                  <button
-                    type="button"
-                    className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline"
+                  <Button
+                    variant="ghost"
                     onClick={() => setAddressListOpen(true)}
+                    className="h-auto! w-auto! p-0! border-none! text-brand! text-[12.5px] hover:bg-transparent! hover:underline"
                   >
                     Ganti
-                  </button>
+                  </Button>
                 )}
               </p>
 
@@ -165,13 +164,14 @@ export default function CheckoutPage() {
                   Memuat alamat...
                 </div>
               ) : addresses.length > 0 ? (
-                <button
-                  type="button"
-                  className="flex items-center justify-center gap-1.5 w-full h-11 rounded-xl border-[1.5px] border-dashed border-brand bg-brand-tint text-brand text-[13.5px] font-bold cursor-pointer hover:bg-brand/10 transition-colors"
+                <Button
+                  variant="outline"
+                  fullWidth
                   onClick={() => setAddressListOpen(true)}
+                  className="h-11! rounded-xl! border-[1.5px]! border-dashed! border-brand! bg-brand-tint! text-brand! hover:bg-brand/10!"
                 >
                   Pilih Alamat Pengiriman
-                </button>
+                </Button>
               ) : (
                 <div className="flex flex-col items-center text-center py-6">
                   <Icon icon="mdi:map-marker-off-outline" width={40} className="text-line" />

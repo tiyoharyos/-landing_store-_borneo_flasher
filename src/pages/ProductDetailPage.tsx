@@ -6,6 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
+import ButtonLink from "@/components/ui/ButtonLink";
 import { type Product, formatRupiah, discountPercent } from "@/data/products";
 import { getProductDetail, getProducts } from "@/services/productsService";
 import { getCategories } from "@/services/categoriesService";
@@ -136,12 +137,14 @@ export default function ProductDetailPage() {
           <Icon icon="mdi:package-variant-closed" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Produk Tidak Ditemukan</p>
           {error && <p className="text-muted text-sm mt-1">{error}</p>}
-          <Link
+          <ButtonLink
             to="/"
-            className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors"
+            variant="outline"
+            size="sm"
+            className="mt-4 border-brand! text-brand! hover:bg-brand-tint!"
           >
             Kembali ke Beranda
-          </Link>
+          </ButtonLink>
         </div>
       </div>
     );
@@ -406,14 +409,14 @@ export default function ProductDetailPage() {
                     outOfStock ? "opacity-50" : ""
                   }`}
                 >
-                  <motion.button
-                    whileTap={{ scale: outOfStock ? 1 : 0.85 }}
+                  <Button
+                    variant="subtle"
+                    icon="mdi:minus"
                     disabled={outOfStock}
-                    className="w-[34px] h-[34px] bg-cream-deep border-none flex items-center justify-center text-ink disabled:cursor-not-allowed cursor-pointer"
                     onClick={() => setQty((q) => clampQty(q - 1))}
-                  >
-                    <Icon icon="mdi:minus" width={16} />
-                  </motion.button>
+                    className="w-[34px]! h-[34px]! p-0! rounded-none! border-none!"
+                    aria-label="Kurangi jumlah"
+                  />
                   <motion.input
                     type="number"
                     value={qty}
@@ -422,14 +425,14 @@ export default function ProductDetailPage() {
                     onChange={(e) => setQty(clampQty(Number(e.target.value) || 1))}
                     className="w-[46px] text-center border-none outline-none font-bold text-[13.5px] bg-surface text-ink disabled:cursor-not-allowed"
                   />
-                  <motion.button
-                    whileTap={{ scale: outOfStock ? 1 : 0.85 }}
+                  <Button
+                    variant="subtle"
+                    icon="mdi:plus"
                     disabled={outOfStock}
-                    className="w-[34px] h-[34px] bg-cream-deep border-none flex items-center justify-center text-ink disabled:cursor-not-allowed cursor-pointer"
                     onClick={() => setQty((q) => clampQty(q + 1))}
-                  >
-                    <Icon icon="mdi:plus" width={16} />
-                  </motion.button>
+                    className="w-[34px]! h-[34px]! p-0! rounded-none! border-none!"
+                    aria-label="Tambah jumlah"
+                  />
                 </div>
                 <div className="text-right">
                   <p className="text-[11px] text-muted">Stok Total</p>
@@ -473,24 +476,30 @@ export default function ProductDetailPage() {
             </div>
 
             <div className="flex items-center justify-center gap-5 pt-1 text-[12px] text-ink-soft">
-              <button type="button" className="flex items-center gap-1.5 bg-transparent border-none cursor-pointer hover:text-brand transition-colors">
-                <Icon icon="mdi:chat-outline" width={17} />
+              <Button
+                variant="ghost"
+                icon="mdi:chat-outline"
+                className="h-auto! w-auto! p-0! border-none! gap-1.5 hover:bg-transparent! hover:text-brand!"
+              >
                 Chat
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant="ghost"
+                icon={wished ? "mdi:heart" : "mdi:heart-outline"}
                 onClick={() => toggle(product.id)}
-                className={`flex items-center gap-1.5 bg-transparent border-none cursor-pointer transition-colors ${
-                  wished ? "text-brand" : "hover:text-brand"
+                className={`h-auto! w-auto! p-0! border-none! gap-1.5 hover:bg-transparent! hover:text-brand! ${
+                  wished ? "text-brand!" : ""
                 }`}
               >
-                <Icon icon={wished ? "mdi:heart" : "mdi:heart-outline"} width={17} />
                 Wishlist
-              </button>
-              <button type="button" className="flex items-center gap-1.5 bg-transparent border-none cursor-pointer hover:text-brand transition-colors">
-                <Icon icon="mdi:share-variant-outline" width={17} />
+              </Button>
+              <Button
+                variant="ghost"
+                icon="mdi:share-variant-outline"
+                className="h-auto! w-auto! p-0! border-none! gap-1.5 hover:bg-transparent! hover:text-brand!"
+              >
                 Share
-              </button>
+              </Button>
             </div>
           </motion.aside>
         </div>

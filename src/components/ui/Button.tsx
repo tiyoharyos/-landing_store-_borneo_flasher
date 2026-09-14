@@ -22,10 +22,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
 }
 
-const ICON_SIZE: Record<ButtonSize, number> = { sm: 15, md: 17, lg: 19 };
+export const ICON_SIZE: Record<ButtonSize, number> = { sm: 15, md: 17, lg: 19 };
 
 /* 4 varian utama sesuai style guide: Primary / Secondary / Inverted / Outlined */
-const VARIANT_CLASSES: Record<ButtonVariant, string> = {
+export const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
     "bg-brand border-brand text-white hover:bg-brand-dark hover:border-brand-dark",
   secondary:
@@ -42,13 +42,13 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
     "bg-warn border-warn text-white hover:brightness-90",
 };
 
-const SIZE_CLASSES: Record<ButtonSize, string> = {
+export const SIZE_CLASSES: Record<ButtonSize, string> = {
   sm: "h-[34px] px-[15px] text-[12.5px] rounded-lg gap-1.5",
   md: "h-[42px] px-[20px] text-sm rounded-lg gap-2",
   lg: "h-[50px] px-6 text-[15px] rounded-xl gap-2",
 };
 
-const SPINNER_BORDER: Record<ButtonVariant, string> = {
+export const SPINNER_BORDER: Record<ButtonVariant, string> = {
   primary: "border-white/45 border-t-white",
   inverted: "border-white/45 border-t-white",
   danger: "border-white/45 border-t-white",
@@ -57,6 +57,36 @@ const SPINNER_BORDER: Record<ButtonVariant, string> = {
   ghost: "border-ink-soft/20 border-t-ink-soft",
   subtle: "border-ink-soft/20 border-t-ink-soft",
 };
+
+export const BUTTON_BASE_CLASSES =
+  "inline-flex items-center justify-center border font-semibold whitespace-nowrap select-none cursor-pointer transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand/15";
+
+/** Class builder dipakai bersama oleh <Button> (elemen <button>) dan <ButtonLink> (elemen <Link>/<a>)
+ *  supaya kedua bentuk tombol selalu memakai satu sumber gaya yang sama. */
+export function buttonClasses({
+  variant = "primary",
+  size = "md",
+  fullWidth = false,
+  disabled = false,
+  className = "",
+}: {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  fullWidth?: boolean;
+  disabled?: boolean;
+  className?: string;
+} = {}) {
+  return [
+    BUTTON_BASE_CLASSES,
+    VARIANT_CLASSES[variant],
+    SIZE_CLASSES[size],
+    fullWidth ? "flex w-full" : "",
+    disabled ? "cursor-not-allowed opacity-60" : "",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   {
@@ -74,16 +104,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   },
   ref
 ) {
-  const classes = [
-    "inline-flex items-center justify-center border font-semibold whitespace-nowrap select-none cursor-pointer transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand/15",
-    VARIANT_CLASSES[variant],
-    SIZE_CLASSES[size],
-    fullWidth ? "flex w-full" : "",
-    disabled || loading ? "cursor-not-allowed opacity-60" : "",
+  const classes = buttonClasses({
+    variant,
+    size,
+    fullWidth,
+    disabled: disabled || loading,
     className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  });
 
   return (
     <button ref={ref} type={type} className={classes} disabled={disabled || loading} {...rest}>

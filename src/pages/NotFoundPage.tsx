@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import ButtonLink from "@/components/ui/ButtonLink";
 
 export default function NotFoundPage() {
   return (
@@ -9,12 +9,9 @@ export default function NotFoundPage() {
       <p className="text-muted">
         Halaman yang kamu cari sudah pindah atau belum tersedia.
       </p>
-      <Link
-        to="/"
-        className="font-body text-[13px] font-semibold px-6 py-3 rounded-lg text-white bg-brand mt-2 hover:bg-brand-dark transition-colors"
-      >
+      <ButtonLink to="/" className="mt-2">
         Kembali ke Beranda
-      </Link>
+      </ButtonLink>
     </div>
   );
 }

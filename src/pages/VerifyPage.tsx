@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import AuthLayout from "@/components/auth/AuthLayout";
 import { Card, CardBody } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import ButtonLink from "@/components/ui/ButtonLink";
 import { verifyAccount } from "@/services/authService";
 import { getApiErrorMessage } from "@/lib/axios";
 
@@ -82,11 +83,9 @@ export default function VerifyPage() {
                 <Icon icon="mdi:close-circle-outline" width={48} className="text-warn" />
                 <p className="font-display font-extrabold text-lg text-ink">Verifikasi Gagal</p>
                 <p className="text-[13.75px] text-muted">{message}</p>
-                <Link to="/daftar" className="mt-2 w-full">
-                  <Button variant="outline" size="lg" fullWidth>
-                    Daftar Ulang
-                  </Button>
-                </Link>
+                <ButtonLink to="/daftar" variant="outline" size="lg" fullWidth className="mt-2">
+                  Daftar Ulang
+                </ButtonLink>
               </>
             )}
           </CardBody>

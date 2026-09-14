@@ -7,6 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
+import ButtonLink from "@/components/ui/ButtonLink";
 import ThemeToggle from "@/components/ThemeToggle";
 import { navLinkClass } from "@/components/navLinkClass";
 import { formatRupiah } from "@/data/products";
@@ -92,12 +93,14 @@ export default function Navbar() {
               placeholder="Cari alat, sparepart..."
               className="flex-1 min-w-0 border-none outline-none bg-transparent text-sm h-9 text-ink placeholder:text-muted"
             />
-            <button
+            <Button
+              variant="primary"
+              size="sm"
               onClick={submitSearch}
-              className="flex-shrink-0 rounded-lg px-4 md:px-5 h-9 font-bold text-[13px] bg-brand text-white cursor-pointer whitespace-nowrap hover:bg-brand-dark active:scale-95 transition-all duration-200"
+              className="flex-shrink-0 h-9! px-4! md:px-5!"
             >
               Cari
-            </button>
+            </Button>
           </div>
 
           <div className="order-2 md:order-3 flex items-center gap-3 sm:gap-3.5 flex-shrink-0">
@@ -157,9 +160,14 @@ export default function Navbar() {
                         <p className="text-[12.5px] text-muted mt-1">
                           Yuk, isi dengan barang-barang impianmu!
                         </p>
-                        <Link to="/" onClick={() => setCartOpen(false)} className="mt-[1.1rem]">
-                          <Button variant="outline">Mulai Belanja</Button>
-                        </Link>
+                        <ButtonLink
+                          to="/"
+                          variant="outline"
+                          onClick={() => setCartOpen(false)}
+                          className="mt-[1.1rem]"
+                        >
+                          Mulai Belanja
+                        </ButtonLink>
                       </div>
                     ) : (
                       <>
@@ -188,24 +196,28 @@ export default function Navbar() {
                                 </div>
                                 <div className="flex items-center justify-between mt-2">
                                   <div className="flex items-center border border-line rounded-lg overflow-hidden transition-colors duration-200">
-                                    <button
-                                      className="w-[26px] h-[26px] bg-cream-deep border-none flex items-center justify-center cursor-pointer text-ink hover:bg-brand-tint hover:text-brand active:scale-90 transition-all duration-150"
+                                    <Button
+                                      variant="subtle"
+                                      size="sm"
+                                      icon="mdi:minus"
                                       onClick={() => setQty(item.productId, item.qty - 1)}
-                                    >
-                                      <Icon icon="mdi:minus" width={14} />
-                                    </button>
+                                      aria-label="Kurangi jumlah"
+                                      className="w-[26px]! h-[26px]! p-0! rounded-none! border-none! active:scale-90! hover:bg-brand-tint! hover:text-brand!"
+                                    />
                                     <span className="w-[30px] text-center font-bold text-[13px] text-ink">{item.qty}</span>
-                                    <button
-                                      className="w-[26px] h-[26px] bg-cream-deep border-none flex items-center justify-center cursor-pointer text-ink hover:bg-brand-tint hover:text-brand active:scale-90 transition-all duration-150"
+                                    <Button
+                                      variant="subtle"
+                                      size="sm"
+                                      icon="mdi:plus"
                                       onClick={() =>
                                         setQty(
                                           item.productId,
                                           Math.min(item.product.stock, item.qty + 1)
                                         )
                                       }
-                                    >
-                                      <Icon icon="mdi:plus" width={14} />
-                                    </button>
+                                      aria-label="Tambah jumlah"
+                                      className="w-[26px]! h-[26px]! p-0! rounded-none! border-none! active:scale-90! hover:bg-brand-tint! hover:text-brand!"
+                                    />
                                   </div>
                                   <span className="text-[11px] text-muted">
                                     Stok: {item.product.stock}
@@ -243,14 +255,15 @@ export default function Navbar() {
 
             {user ? (
               <div className="relative" ref={menuRef}>
-                <button
-                  className="flex items-center gap-1 bg-transparent border-none cursor-pointer text-[13.5px] font-semibold text-ink-soft transition-colors duration-200"
+                <Button
+                  variant="ghost"
+                  icon="mdi:account-circle-outline"
+                  iconRight="mdi:chevron-down"
                   onClick={() => setMenuOpen((v) => !v)}
+                  className="h-auto! px-0! border-none! text-[13.5px]"
                 >
-                  <Icon icon="mdi:account-circle-outline" width={22} />
                   <span className="hidden sm:inline">{user.name.split(" ")[0]}</span>
-                  <Icon icon="mdi:chevron-down" width={16} />
-                </button>
+                </Button>
                 {menuOpen && (
                   <div className="absolute right-0 top-[calc(100%+8px)] bg-surface border border-line rounded-xl shadow-[var(--shadow-md)] min-w-[180px] overflow-hidden z-[60] animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)] origin-top-right">
                     <Link
@@ -278,28 +291,27 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex gap-2 items-center">
-                <Link
+                <ButtonLink
                   to="/masuk"
-                  className="hidden sm:block border border-brand text-brand text-[13px] font-semibold rounded-lg px-4 py-1.5 whitespace-nowrap hover:bg-brand-tint transition-all duration-200"
+                  variant="outline"
+                  size="sm"
+                  className="hidden sm:inline-flex border-brand! text-brand! hover:bg-brand-tint!"
                 >
                   Masuk
-                </Link>
-                <Link
-                  to="/daftar"
-                  className="bg-brand text-white text-[13px] font-semibold rounded-lg px-3 md:px-4 py-1.5 whitespace-nowrap hover:bg-brand-dark transition-all duration-200"
-                >
+                </ButtonLink>
+                <ButtonLink to="/daftar" variant="primary" size="sm" className="px-3! md:px-4!">
                   Daftar
-                </Link>
+                </ButtonLink>
               </div>
             )}
 
-            <button
-              className="md:hidden text-2xl text-ink bg-transparent border-none cursor-pointer ml-1 transition-colors duration-200"
+            <Button
+              variant="ghost"
+              icon={open ? "mdi:close" : "mdi:menu"}
               onClick={() => setOpen(!open)}
               aria-label="Toggle navigation"
-            >
-              <Icon icon={open ? "mdi:close" : "mdi:menu"} />
-            </button>
+              className="md:hidden! h-auto! w-auto! px-0! py-0! border-none! ml-1 text-ink text-2xl [&_svg]:w-6 [&_svg]:h-6"
+            />
           </div>
         </div>
 

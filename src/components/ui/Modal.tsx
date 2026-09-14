@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Icon } from "@iconify/react";
+import Button from "./Button";
 
 export interface ModalProps {
   open: boolean;
@@ -40,14 +40,14 @@ export default function Modal({ open, onClose, title, children, maxWidth = 480 }
       >
         <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-line shrink-0">
           <p className="font-display font-extrabold text-[15px] text-ink">{title}</p>
-          <button
-            type="button"
-            className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center border-none bg-transparent text-muted cursor-pointer hover:bg-cream-deep hover:text-ink transition-colors"
+          <Button
+            variant="ghost"
+            size="sm"
+            icon="mdi:close"
+            className="w-8! h-8! p-0! rounded-full! shrink-0 text-muted"
             onClick={onClose}
             aria-label="Tutup"
-          >
-            <Icon icon="mdi:close" width={20} />
-          </button>
+          />
         </div>
         <div className="p-5 overflow-y-auto flex flex-col gap-4">{children}</div>
       </div>

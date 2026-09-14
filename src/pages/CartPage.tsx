@@ -4,6 +4,7 @@ import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatRupiah } from "@/data/products";
 import Button from "@/components/ui/Button";
+import ButtonLink from "@/components/ui/ButtonLink";
 import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
 
@@ -69,11 +70,9 @@ export default function CartPage() {
               <p className="text-muted text-[13.5px] mt-1.5 max-w-[320px]">
                 Yuk, isi dengan barang-barang kebutuhan servis kamu!
               </p>
-              <Link to="/" className="inline-block mt-6">
-                <Button variant="primary" icon="mdi:storefront-outline">
-                  Mulai Belanja
-                </Button>
-              </Link>
+              <ButtonLink to="/" icon="mdi:storefront-outline" className="mt-6">
+                Mulai Belanja
+              </ButtonLink>
             </div>
 
             <div className="bg-surface border border-line rounded-xl p-5 sticky top-[90px] opacity-70">
@@ -109,29 +108,34 @@ export default function CartPage() {
                     <p className="font-mono font-bold text-[13px] text-brand-dark mt-1">{formatRupiah(item.product.price)}</p>
                     <div className="flex items-center gap-3.5 mt-2">
                       <div className="flex items-center border border-line rounded-lg overflow-hidden">
-                        <button
-                          className="w-[26px] h-[26px] bg-cream-deep flex items-center justify-center cursor-pointer text-ink"
+                        <Button
+                          variant="subtle"
+                          size="sm"
+                          icon="mdi:minus"
                           onClick={() => setQty(item.productId, item.qty - 1)}
-                        >
-                          <Icon icon="mdi:minus" width={14} />
-                        </button>
+                          aria-label="Kurangi jumlah"
+                          className="w-[26px]! h-[26px]! p-0! rounded-none! border-none!"
+                        />
                         <span className="w-[30px] text-center font-bold text-[13px] text-ink">{item.qty}</span>
-                        <button
-                          className="w-[26px] h-[26px] bg-cream-deep flex items-center justify-center cursor-pointer text-ink"
+                        <Button
+                          variant="subtle"
+                          size="sm"
+                          icon="mdi:plus"
                           onClick={() =>
                             setQty(item.productId, Math.min(item.product.stock, item.qty + 1))
                           }
-                        >
-                          <Icon icon="mdi:plus" width={14} />
-                        </button>
+                          aria-label="Tambah jumlah"
+                          className="w-[26px]! h-[26px]! p-0! rounded-none! border-none!"
+                        />
                       </div>
-                      <button
-                        className="flex items-center gap-1 text-xs text-warn bg-transparent border-none cursor-pointer hover:underline"
+                      <Button
+                        variant="ghost"
+                        icon="mdi:trash-can-outline"
                         onClick={() => handleRemove(item.productId, item.product.name)}
+                        className="h-auto! w-auto! p-0! border-none! gap-1 text-warn! text-xs hover:bg-transparent! hover:underline"
                       >
-                        <Icon icon="mdi:trash-can-outline" width={16} />
                         Hapus
-                      </button>
+                      </Button>
                     </div>
                   </div>
                   <p className="font-mono font-bold text-[13.5px] text-ink flex-shrink-0">{formatRupiah(item.lineTotal)}</p>

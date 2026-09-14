@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import Modal from "@/components/ui/Modal";
+import Button from "@/components/ui/Button";
 import AddressCard from "@/components/address/AddressCard";
 import AddressFormModal from "@/components/address/AddressFormModal";
 import { useAddresses } from "@/context/AddressContext";
@@ -44,14 +45,15 @@ export default function AddressListModal({ open, onClose, onPick }: Props) {
   return (
     <>
       <Modal open={open} onClose={onClose} title="Pilih Alamat Pengiriman" maxWidth={560}>
-        <button
-          type="button"
-          className="flex items-center justify-center gap-1.5 w-full h-11 rounded-xl border-[1.5px] border-dashed border-brand bg-brand-tint text-brand text-[13.5px] font-bold cursor-pointer hover:bg-brand/10 transition-colors"
+        <Button
+          variant="outline"
+          icon="mdi:plus"
+          fullWidth
           onClick={openAdd}
+          className="h-11! rounded-xl! border-[1.5px]! border-dashed! border-brand! bg-brand-tint! text-brand! hover:bg-brand/10!"
         >
-          <Icon icon="mdi:plus" width={18} />
           Tambah Alamat Baru
-        </button>
+        </Button>
 
         {addresses.length === 0 ? (
           <div className="flex flex-col items-center text-center py-8 px-4">

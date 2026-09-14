@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BannerCarousel from "@/components/BannerCarousel";
 import ProductCard from "@/components/ProductCard";
+import ButtonLink from "@/components/ui/ButtonLink";
 import { type Product } from "@/data/products";
 import { getProducts } from "@/services/productsService";
 import { mapApiProductsToProducts } from "@/lib/mapProduct";
@@ -118,12 +119,9 @@ export default function HomePage() {
               </div>
 
               <div className="flex justify-center text-white">
-                <Link
-                  to="/kategori"
-                  className="rounded-lg px-4 md:px-5 h-9 inline-flex items-center gap-2 bg-brand text-white  cursor-pointer whitespace-nowrap hover:bg-brand-dark active:scale-95 transition-all duration-200"
-                >
+                <ButtonLink to="/kategori" size="sm" className="h-9! px-4! md:px-5!">
                   Lihat Semua Produk
-                </Link>
+                </ButtonLink>
               </div>
             </>
           )}

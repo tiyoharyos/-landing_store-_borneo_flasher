@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Logo from "./Logo";
+import { ExternalButtonLink } from "@/components/ui/ButtonLink";
 import { ADDRESS, EMAIL, PHONE_DISPLAY, SOCIALS, waLink } from "@/config/config";
 
 const SOCIAL_ICONS: { key: keyof typeof SOCIALS; icon: string }[] = [
@@ -27,16 +28,16 @@ export default function Footer() {
             </p>
             <div className="flex gap-2 mt-5">
               {SOCIAL_ICONS.map((s) => (
-                <a
+                <ExternalButtonLink
                   key={s.key}
                   href={SOCIALS[s.key]}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-[38px] h-[38px] rounded-full border border-line flex items-center justify-center text-ink-soft transition-all duration-200 hover:bg-brand hover:border-brand hover:text-white hover:-translate-y-0.5 hover:shadow-[var(--shadow-brand)]"
+                  variant="outline"
+                  icon={s.icon}
                   aria-label={s.key}
-                >
-                  <Icon icon={s.icon} width={18} />
-                </a>
+                  className="w-[38px]! h-[38px]! p-0! rounded-full! hover:bg-brand! hover:border-brand! hover:text-white! hover:-translate-y-0.5 hover:shadow-[var(--shadow-brand)]"
+                />
               ))}
             </div>
           </div>
@@ -84,15 +85,15 @@ export default function Footer() {
         </div>
       </div>
 
-      <a
+      <ExternalButtonLink
         href={waLink()}
-        className="fixed w-12 h-12 md:w-14 md:h-14 bottom-4 right-4 md:bottom-[26px] md:right-[26px] bg-[#25d366] text-white rounded-full flex items-center justify-center text-xl md:text-2xl shadow-[0_10px_24px_rgba(37,211,102,0.35)] z-[100] transition-all duration-200 ease-out hover:scale-110 hover:shadow-[0_14px_30px_rgba(37,211,102,0.45)] active:scale-100"
         target="_blank"
         rel="noreferrer"
         title="Hubungi Admin"
-      >
-        <Icon icon="ic:baseline-whatsapp" />
-      </a>
+        variant="primary"
+        icon="ic:baseline-whatsapp"
+        className="fixed! w-12! h-12! md:w-14! md:h-14! p-0! bottom-4 right-4 md:bottom-[26px] md:right-[26px] bg-[#25d366]! border-[#25d366]! rounded-full! text-xl md:text-2xl shadow-[0_10px_24px_rgba(37,211,102,0.35)] z-[100] hover:scale-110 hover:bg-[#25d366]! hover:border-[#25d366]! hover:shadow-[0_14px_30px_rgba(37,211,102,0.45)] active:scale-100"
+      />
     </footer>
   );
 }

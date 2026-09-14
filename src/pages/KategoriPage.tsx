@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import Button from "@/components/ui/Button";
 import ProductCard from "@/components/ProductCard";
 import { type Product } from "@/data/products";
 import { getProducts } from "@/services/productsService";
@@ -298,13 +299,14 @@ export default function KategoriPage() {
         </div>
       </div>
 
-      <button
-        type="button"
-        className="w-full mt-0 bg-surface border border-brand text-brand text-[13px] font-semibold rounded-lg px-[1.6rem] py-2 cursor-pointer transition-colors hover:bg-brand-tint"
+      <Button
+        variant="outline"
+        fullWidth
         onClick={resetAllFilters}
+        className="mt-0! border-brand! text-brand! hover:bg-brand-tint!"
       >
         Reset Filter
-      </button>
+      </Button>
     </>
   );
 
@@ -327,24 +329,20 @@ export default function KategoriPage() {
               <aside className="absolute inset-y-0 left-0 w-[85vw] max-w-[320px] bg-surface flex flex-col shadow-[var(--shadow-lg)]">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-line shrink-0">
                   <p className="font-display font-bold text-[14.5px] text-ink">Filter Produk</p>
-                  <button
-                    type="button"
-                    className="w-8 h-8 rounded-full flex items-center justify-center border-none bg-transparent text-muted cursor-pointer hover:bg-cream-deep hover:text-ink transition-colors"
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    icon="mdi:close"
                     onClick={() => setMobileFilterOpen(false)}
                     aria-label="Tutup filter"
-                  >
-                    <Icon icon="mdi:close" width={20} />
-                  </button>
+                    className="w-8! h-8! p-0! rounded-full!"
+                  />
                 </div>
                 <div className="p-5 flex flex-col gap-5 overflow-y-auto">{filterContent}</div>
                 <div className="p-4 border-t border-line shrink-0">
-                  <button
-                    type="button"
-                    className="w-full h-11 rounded-lg bg-brand text-white text-[13.5px] font-bold cursor-pointer hover:bg-brand-dark transition-colors"
-                    onClick={() => setMobileFilterOpen(false)}
-                  >
+                  <Button variant="primary" size="lg" fullWidth onClick={() => setMobileFilterOpen(false)}>
                     Tampilkan {filtered.length} Produk
-                  </button>
+                  </Button>
                 </div>
               </aside>
             </div>
@@ -389,39 +387,42 @@ export default function KategoriPage() {
                   />
                 </div>
 
-                <button
-                  type="button"
-                  className="relative border border-brand text-brand text-[13px] font-semibold rounded-lg px-4 h-9 whitespace-nowrap flex lg:hidden items-center gap-1.5 hover:bg-brand-tint transition-colors"
+                <Button
+                  variant="outline"
+                  icon="mdi:filter-variant"
                   onClick={() => setMobileFilterOpen(true)}
+                  className="relative h-9! border-brand! text-brand! flex! lg:hidden! hover:bg-brand-tint!"
                 >
-                  <Icon icon="mdi:filter-variant" width={17} /> Filter
+                  Filter
                   {activeFilters.length > 0 && (
                     <span className="inline-flex items-center justify-center w-[18px] h-[18px] rounded-full bg-brand text-white text-[10px] font-bold">
                       {activeFilters.length}
                     </span>
                   )}
-                </button>
+                </Button>
               </div>
             </div>
 
             {activeFilters.length > 0 && (
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 {activeFilters.map((f) => (
-                  <button
+                  <Button
                     key={f.label}
-                    className="inline-flex items-center gap-1.5 bg-brand-tint text-brand border-none rounded-full px-3 py-1.5 text-xs font-semibold cursor-pointer"
+                    variant="subtle"
+                    iconRight="mdi:close"
                     onClick={f.onClear}
+                    className="h-auto! w-auto! rounded-full! px-3! py-1.5! bg-brand-tint! border-none! text-brand! text-xs"
                   >
                     {f.label}
-                    <Icon icon="mdi:close" width={13} />
-                  </button>
+                  </Button>
                 ))}
-                <button
-                  className="bg-transparent border-none text-warn text-[12.5px] font-bold cursor-pointer hover:underline"
+                <Button
+                  variant="ghost"
                   onClick={resetAllFilters}
+                  className="h-auto! w-auto! p-0! border-none! text-warn! text-[12.5px] hover:bg-transparent! hover:underline"
                 >
                   Hapus Semua
-                </button>
+                </Button>
               </div>
             )}
 
@@ -448,14 +449,14 @@ export default function KategoriPage() {
 
                   {totalPages > 1 && (
                     <div className="flex flex-wrap justify-center gap-1.5 my-9 mb-12">
-                      <button
-                        className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand"
+                      <Button
+                        variant="outline"
+                        icon="mdi:chevron-left"
                         disabled={page === 1}
                         onClick={() => setPage((p) => Math.max(1, p - 1))}
                         aria-label="Sebelumnya"
-                      >
-                        <Icon icon="mdi:chevron-left" width={18} />
-                      </button>
+                        className="min-w-9! w-9! h-9! p-0! hover:enabled:border-brand! hover:enabled:text-brand!"
+                      />
                       {getPageNumbers(page, totalPages).map((n, idx) =>
                         n === "..." ? (
                           <span
@@ -465,27 +466,26 @@ export default function KategoriPage() {
                             ...
                           </span>
                         ) : (
-                          <button
+                          <Button
                             key={n}
-                            className={`min-w-9 h-9 px-1.5 rounded-lg border text-[13px] font-semibold flex items-center justify-center cursor-pointer ${
-                              page === n
-                                ? "bg-brand border-brand text-white"
-                                : "border-line bg-surface text-ink-soft hover:border-brand hover:text-brand"
-                            }`}
+                            variant={page === n ? "primary" : "outline"}
                             onClick={() => setPage(n)}
+                            className={`min-w-9! w-9! h-9! p-0! ${
+                              page === n ? "" : "hover:border-brand! hover:text-brand!"
+                            }`}
                           >
                             {n}
-                          </button>
+                          </Button>
                         )
                       )}
-                      <button
-                        className="min-w-9 h-9 px-1.5 rounded-lg border border-line bg-surface text-[13px] font-semibold text-ink-soft flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-brand hover:enabled:text-brand"
+                      <Button
+                        variant="outline"
+                        icon="mdi:chevron-right"
                         disabled={page === totalPages}
                         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                         aria-label="Berikutnya"
-                      >
-                        <Icon icon="mdi:chevron-right" width={18} />
-                      </button>
+                        className="min-w-9! w-9! h-9! p-0! hover:enabled:border-brand! hover:enabled:text-brand!"
+                      />
                     </div>
                   )}
                 </>
@@ -495,13 +495,14 @@ export default function KategoriPage() {
                   <p className="font-display font-bold text-[1.1rem] mt-4">Produk Tidak Ditemukan</p>
                   <p className="text-muted text-sm mt-1">Coba ubah kata kunci atau filter pencarian Anda.</p>
                   {activeFilters.length > 0 && (
-                    <button
-                      type="button"
-                      className="mt-4 border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors"
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={resetAllFilters}
+                      className="mt-4 border-brand! text-brand! hover:bg-brand-tint!"
                     >
                       Reset Filter
-                    </button>
+                    </Button>
                   )}
                 </div>
               )

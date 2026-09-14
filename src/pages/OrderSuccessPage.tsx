@@ -1,7 +1,8 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { getOrderById } from "@/data/orders";
 import { formatRupiah } from "@/data/products";
+import ButtonLink from "@/components/ui/ButtonLink";
 
 export default function OrderSuccessPage() {
   const { orderId } = useParams<{ orderId: string }>();
@@ -13,12 +14,14 @@ export default function OrderSuccessPage() {
         <div className="container text-center py-12 px-6">
           <Icon icon="mdi:receipt-text-remove-outline" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Pesanan Tidak Ditemukan</p>
-          <Link
+          <ButtonLink
             to="/"
-            className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors"
+            variant="outline"
+            size="sm"
+            className="mt-4 border-brand! text-brand! hover:bg-brand-tint!"
           >
             Kembali ke Beranda
-          </Link>
+          </ButtonLink>
         </div>
       </div>
     );
@@ -70,18 +73,17 @@ export default function OrderSuccessPage() {
           </div>
 
           <div className="flex gap-3 mt-6">
-            <Link
+            <ButtonLink
               to="/"
-              className="inline-flex items-center justify-center gap-2 font-bold text-sm rounded-xl px-6 py-3.5 border-[1.5px] border-brand text-brand hover:bg-brand-tint transition-colors"
+              variant="outline"
+              size="lg"
+              className="rounded-xl! border-[1.5px]! border-brand! text-brand! hover:bg-brand-tint!"
             >
               Kembali ke Beranda
-            </Link>
-            <Link
-              to="/akun/profil?tab=pesanan"
-              className="inline-flex items-center justify-center gap-2 font-bold text-sm rounded-xl px-6 py-3.5 bg-brand text-white hover:bg-brand-dark transition-colors"
-            >
+            </ButtonLink>
+            <ButtonLink to="/akun/profil?tab=pesanan" size="lg" className="rounded-xl!">
               Lihat Pesanan Saya
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </div>

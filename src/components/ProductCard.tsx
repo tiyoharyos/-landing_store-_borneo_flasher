@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
 import { formatRupiah, discountPercent, type Product } from "@/data/products";
 import { useWishlist } from "@/context/WishlistContext";
+import Button from "@/components/ui/Button";
 
 export default function ProductCard({ product }: { product: Product }) {
   const pct = discountPercent(product);
@@ -40,20 +40,19 @@ export default function ProductCard({ product }: { product: Product }) {
             Bekas
           </span>
         )}
-        <button
-          type="button"
-          className={`absolute top-2 right-2 w-7 h-7 rounded-full border border-line bg-surface/95 flex items-center justify-center cursor-pointer transition-colors z-[2] ${
-            wished ? "text-brand" : "text-ink-soft"
-          }`}
+        <Button
+          variant="outline"
+          icon={wished ? "mdi:heart" : "mdi:heart-outline"}
           aria-label={wished ? "Hapus dari wishlist" : "Tambah ke wishlist"}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             toggle(product.id);
           }}
-        >
-          <Icon icon={wished ? "mdi:heart" : "mdi:heart-outline"} width={16} />
-        </button>
+          className={`absolute top-2 right-2 w-7! h-7! p-0! rounded-full! bg-surface/95! z-[2] ${
+            wished ? "text-brand!" : "text-ink-soft!"
+          }`}
+        />
       </div>
       <div className="px-3.5 pt-3 pb-3.5">
         <p

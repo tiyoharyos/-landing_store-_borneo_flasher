@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import Button from "@/components/ui/Button";
 import type { Address } from "@/data/addresses";
 
 interface Props {
@@ -41,40 +42,36 @@ export default function AddressCard({
 
       <div className="flex items-center gap-3.5 flex-wrap mt-2 pt-2.5 border-t border-line">
         {onEdit && (
-          <button
-            type="button"
-            className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline"
+          <Button
+            variant="ghost"
             onClick={onEdit}
+            className="h-auto! w-auto! p-0! border-none! text-brand! text-[12.5px] hover:bg-transparent! hover:underline"
           >
             Ubah Alamat
-          </button>
+          </Button>
         )}
         {!address.isPrimary && onMakePrimary && (
-          <button
-            type="button"
-            className="bg-transparent border-none p-0 text-brand text-[12.5px] font-bold cursor-pointer hover:underline"
+          <Button
+            variant="ghost"
             onClick={onMakePrimary}
+            className="h-auto! w-auto! p-0! border-none! text-brand! text-[12.5px] hover:bg-transparent! hover:underline"
           >
             {selectable ? "Jadikan Utama & Pilih" : "Jadikan Alamat Utama"}
-          </button>
+          </Button>
         )}
         {onDelete && (
-          <button
-            type="button"
-            className="bg-transparent border-none p-0 text-warn text-[12.5px] font-bold cursor-pointer hover:underline"
+          <Button
+            variant="ghost"
             onClick={onDelete}
+            className="h-auto! w-auto! p-0! border-none! text-warn! text-[12.5px] hover:bg-transparent! hover:underline"
           >
             Hapus
-          </button>
+          </Button>
         )}
         {selectable && onSelect && (
-          <button
-            type="button"
-            className="ml-auto h-8 px-4 rounded-lg bg-brand text-white border-none text-[12.5px] font-bold cursor-pointer hover:bg-brand-dark transition-colors"
-            onClick={onSelect}
-          >
+          <Button variant="primary" size="sm" onClick={onSelect} className="ml-auto h-8! px-4!">
             Pilih
-          </button>
+          </Button>
         )}
       </div>
     </div>

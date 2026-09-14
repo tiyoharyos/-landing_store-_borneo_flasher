@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import ProductCard from "@/components/ProductCard";
+import Button from "@/components/ui/Button";
+import ButtonLink from "@/components/ui/ButtonLink";
 import NameEditModal from "@/components/NameEditModal";
 import PhoneEditModal from "@/components/PhoneEditModal";
 import AddressCard from "@/components/address/AddressCard";
@@ -205,9 +207,9 @@ export default function ProfilePage() {
                   <Icon icon="mdi:receipt-text-outline" width={64} className="text-line inline-block" />
                   <p className="font-display font-bold text-[1.1rem] mt-4">Belum Ada Pesanan</p>
                   <p className="text-muted text-sm mt-1">Pesanan yang kamu buat akan muncul di sini.</p>
-                  <Link to="/" className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors">
+                  <ButtonLink to="/" variant="outline" size="sm" className="mt-4 border-brand! text-brand! hover:bg-brand-tint!">
                     Mulai Belanja
-                  </Link>
+                  </ButtonLink>
                 </div>
               ) : (
                 <div className="flex flex-col gap-4">
@@ -266,14 +268,16 @@ export default function ProfilePage() {
                       </div>
                     )}
                   </div>
-                  <button
-                    type="button"
+                  <Button
+                    variant="ghost"
+                    fullWidth
+                    loading={uploadingAvatar}
                     onClick={handlePickAvatar}
                     disabled={uploadingAvatar}
-                    className="border-t border-line py-3 text-[13px] font-bold text-ink bg-surface cursor-pointer hover:bg-cream-deep transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="border-t! border-line! rounded-none! text-ink hover:bg-cream-deep!"
                   >
                     {uploadingAvatar ? "Mengunggah..." : "Pilih Foto"}
-                  </button>
+                  </Button>
                 </div>
                 <input
                   ref={avatarInputRef}
@@ -296,13 +300,13 @@ export default function ProfilePage() {
                 <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
                   <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nama</span>
                   <span className="text-[13.5px] text-ink font-semibold">{user.name}</span>
-                  <button
-                    type="button"
-                    className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline"
+                  <Button
+                    variant="ghost"
                     onClick={openNameModal}
+                    className="ml-auto h-auto! w-auto! p-0! border-none! text-brand! text-[13px] hover:bg-transparent! hover:underline"
                   >
                     Ubah
-                  </button>
+                  </Button>
                 </div>
 
                 <p className="font-display font-extrabold text-base text-ink mt-5 mb-1">Ubah Kontak</p>
@@ -318,13 +322,13 @@ export default function ProfilePage() {
                   <span className={`text-[13.5px] font-medium ${user.phone ? "text-ink font-semibold" : "text-muted"}`}>
                     {user.phone || "Belum ditambahkan"}
                   </span>
-                  <button
-                    type="button"
-                    className="ml-auto bg-transparent border-none text-brand text-[13px] font-bold cursor-pointer hover:underline"
+                  <Button
+                    variant="ghost"
                     onClick={openPhoneModal}
+                    className="ml-auto h-auto! w-auto! p-0! border-none! text-brand! text-[13px] hover:bg-transparent! hover:underline"
                   >
                     {user.phone ? "Ubah" : "Tambah"}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -334,14 +338,9 @@ export default function ProfilePage() {
             <div className="p-5">
               <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
                 <p className="font-display font-extrabold text-base text-ink">Alamat Tersimpan</p>
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-brand text-white border-none text-[12.5px] font-bold cursor-pointer hover:bg-brand-dark transition-colors"
-                  onClick={openAddAddress}
-                >
-                  <Icon icon="mdi:plus" width={16} />
+                <Button variant="primary" size="sm" icon="mdi:plus" onClick={openAddAddress} className="h-9!">
                   Tambah Alamat Baru
-                </button>
+                </Button>
               </div>
 
               {addresses.length === 0 ? (
@@ -375,9 +374,9 @@ export default function ProfilePage() {
                   <p className="text-muted text-sm mt-1">
                     Simpan produk favoritmu dengan tap ikon hati pada produk.
                   </p>
-                  <Link to="/" className="mt-4 inline-block border border-brand text-brand text-[13px] font-semibold rounded-lg px-6 py-2 hover:bg-brand-tint transition-colors">
+                  <ButtonLink to="/" variant="outline" size="sm" className="mt-4 border-brand! text-brand! hover:bg-brand-tint!">
                     Mulai Belanja
-                  </Link>
+                  </ButtonLink>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">

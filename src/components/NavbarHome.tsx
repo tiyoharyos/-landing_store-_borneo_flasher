@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Icon } from "@iconify/react";
 import logoLpks from "../assets/img/logo-lpks.png";
 import ThemeToggle from "@/components/ThemeToggle";
+import Button from "@/components/ui/Button";
 import { navLinkClass } from "@/components/navLinkClass";
 
 export default function NavbarHome() {
@@ -17,13 +17,13 @@ export default function NavbarHome() {
 
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
-          <button
-            className="text-2xl text-ink bg-transparent border-none cursor-pointer"
+          <Button
+            variant="ghost"
+            icon={open ? "mdi:close" : "mdi:menu"}
             onClick={() => setOpen(!open)}
             aria-label="Toggle navigation"
-          >
-            <Icon icon={open ? "mdi:close" : "mdi:menu"} />
-          </button>
+            className="h-auto! w-auto! p-0! border-none! text-ink text-2xl [&_svg]:w-6 [&_svg]:h-6"
+          />
         </div>
 
         <ul
