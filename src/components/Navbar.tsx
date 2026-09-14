@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { AnimatePresence, motion } from "framer-motion";
 import Swal from "sweetalert2";
+import { EASE_POP } from "@/lib/motion";
 import logoLpks from "../assets/img/logo-lpks.png";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
@@ -12,6 +14,15 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { navLinkClass } from "@/components/navLinkClass";
 import { formatRupiah } from "@/data/products";
 import Logo from "./Logo";
+
+// Animasi masuk & keluar yang sama untuk semua panel dropdown di navbar
+// (keranjang mini, menu akun) — biar tutupnya juga halus, bukan hilang instan.
+const dropdownMotion = {
+  initial: { opacity: 0, scale: 0.96, y: -6 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  exit: { opacity: 0, scale: 0.97, y: -4 },
+  transition: { duration: 0.18, ease: EASE_POP },
+};
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -133,10 +144,14 @@ export default function Navbar() {
                 )}
               </Link>
 
+              <AnimatePresence>
               {cartOpen && (
                 <>
                   <div className="absolute top-full right-0 w-[300px] h-3.5" />
-                  <div className="absolute top-[calc(100%+14px)] right-[-50px] sm:-right-2.5 w-[85vw] sm:w-[340px] max-w-[340px] bg-surface border border-line rounded-xl shadow-[var(--shadow-md)] z-[80] overflow-hidden animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)] origin-top-right">
+                  <motion.div
+                    {...dropdownMotion}
+                    style={{ willChange: "opacity, transform" }}
+                    className="absolute top-[calc(100%+14px)] right-[-50px] sm:-right-2.5 w-[85vw] sm:w-[340px] max-w-[340px] bg-surface border border-line rounded-xl shadow-[var(--shadow-md)] z-[80] overflow-hidden origin-top-right">
                     <div className="flex items-center justify-between px-[18px] py-3.5 border-b border-line transition-colors duration-200">
                       <span className="font-display font-extrabold text-[14.5px] text-ink">
                         Keranjang{totalItems > 0 ? ` (${totalItems})` : ""}
@@ -248,9 +263,10 @@ export default function Navbar() {
                         </div>
                       </>
                     )}
-                  </div>
+                  </motion.div>
                 </>
               )}
+              </AnimatePresence>
             </div>
 
             {user ? (
@@ -264,8 +280,13 @@ export default function Navbar() {
                 >
                   <span className="hidden sm:inline">{user.name.split(" ")[0]}</span>
                 </Button>
+                <AnimatePresence>
                 {menuOpen && (
-                  <div className="absolute right-0 top-[calc(100%+8px)] bg-surface border border-line rounded-xl shadow-[var(--shadow-md)] min-w-[180px] overflow-hidden z-[60] animate-[modalIn_0.18s_cubic-bezier(0.16,1,0.3,1)] origin-top-right">
+                  <motion.div
+                    {...dropdownMotion}
+                    style={{ willChange: "opacity, transform" }}
+                    className="absolute right-0 top-[calc(100%+8px)] bg-surface border border-line rounded-xl shadow-[var(--shadow-md)] min-w-[180px] overflow-hidden z-[60] origin-top-right"
+                  >
                     <Link
                       to="/akun/profil"
                       onClick={() => setMenuOpen(false)}
@@ -286,8 +307,9 @@ export default function Navbar() {
                     >
                       <Icon icon="mdi:logout" width={17} /> Keluar
                     </button>
-                  </div>
+                  </motion.div>
                 )}
+                </AnimatePresence>
               </div>
             ) : (
               <div className="flex gap-2 items-center">
@@ -317,7 +339,7 @@ export default function Navbar() {
 
         <ul
           className={`${
-            open ? "flex" : "hidden"
+            open ? "flex animate-fade-slide-down" : "hidden"
           } md:flex flex-col md:flex-row gap-2 md:gap-6 list-none m-0 mt-4 md:mt-2 p-0 items-start md:items-center`}
         >
           <li>

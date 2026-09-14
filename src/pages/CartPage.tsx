@@ -7,6 +7,8 @@ import Button from "@/components/ui/Button";
 import ButtonLink from "@/components/ui/ButtonLink";
 import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
+import FadeIn from "@/components/FadeIn";
+import AnimatedGrid, { AnimatedGridItem } from "@/components/AnimatedGrid";
 
 export default function CartPage() {
   const { items, subtotal, loading, removeItem, setQty } = useCart();
@@ -60,7 +62,7 @@ export default function CartPage() {
           </div>
         ) : items.length === 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
-            <div className="flex flex-col items-center text-center bg-surface border border-line rounded-xl px-6 py-14 shadow-sm">
+            <FadeIn className="flex flex-col items-center text-center bg-surface border border-line rounded-xl px-6 py-14 shadow-sm">
               <div className="w-[140px] h-[140px] flex items-center justify-center text-line">
                 <Icon icon="mdi:basket-outline" width={56} />
               </div>
@@ -73,9 +75,9 @@ export default function CartPage() {
               <ButtonLink to="/" icon="mdi:storefront-outline" className="mt-6">
                 Mulai Belanja
               </ButtonLink>
-            </div>
+            </FadeIn>
 
-            <div className="bg-surface border border-line rounded-xl p-5 sticky top-[90px] opacity-70">
+            <FadeIn delay={0.08} className="bg-surface border border-line rounded-xl p-5 sticky top-[90px] opacity-70">
               <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Belanja</p>
               <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
                 <span>Total</span>
@@ -91,13 +93,14 @@ export default function CartPage() {
               <Button variant="primary" size="lg" fullWidth className="mt-3" disabled>
                 Beli
               </Button>
-            </div>
+            </FadeIn>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
-            <div className="flex flex-col gap-3">
+            <AnimatedGrid className="flex flex-col gap-3">
               {items.map((item) => (
-                <div key={item.productId} className="flex gap-3.5 bg-surface border border-line rounded-xl p-3.5 items-center">
+                <AnimatedGridItem key={item.productId}>
+                  <div className="flex gap-3.5 bg-surface border border-line rounded-xl p-3.5 items-center">
                   <Link to={`/produk/${item.product.slug}`} className="w-[72px] h-[72px] rounded-[10px] overflow-hidden flex-shrink-0 bg-cream-deep">
                     <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
                   </Link>
@@ -139,11 +142,12 @@ export default function CartPage() {
                     </div>
                   </div>
                   <p className="font-mono font-bold text-[13.5px] text-ink flex-shrink-0">{formatRupiah(item.lineTotal)}</p>
-                </div>
+                  </div>
+                </AnimatedGridItem>
               ))}
-            </div>
+            </AnimatedGrid>
 
-            <div className="bg-surface border border-line rounded-xl p-5 sticky top-[90px]">
+            <FadeIn delay={0.1} className="bg-surface border border-line rounded-xl p-5 sticky top-[90px]">
               <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Belanja</p>
               <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
                 <span>Subtotal</span>
@@ -155,7 +159,7 @@ export default function CartPage() {
               <Button variant="primary" size="lg" fullWidth className="mt-3" onClick={goCheckout}>
                 Checkout ({items.length})
               </Button>
-            </div>
+            </FadeIn>
           </div>
         )}
       </div>

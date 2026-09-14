@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import ProductCard from "@/components/ProductCard";
+import AnimatedGrid, { AnimatedGridItem } from "@/components/AnimatedGrid";
+import FadeIn from "@/components/FadeIn";
 import Button from "@/components/ui/Button";
 import ButtonLink from "@/components/ui/ButtonLink";
 import NameEditModal from "@/components/NameEditModal";
@@ -120,19 +122,19 @@ export default function ProfilePage() {
   };
 
   const navItemClass = (active: boolean, extra = "") =>
-    `flex items-center gap-2.5 w-full text-left px-3 py-2.5 rounded-[10px] border-none bg-transparent text-[13.5px] font-semibold cursor-pointer ${
+    `flex items-center gap-2.5 w-full text-left px-3 py-2.5 rounded-[10px] border-none bg-transparent text-[13.5px] font-semibold cursor-pointer transition-colors duration-200 ${
       active ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
     } ${extra}`;
 
   const tabBtnClass = (active: boolean) =>
-    `border-none bg-transparent px-2.5 py-3.5 text-[13.5px] font-bold cursor-pointer border-b-2 whitespace-nowrap ${
+    `border-none bg-transparent px-2.5 py-3.5 text-[13.5px] font-bold cursor-pointer border-b-2 whitespace-nowrap transition-colors duration-200 ${
       active ? "text-brand border-brand" : "text-muted border-transparent"
     }`;
 
   return (
     <div>
       <div className="container grid grid-cols-1 md:grid-cols-[260px_1fr] gap-4.5 gap-x-4 pt-6 pb-12 items-start">
-        <aside className="bg-surface border border-line rounded-xl overflow-hidden">
+        <FadeIn y={8} className="bg-surface border border-line rounded-xl overflow-hidden">
           <div className="flex flex-col items-center text-center px-4 py-6 border-b border-line">
             {user.avatar ? (
               <img
@@ -182,9 +184,9 @@ export default function ProfilePage() {
               Keluar
             </button>
           </nav>
-        </aside>
+        </FadeIn>
 
-        <section className="bg-surface border border-line rounded-xl overflow-hidden">
+        <FadeIn y={8} delay={0.06} className="bg-surface border border-line rounded-xl overflow-hidden">
           <div className="flex gap-1 border-b border-line px-4 overflow-x-auto">
             <button type="button" className={tabBtnClass(tab === "pesanan")} onClick={() => changeTab("pesanan")}>
               Pesanan Saya{orders.length > 0 ? ` (${orders.length})` : ""}
@@ -212,9 +214,10 @@ export default function ProfilePage() {
                   </ButtonLink>
                 </div>
               ) : (
-                <div className="flex flex-col gap-4">
+                <AnimatedGrid className="flex flex-col gap-4">
                   {orders.map((o) => (
-                    <div key={o.id} className="bg-surface border border-line rounded-xl px-5 py-4.5">
+                    <AnimatedGridItem key={o.id}>
+                      <div className="bg-surface border border-line rounded-xl px-5 py-4.5">
                       <div className="flex justify-between items-center pb-2.5 border-b border-line mb-2.5">
                         <div>
                           <p className="font-mono font-bold text-brand-dark">{o.id}</p>
@@ -247,9 +250,10 @@ export default function ProfilePage() {
                         <span>Total Bayar</span>
                         <span className="font-mono text-brand-dark">{formatRupiah(o.total)}</span>
                       </div>
-                    </div>
+                      </div>
+                    </AnimatedGridItem>
                   ))}
-                </div>
+                </AnimatedGrid>
               )}
             </div>
           )}
@@ -350,17 +354,18 @@ export default function ProfilePage() {
                   <p className="text-muted text-sm mt-1">Tambahkan alamat supaya checkout jadi lebih cepat.</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <AnimatedGrid className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {addresses.map((a) => (
-                    <AddressCard
-                      key={a.id}
-                      address={a}
-                      onEdit={() => openEditAddress(a)}
-                      onDelete={() => handleDeleteAddress(a)}
-                      onMakePrimary={() => makePrimary(a.id)}
-                    />
+                    <AnimatedGridItem key={a.id}>
+                      <AddressCard
+                        address={a}
+                        onEdit={() => openEditAddress(a)}
+                        onDelete={() => handleDeleteAddress(a)}
+                        onMakePrimary={() => makePrimary(a.id)}
+                      />
+                    </AnimatedGridItem>
                   ))}
-                </div>
+                </AnimatedGrid>
               )}
             </div>
           )}
@@ -379,15 +384,17 @@ export default function ProfilePage() {
                   </ButtonLink>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <AnimatedGrid className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                   {wishlistItems.map((p) => (
-                    <ProductCard key={p.id} product={p} />
+                    <AnimatedGridItem key={p.id}>
+                      <ProductCard product={p} />
+                    </AnimatedGridItem>
                   ))}
-                </div>
+                </AnimatedGrid>
               )}
             </div>
           )}
-        </section>
+        </FadeIn>
       </div>
 
       <NameEditModal open={nameModalOpen} onClose={() => setNameModalOpen(false)} />

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import { Form } from "@/components/ui/FormLayout";
+import FadeIn from "@/components/FadeIn";
 import Swal from "sweetalert2";
 import type { Gender } from "@/services/authService";
 
@@ -74,7 +75,7 @@ export default function RegisterPage() {
       taglineSub="Daftar sekarang dan nikmati kemudahan transaksi di Borneo Flasher Store."
     >
       <Card noPadding>
-        <div className="p-8">
+        <FadeIn className="p-8">
           <CardHeader className="mb-1">
             <div>
               <CardTitle>Daftar Akun Baru</CardTitle>
@@ -135,7 +136,7 @@ export default function RegisterPage() {
               </Link>
             </p>
           </CardBody>
-        </div>
+        </FadeIn>
       </Card>
     </AuthLayout>
   );

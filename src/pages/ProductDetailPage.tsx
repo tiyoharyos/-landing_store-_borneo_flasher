@@ -7,6 +7,7 @@ import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
 import ButtonLink from "@/components/ui/ButtonLink";
+import FadeIn from "@/components/FadeIn";
 import { type Product, formatRupiah, discountPercent } from "@/data/products";
 import { getProductDetail, getProducts } from "@/services/productsService";
 import { getCategories } from "@/services/categoriesService";
@@ -178,7 +179,7 @@ export default function ProductDetailPage() {
     <div>
       <div className="container pt-6">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-1.5 text-[12.5px] text-muted mb-5 flex-wrap">
+        <FadeIn className="flex items-center gap-1.5 text-[12.5px] text-muted mb-5 flex-wrap">
           <Link to="/" className="transition-colors hover:text-brand">Beranda</Link>
           <Icon icon="mdi:chevron-right" width={14} />
           {categoryLabel && (
@@ -196,7 +197,7 @@ export default function ProductDetailPage() {
           <span className="truncate max-w-[220px]" title={product.name}>
             {product.name}
           </span>
-        </div>
+        </FadeIn>
 
         {/* Layout utama: gambar | info produk | sidebar beli */}
         <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr_320px] gap-6 items-start pb-4">

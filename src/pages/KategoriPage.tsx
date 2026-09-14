@@ -3,6 +3,8 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Button from "@/components/ui/Button";
 import ProductCard from "@/components/ProductCard";
+import AnimatedGrid, { AnimatedGridItem } from "@/components/AnimatedGrid";
+import FadeIn from "@/components/FadeIn";
 import { type Product } from "@/data/products";
 import { getProducts } from "@/services/productsService";
 import { getCategories } from "@/services/categoriesService";
@@ -214,7 +216,7 @@ export default function KategoriPage() {
           <li>
             <button
               type="button"
-              className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer ${
+              className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer transition-colors duration-200 ${
                 categoryFilter === SEMUA_KATEGORI ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
               }`}
               onClick={() => goToCategory(SEMUA_KATEGORI)}
@@ -227,7 +229,7 @@ export default function KategoriPage() {
             <li key={c.key}>
               <button
                 type="button"
-                className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer ${
+                className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer transition-colors duration-200 ${
                   categoryFilter === c.key ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
                 }`}
                 onClick={() => goToCategory(c.key)}
@@ -315,9 +317,9 @@ export default function KategoriPage() {
       <div className="container pt-6">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6 pb-16">
           {/* Filter sidebar — hanya tampil di desktop, menetap saat scroll */}
-          <aside className="hidden lg:flex flex-col gap-6 bg-surface border border-line rounded-xl p-5 self-start lg:sticky lg:top-[90px]">
+          <FadeIn className="hidden lg:flex flex-col gap-6 bg-surface border border-line rounded-xl p-5 self-start lg:sticky lg:top-[90px]">
             {filterContent}
-          </aside>
+          </FadeIn>
 
           {/* Drawer filter mobile — overlay dari kiri, tidak mendorong konten */}
           {mobileFilterOpen && (
@@ -326,7 +328,7 @@ export default function KategoriPage() {
                 className="absolute inset-0 bg-overlay animate-[modalIn_0.2s_ease-out]"
                 onClick={() => setMobileFilterOpen(false)}
               />
-              <aside className="absolute inset-y-0 left-0 w-[85vw] max-w-[320px] bg-surface flex flex-col shadow-[var(--shadow-lg)]">
+              <aside className="absolute inset-y-0 left-0 w-[85vw] max-w-[320px] bg-surface flex flex-col shadow-[var(--shadow-lg)] animate-slide-in-left">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-line shrink-0">
                   <p className="font-display font-bold text-[14.5px] text-ink">Filter Produk</p>
                   <Button
@@ -349,7 +351,7 @@ export default function KategoriPage() {
           )}
 
           {/* Main content */}
-          <div className="min-w-0">
+          <FadeIn delay={0.05} className="min-w-0">
             {/* Toolbar: jumlah produk + urutkan + tombol filter mobile */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <p className="text-[13.5px] text-ink-soft">
@@ -441,11 +443,13 @@ export default function KategoriPage() {
             {!loading && !error && (
               paged.length ? (
                 <>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
+                  <AnimatedGrid className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
                     {paged.map((p) => (
-                      <ProductCard key={p.id} product={p} />
+                      <AnimatedGridItem key={p.id}>
+                        <ProductCard product={p} />
+                      </AnimatedGridItem>
                     ))}
-                  </div>
+                  </AnimatedGrid>
 
                   {totalPages > 1 && (
                     <div className="flex flex-wrap justify-center gap-1.5 my-9 mb-12">
@@ -507,7 +511,7 @@ export default function KategoriPage() {
                 </div>
               )
             )}
-          </div>
+          </FadeIn>
         </div>
       </div>
     </div>

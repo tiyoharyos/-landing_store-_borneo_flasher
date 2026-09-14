@@ -1,5 +1,7 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import ToastAlert, { type AlertType } from "./ToastAlert";
+import { EASE_SMOOTH } from "@/lib/motion";
 
 export type ToastPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
 
@@ -47,19 +49,21 @@ const getContainerClass = (pos: ToastPosition) => {
   }
 };
 
-const getAnimationClass = (pos: ToastPosition) => {
+// Offset arah masuk (& keluar, dibalik) tiap posisi — dipakai framer-motion
+// supaya toast juga fade+slide halus saat DIHAPUS, bukan cuma saat muncul.
+const getSlideOffset = (pos: ToastPosition) => {
   switch (pos) {
     case "top-left":
     case "bottom-left":
-      return "animate-slide-in-left";
+      return { x: -24, y: 0 };
     case "top-center":
-      return "animate-slide-in-top";
+      return { x: 0, y: -16 };
     case "bottom-center":
-      return "animate-slide-in-bottom";
+      return { x: 0, y: 16 };
     case "top-right":
     case "bottom-right":
     default:
-      return "animate-slide-in-right";
+      return { x: 24, y: 0 };
   }
 };
 
@@ -116,16 +120,31 @@ export function ToastProvider({
         if (positionToasts.length === 0) return null;
         return (
           <div key={pos} className={getContainerClass(pos)}>
-            {positionToasts.map((t) => (
-              <ToastAlert
-                key={t.id}
-                type={t.type}
-                title={t.title}
-                message={t.message}
-                onClose={() => dismiss(t.id)}
-                className={`shadow-xl backdrop-blur-md pointer-events-auto w-full ${getAnimationClass(t.position)}`}
-              />
-            ))}
+            <AnimatePresence initial={false}>
+              {positionToasts.map((t) => {
+                const offset = getSlideOffset(t.position);
+                return (
+                  <motion.div
+                    key={t.id}
+                    layout
+                    initial={{ opacity: 0, ...offset }}
+                    animate={{ opacity: 1, x: 0, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.16 } }}
+                    transition={{ duration: 0.3, ease: EASE_SMOOTH }}
+                    className="pointer-events-auto w-full"
+                    style={{ willChange: "opacity, transform" }}
+                  >
+                    <ToastAlert
+                      type={t.type}
+                      title={t.title}
+                      message={t.message}
+                      onClose={() => dismiss(t.id)}
+                      className="shadow-xl backdrop-blur-md w-full"
+                    />
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         );
       })}

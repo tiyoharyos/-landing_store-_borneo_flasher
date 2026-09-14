@@ -151,7 +151,11 @@ a {
   pointer-events: none;
   z-index: 1000;
   opacity: 1;
-  transition: transform 0.05s linear, opacity 0.3s ease;
+  /* Posisi (transform) sudah di-interpolasi halus lewat lerp di
+     requestAnimationFrame (CustomCursor.tsx) — kalau transform ikut
+     dikasih CSS transition juga, dua "pelicin" ini saling tabrakan dan
+     hasilnya malah patah-patah/lag. Jadi transisi CSS cukup untuk opacity. */
+  transition: opacity 0.3s ease;
   will-change: transform;
 }
 .container {
@@ -223,5 +227,35 @@ a {
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+}
+
+/* Menu mobile navbar: muncul halus tiap kali dibuka (tutup tetap instan,
+   supaya ringan & tidak perlu logic unmount tertunda). */
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-slide-down {
+  animation: fadeSlideDown 0.2s ease-out;
+}
+
+/* Hormati preferensi pengguna yang mematikan animasi (aksesibilitas +
+   mencegah kesan "lag" di perangkat/kondisi low-power). Semua animasi
+   & transisi di atas otomatis jadi nyaris instan tanpa perlu ubah tiap komponen. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

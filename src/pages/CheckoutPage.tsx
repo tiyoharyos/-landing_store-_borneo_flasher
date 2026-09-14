@@ -8,6 +8,7 @@ import { useAddresses } from "@/context/AddressContext";
 import { formatRupiah } from "@/data/products";
 import Button from "@/components/ui/Button";
 import ButtonLink from "@/components/ui/ButtonLink";
+import FadeIn from "@/components/FadeIn";
 import AddressListModal from "@/components/address/AddressListModal";
 import AddressFormModal from "@/components/address/AddressFormModal";
 import { useToast } from "@/components/ui/Toast";
@@ -128,7 +129,7 @@ export default function CheckoutPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
           <div className="flex flex-col gap-4">
-            <div className="bg-surface border border-line rounded-xl p-5">
+            <FadeIn className="bg-surface border border-line rounded-xl p-5">
               <p className="flex items-center justify-between gap-2 mb-3">
                 <span className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink">
                   <Icon icon="mdi:map-marker-outline" width={18} /> Alamat Pengiriman
@@ -181,9 +182,9 @@ export default function CheckoutPage() {
                   </Button>
                 </div>
               )}
-            </div>
+            </FadeIn>
 
-            <div className="bg-surface border border-line rounded-xl p-5">
+            <FadeIn delay={0.05} className="bg-surface border border-line rounded-xl p-5">
               <p className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink mb-3">
                 <Icon icon="mdi:truck-outline" width={18} /> Metode Pengiriman
               </p>
@@ -191,7 +192,7 @@ export default function CheckoutPage() {
                 {SHIPPING_OPTIONS.map((opt) => (
                   <label
                     key={opt.key}
-                    className={`flex items-center gap-3 border rounded-xl px-3.5 py-2.5 cursor-pointer ${
+                    className={`flex items-center gap-3 border rounded-xl px-3.5 py-2.5 cursor-pointer transition-colors duration-200 ${
                       shippingMethod === opt.key ? "border-brand bg-brand-tint" : "border-line"
                     }`}
                   >
@@ -210,9 +211,9 @@ export default function CheckoutPage() {
                   </label>
                 ))}
               </div>
-            </div>
+            </FadeIn>
 
-            <div className="bg-surface border border-line rounded-xl p-5">
+            <FadeIn delay={0.1} className="bg-surface border border-line rounded-xl p-5">
               <p className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink mb-3">
                 <Icon icon="mdi:credit-card-outline" width={18} /> Metode Pembayaran
               </p>
@@ -220,7 +221,7 @@ export default function CheckoutPage() {
                 {PAYMENT_OPTIONS.map((opt) => (
                   <label
                     key={opt.key}
-                    className={`flex items-center gap-3 border rounded-xl px-3.5 py-2.5 cursor-pointer ${
+                    className={`flex items-center gap-3 border rounded-xl px-3.5 py-2.5 cursor-pointer transition-colors duration-200 ${
                       paymentMethod === opt.key ? "border-brand bg-brand-tint" : "border-line"
                     }`}
                   >
@@ -238,10 +239,10 @@ export default function CheckoutPage() {
                   </label>
                 ))}
               </div>
-            </div>
+            </FadeIn>
           </div>
 
-          <div className="bg-surface border border-line rounded-xl p-5 sticky top-[90px]">
+          <FadeIn delay={0.15} className="bg-surface border border-line rounded-xl p-5 sticky top-[90px]">
             <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Pesanan</p>
             {items.map((i) => (
               <div key={i.productId} className="flex justify-between text-[12.5px] text-muted py-1.5">
@@ -279,7 +280,7 @@ export default function CheckoutPage() {
             <p className="text-[11.5px] text-muted mt-1.5 text-center mt-2">
               Ini adalah simulasi checkout (belum ada pembayaran nyata).
             </p>
-          </div>
+          </FadeIn>
         </div>
       </div>
 

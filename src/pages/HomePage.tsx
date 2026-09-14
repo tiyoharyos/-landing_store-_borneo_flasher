@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import BannerCarousel from "@/components/BannerCarousel";
 import ProductCard from "@/components/ProductCard";
 import ButtonLink from "@/components/ui/ButtonLink";
+import AnimatedGrid, { AnimatedGridItem } from "@/components/AnimatedGrid";
+import FadeIn from "@/components/FadeIn";
 import { type Product } from "@/data/products";
 import { getProducts } from "@/services/productsService";
 import { mapApiProductsToProducts } from "@/lib/mapProduct";
@@ -66,13 +68,13 @@ export default function HomePage() {
 
       <div className="container pt-8">
         {/* Hero */}
-        <div>
+        <FadeIn y={8}>
           <BannerCarousel />
-        </div>
+        </FadeIn>
 
         {/* Produk Pilihan */}
         <section className="py-10 md:py-14">
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+          <FadeIn delay={0.08} className="flex flex-wrap items-end justify-between gap-4 mb-8">
             <div>
               <p className="font-display font-extrabold text-[1.35rem] text-ink mb-3 tracking-tight">
                 Produk Pilihan
@@ -96,7 +98,7 @@ export default function HomePage() {
             <Link to="/kategori" className="text-[13.5px] font-semibold text-ink-soft hover:text-ink transition-colors">
               Lihat Semua
             </Link>
-          </div>
+          </FadeIn>
 
           {loading && (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
@@ -112,11 +114,13 @@ export default function HomePage() {
 
           {!loading && !error && (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-10">
+              <AnimatedGrid className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-10">
                 {sorted.slice(0, 12).map((p) => (
-                  <ProductCard key={p.id} product={p} />
+                  <AnimatedGridItem key={p.id}>
+                    <ProductCard product={p} />
+                  </AnimatedGridItem>
                 ))}
-              </div>
+              </AnimatedGrid>
 
               <div className="flex justify-center text-white">
                 <ButtonLink to="/kategori" size="sm" className="h-9! px-4! md:px-5!">

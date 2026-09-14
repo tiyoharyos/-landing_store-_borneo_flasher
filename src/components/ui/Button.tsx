@@ -59,7 +59,7 @@ export const SPINNER_BORDER: Record<ButtonVariant, string> = {
 };
 
 export const BUTTON_BASE_CLASSES =
-  "inline-flex items-center justify-center border font-semibold whitespace-nowrap select-none cursor-pointer transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand/15";
+  "inline-flex items-center justify-center border font-semibold whitespace-nowrap select-none cursor-pointer transition-[color,background-color,border-color,box-shadow,transform] duration-150 ease-out hover:-translate-y-px active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand/15";
 
 /** Class builder dipakai bersama oleh <Button> (elemen <button>) dan <ButtonLink> (elemen <Link>/<a>)
  *  supaya kedua bentuk tombol selalu memakai satu sumber gaya yang sama. */
@@ -81,7 +81,7 @@ export function buttonClasses({
     VARIANT_CLASSES[variant],
     SIZE_CLASSES[size],
     fullWidth ? "flex w-full" : "",
-    disabled ? "cursor-not-allowed opacity-60" : "",
+    disabled ? "cursor-not-allowed opacity-60 pointer-events-none" : "",
     className,
   ]
     .filter(Boolean)

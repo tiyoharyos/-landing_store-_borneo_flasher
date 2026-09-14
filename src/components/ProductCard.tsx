@@ -12,16 +12,16 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       to={`/produk/${product.slug}`}
-      className={`block bg-surface border border-line rounded-xl overflow-hidden transition-colors hover:border-ink/20 ${
+      className={`group block bg-surface border border-line rounded-xl overflow-hidden transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:shadow-[var(--shadow-md)] hover:border-ink/20 ${
         outOfStock ? "opacity-80" : ""
       }`}
     >
-      <div className="relative aspect-square bg-cream-deep">
+      <div className="relative aspect-square bg-cream-deep overflow-hidden">
         <img
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className={`w-full h-full object-cover ${outOfStock ? "grayscale opacity-60" : ""}`}
+          className={`w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.06] ${outOfStock ? "grayscale opacity-60" : ""}`}
         />
         {outOfStock && (
           <div className="absolute inset-0 z-[1] flex items-center justify-center bg-ink/45">

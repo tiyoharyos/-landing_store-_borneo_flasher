@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { motion } from "framer-motion";
 import { getOrderById } from "@/data/orders";
 import { formatRupiah } from "@/data/products";
 import ButtonLink from "@/components/ui/ButtonLink";
+import FadeIn from "@/components/FadeIn";
 
 export default function OrderSuccessPage() {
   const { orderId } = useParams<{ orderId: string }>();
@@ -11,7 +13,7 @@ export default function OrderSuccessPage() {
   if (!order) {
     return (
       <div>
-        <div className="container text-center py-12 px-6">
+        <FadeIn className="container text-center py-12 px-6">
           <Icon icon="mdi:receipt-text-remove-outline" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Pesanan Tidak Ditemukan</p>
           <ButtonLink
@@ -22,7 +24,7 @@ export default function OrderSuccessPage() {
           >
             Kembali ke Beranda
           </ButtonLink>
-        </div>
+        </FadeIn>
       </div>
     );
   }
@@ -31,7 +33,14 @@ export default function OrderSuccessPage() {
     <div>
       <div className="container">
         <div className="max-w-[480px] mx-auto my-12 text-center flex flex-col items-center">
-          <Icon icon="mdi:check-decagram" width={64} className="text-ok" />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
+          >
+            <Icon icon="mdi:check-decagram" width={64} className="text-ok" />
+          </motion.div>
+          <FadeIn delay={0.1} className="flex flex-col items-center w-full">
           <p className="font-display font-extrabold text-[1.4rem] mt-2.5 text-ink">Pesanan Berhasil Dibuat!</p>
           <p className="text-muted text-[13.5px] mt-1">
             Nomor pesanan kamu: <span className="font-mono font-bold text-brand-dark">{order.id}</span>
@@ -85,6 +94,7 @@ export default function OrderSuccessPage() {
               Lihat Pesanan Saya
             </ButtonLink>
           </div>
+          </FadeIn>
         </div>
       </div>
     </div>

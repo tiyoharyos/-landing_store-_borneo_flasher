@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardSubtitle, CardBody } from "@/component
 import { Input } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { Form } from "@/components/ui/FormLayout";
+import FadeIn from "@/components/FadeIn";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -46,7 +47,7 @@ export default function LoginPage() {
       taglineSub="Masuk untuk lacak pesanan, simpan alamat, dan checkout lebih cepat."
     >
       <Card noPadding>
-        <div className="p-8">
+        <FadeIn className="p-8">
           <CardHeader className="mb-1">
             <div>
               <CardTitle>Masuk ke Akun Kamu</CardTitle>
@@ -89,7 +90,7 @@ export default function LoginPage() {
               </Link>
             </p>
           </CardBody>
-        </div>
+        </FadeIn>
       </Card>
     </AuthLayout>
   );

@@ -13,24 +13,31 @@ const BANNER_LIST = [
 
 export default function BannerCarousel() {
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
+    if (paused) return;
     const t = setInterval(() => setIndex((i) => (i + 1) % BANNER_LIST.length), 5000);
     return () => clearInterval(t);
-  }, []);
+  }, [paused]);
 
   const go = (dir: 1 | -1) => setIndex((i) => (i + dir + BANNER_LIST.length) % BANNER_LIST.length);
 
   return (
-    <div className="group relative rounded-xl overflow-hidden bg-cream-deep aspect-[1400/500] border border-line">
+    <div
+      className="group relative rounded-xl overflow-hidden bg-cream-deep aspect-[1400/500] border border-line"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       {BANNER_LIST.map((b, i) => (
         <img
           key={i}
           src={b.image}
           alt={b.alt}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
             i === index ? "opacity-100" : "opacity-0"
           }`}
+          style={{ willChange: "opacity" }}
         />
       ))}
 
