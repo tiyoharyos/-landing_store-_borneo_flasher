@@ -7,7 +7,6 @@ export interface FileValidationResult {
   message?: string;
 }
 
-/** Validasi foto profil: hanya JPG/JPEG/PNG, maksimal AVATAR_MAX_SIZE bytes. */
 export function validateAvatarFile(file: File): FileValidationResult {
   const isAllowedType = AVATAR_ALLOWED_TYPES.includes(file.type.toLowerCase());
   const hasAllowedExt = AVATAR_ALLOWED_EXT.some((ext) => file.name.toLowerCase().endsWith(ext));

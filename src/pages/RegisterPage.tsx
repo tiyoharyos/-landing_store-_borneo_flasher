@@ -47,8 +47,6 @@ export default function RegisterPage() {
       });
       return;
     }
-    // Backend belum kirim email verifikasi sungguhan, jadi untuk sekarang
-    // arahkan langsung ke halaman verifikasi memakai token dari response register.
     if (res.verificationToken) {
       await Swal.fire({
         icon: "success",

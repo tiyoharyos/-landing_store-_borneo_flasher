@@ -75,13 +75,37 @@ export interface CreateProductPayload {
   lokasi_penyimpanan: string;
   supplier: string;
   id_kategori?: number | string | null;
-  image?: string | null;
+  // File asli dari <input type="file" />, bukan string/base64.
+  // Opsional -- kalau tidak diisi, produk dibuat tanpa gambar.
+  image?: File | null;
 }
 
 export async function createProduct(payload: CreateProductPayload) {
+  const formData = new FormData();
+  formData.append("nama_produk", payload.nama_produk);
+  formData.append("kode_produk", payload.kode_produk);
+  formData.append("kuantitas", String(payload.kuantitas));
+  formData.append("harga_modal", String(payload.harga_modal));
+  formData.append("harga_normal", String(payload.harga_normal));
+  formData.append("lokasi_penyimpanan", payload.lokasi_penyimpanan);
+  formData.append("supplier", payload.supplier);
+
+  if (payload.id_kategori !== undefined && payload.id_kategori !== null) {
+    formData.append("id_kategori", String(payload.id_kategori));
+  }
+
+  // Field 'image' cuma di-append kalau user beneran pilih file,
+  // sesuai pengecekan !empty($_FILES['image']['name']) di backend.
+  if (payload.image) {
+    formData.append("image", payload.image);
+  }
+
   const res = await api.post<ApiResponse<{ id_produk: number | string }>>(
     "Products",
-    payload
+    formData
+    // Sengaja TIDAK set header Content-Type manual -- axios/browser akan
+    // otomatis pasang 'multipart/form-data; boundary=...' yang benar
+    // begitu mendeteksi data-nya FormData.
   );
   return res.data;
 }

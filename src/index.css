@@ -165,6 +165,16 @@ a {
   padding-inline: 20px;
 }
 
+/* Sembunyikan scrollbar untuk strip horizontal (mis. CategoryShowcase)
+   tapi tetap bisa discroll (mouse drag / swipe / trackpad). */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* ---------------- Toast: animasi slide-in per posisi ---------------- */
 @keyframes toast-slide-in-right {
   from {

@@ -260,7 +260,6 @@ export default function ProfilePage() {
 
           {tab === "biodata" && (
             <div className="p-5 grid grid-cols-1 sm:grid-cols-[230px_1fr] gap-6 sm:gap-8">
-              {/* Kartu foto profil */}
               <div>
                 <div className="w-full sm:w-[230px] border border-line rounded-xl overflow-hidden flex flex-col">
                   <div className="aspect-square w-full bg-cream-deep overflow-hidden">
@@ -297,7 +296,6 @@ export default function ProfilePage() {
                 </p>
               </div>
 
-              {/* Biodata & kontak */}
               <div>
                 <p className="font-display font-extrabold text-base text-ink mb-1">Ubah Biodata Diri</p>
 

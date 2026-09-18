@@ -34,12 +34,24 @@ export async function getCategories() {
 
 export interface CreateCategoryPayload {
   nama_kategori: string;
+  // File asli dari <input type="file" />. Opsional -- kalau tidak diisi,
+  // kategori dibuat tanpa foto.
+  foto?: File | null;
 }
 
 export async function createCategory(payload: CreateCategoryPayload) {
+  const formData = new FormData();
+  formData.append("nama_kategori", payload.nama_kategori);
+
+  if (payload.foto) {
+    formData.append("foto", payload.foto);
+  }
+
   const res = await api.post<ApiResponse<{ nama_kategori: string }>>(
     "Categories",
-    payload
+    formData
+    // Sama seperti createProduct -- tidak set Content-Type manual,
+    // biarkan axios/browser yang pasang boundary multipart-nya.
   );
   return res.data;
 }

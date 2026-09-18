@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BannerCarousel from "@/components/BannerCarousel";
+import CategoryShowcase from "@/components/CategoryShowcase";
 import ProductCard from "@/components/ProductCard";
 import ButtonLink from "@/components/ui/ButtonLink";
 import AnimatedGrid, { AnimatedGridItem } from "@/components/AnimatedGrid";
@@ -70,6 +71,11 @@ export default function HomePage() {
         {/* Hero */}
         <FadeIn y={8}>
           <BannerCarousel />
+        </FadeIn>
+
+        {/* Kategori */}
+        <FadeIn delay={0.05}>
+          <CategoryShowcase />
         </FadeIn>
 
         {/* Produk Pilihan */}

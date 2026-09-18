@@ -113,3 +113,26 @@ export function mapCategoryOptions(list: ApiCategory[]): CategoryOption[] {
     image: resolveUploadUrl(c.foto, "kategori"),
   }));
 }
+
+export interface BannerSlide {
+  id: string;
+  image: string | null;
+  alt: string;
+  link: string | null;
+  order: number;
+}
+
+// Dipakai kalau backend belum punya endpoint JSON Banner/ — banner diambil
+// langsung dari nama-nama file di folder upload/store/banner/ (lihat
+// bannerService.getBannerFilenamesFromUploadFolder()).
+export function mapBannerFilenamesToSlides(filenames: string[]): BannerSlide[] {
+  return filenames
+    .map((filename, i) => ({
+      id: filename,
+      image: resolveUploadUrl(filename, "banner"),
+      alt: "Banner Borneo Flasher",
+      link: null,
+      order: i,
+    }))
+    .filter((b) => Boolean(b.image));
+}

@@ -26,9 +26,6 @@ import {
 export default function CheckoutPage() {
   const { items, subtotal, refresh: refreshCart } = useCart();
   const { user } = useAuth();
-  // primaryAddress = alamat yang ditandai utama (fallback ke alamat pertama
-  // kalau belum ada yang ditandai utama) — otomatis jadi alamat terpilih
-  // begitu daftar alamat termuat dari backend, lihat useEffect di bawah.
   const { addresses, primaryAddress, loading: addressesLoading } = useAddresses();
   const navigate = useNavigate();
 
@@ -40,8 +37,6 @@ export default function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const toast = useToast();
 
-  // Pilih otomatis alamat utama begitu daftar alamat termuat, kecuali user
-  // sudah memilih alamat lain secara manual.
   useEffect(() => {
     if (!selectedAddress && primaryAddress) setSelectedAddress(primaryAddress);
   }, [primaryAddress, selectedAddress]);
@@ -81,11 +76,6 @@ export default function CheckoutPage() {
 
     setSubmitting(true);
     try {
-      // Backend Checkout/ ambil isi cart langsung dari server (bukan dari
-      // body request), cek stok, buat order, kurangi stok, lalu kosongkan
-      // cart user. Alamat/metode kirim/metode bayar belum didukung backend
-      // (endpoint-nya belum menerima field itu), jadi tetap disimpan
-      // sebagai catatan pesanan di sisi frontend saja.
       const res = await checkout();
       const idOrder = res.data?.id_order;
 
@@ -105,8 +95,6 @@ export default function CheckoutPage() {
         idOrder !== undefined ? String(idOrder) : undefined
       );
 
-      // Cart sudah dikosongkan di server, sinkronkan ulang state lokal
-      // (bukan clear() manual, supaya tidak ada request DELETE dobel).
       refreshCart();
       toast.success("Pesanan berhasil dibuat!");
       navigate(`/pesanan/sukses/${order.id}`);

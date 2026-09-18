@@ -19,7 +19,6 @@ export default function VerifyPage() {
 
   const [state, setState] = useState<VerifyState>("loading");
   const [message, setMessage] = useState("Memverifikasi email kamu, tunggu sebentar...");
-  // StrictMode di dev me-mount komponen 2x; ref ini mencegah request verify terkirim dobel.
   const requestedRef = useRef(false);
 
   useEffect(() => {

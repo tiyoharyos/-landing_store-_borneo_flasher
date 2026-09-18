@@ -1,27 +1,58 @@
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
+import { getBannerFilenamesFromUploadFolder } from "@/services/bannerService";
+import { mapBannerFilenamesToSlides, type BannerSlide } from "@/lib/mapProduct";
 
 import banner1 from "@/assets/img/banner1.png";
 import banner2 from "@/assets/img/banner4.png";
 import banner3 from "@/assets/img/banner3.png";
 
-const BANNER_LIST = [
-  { image: banner1, alt: "Promo Borneo Flasher 1" },
-  { image: banner2, alt: "Promo Borneo Flasher 2" },
-  { image: banner3, alt: "Promo Borneo Flasher 3" },
+// Dipakai sebagai fallback kalau API banner gagal/kosong, supaya hero
+// section tidak pernah tampil kosong.
+const FALLBACK_BANNERS: BannerSlide[] = [
+  { id: "fallback-1", image: banner1, alt: "Promo Borneo Flasher 1", link: null, order: 1 },
+  { id: "fallback-2", image: banner2, alt: "Promo Borneo Flasher 2", link: null, order: 2 },
+  { id: "fallback-3", image: banner3, alt: "Promo Borneo Flasher 3", link: null, order: 3 },
 ];
 
 export default function BannerCarousel() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [banners, setBanners] = useState<BannerSlide[]>(FALLBACK_BANNERS);
 
   useEffect(() => {
-    if (paused) return;
-    const t = setInterval(() => setIndex((i) => (i + 1) % BANNER_LIST.length), 5000);
-    return () => clearInterval(t);
-  }, [paused]);
+    let active = true;
 
-  const go = (dir: 1 | -1) => setIndex((i) => (i + dir + BANNER_LIST.length) % BANNER_LIST.length);
+    async function fetchBanners() {
+      // Baca langsung folder upload/store/banner/ (directory listing),
+      // TIDAK ada request ke api_borneoacademy/Banner sama sekali.
+      try {
+        const filenames = await getBannerFilenamesFromUploadFolder();
+        if (!active) return;
+        const slides = mapBannerFilenamesToSlides(filenames);
+        if (slides.length > 0) setBanners(slides);
+      } catch {
+        // Diam-diam pakai fallback gambar statis kalau folder gagal dibaca.
+      }
+    }
+
+    fetchBanners();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    setIndex(0);
+  }, [banners]);
+
+  useEffect(() => {
+    if (paused || banners.length <= 1) return;
+    const t = setInterval(() => setIndex((i) => (i + 1) % banners.length), 5000);
+    return () => clearInterval(t);
+  }, [paused, banners.length]);
+
+  const go = (dir: 1 | -1) => setIndex((i) => (i + dir + banners.length) % banners.length);
 
   return (
     <div
@@ -29,17 +60,32 @@ export default function BannerCarousel() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {BANNER_LIST.map((b, i) => (
-        <img
-          key={i}
-          src={b.image}
-          alt={b.alt}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ willChange: "opacity" }}
-        />
-      ))}
+      {banners.map((b, i) => {
+        const img = (
+          <img
+            src={b.image ?? ""}
+            alt={b.alt}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ willChange: "opacity" }}
+          />
+        );
+        return b.link ? (
+          <a
+            key={b.id}
+            href={b.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`absolute inset-0 ${i === index ? "pointer-events-auto" : "pointer-events-none"}`}
+            aria-hidden={i !== index}
+          >
+            {img}
+          </a>
+        ) : (
+          <div key={b.id}>{img}</div>
+        );
+      })}
 
       <Button
         variant="outline"
@@ -57,9 +103,9 @@ export default function BannerCarousel() {
       />
 
       <div className="absolute bottom-3 right-3 flex gap-1.5">
-        {BANNER_LIST.map((_, i) => (
+        {banners.map((b, i) => (
           <Button
-            key={i}
+            key={b.id}
             variant="ghost"
             onClick={() => setIndex(i)}
             aria-label={`Slide ${i + 1}`}

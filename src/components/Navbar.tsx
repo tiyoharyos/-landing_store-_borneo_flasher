@@ -15,8 +15,6 @@ import { navLinkClass } from "@/components/navLinkClass";
 import { formatRupiah } from "@/data/products";
 import Logo from "./Logo";
 
-// Animasi masuk & keluar yang sama untuk semua panel dropdown di navbar
-// (keranjang mini, menu akun) — biar tutupnya juga halus, bukan hilang instan.
 const dropdownMotion = {
   initial: { opacity: 0, scale: 0.96, y: -6 },
   animate: { opacity: 1, scale: 1, y: 0 },

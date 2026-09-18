@@ -28,7 +28,7 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
 ];
 
 function getPageNumbers(current: number, total: number): (number | "...")[] {
-  const delta = 1; // jumlah halaman di kiri/kanan current yang ditampilkan
+  const delta = 1;
   const range: (number | "...")[] = [];
 
   const start = Math.max(2, current - delta);
@@ -50,7 +50,6 @@ export default function KategoriPage() {
 
   const urlCategory = category && category !== SEMUA_KATEGORI ? category : SEMUA_KATEGORI;
 
-  // Kata kunci pencarian sepenuhnya dikendalikan dari kotak cari di Navbar (?cari=...)
   const query = searchParams.get("cari") ?? "";
 
   const [categoryFilter, setCategoryFilter] = useState<string>(urlCategory);
@@ -66,12 +65,10 @@ export default function KategoriPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Sinkronkan filter kategori setiap kali URL berubah (klik dari navbar/link lain)
   useEffect(() => {
     setCategoryFilter(urlCategory);
   }, [urlCategory]);
 
-  // Ambil daftar kategori sekali di awal (buat sidebar filter).
   useEffect(() => {
     let active = true;
     getCategories()
@@ -80,7 +77,6 @@ export default function KategoriPage() {
         setCategories(mapCategoryOptions(res.data ?? []));
       })
       .catch(() => {
-        // Sidebar kategori gagal dimuat tetap bisa lanjut lihat produk tanpa filter kategori.
       });
     return () => {
       active = false;
@@ -118,7 +114,6 @@ export default function KategoriPage() {
     setPage(1);
   }, [categoryFilter, query, sort, availability, priceMin, priceMax]);
 
-  // Kunci scroll body selagi drawer filter mobile terbuka.
   useEffect(() => {
     if (!mobileFilterOpen) return;
     const prevOverflow = document.body.style.overflow;
@@ -206,8 +201,6 @@ export default function KategoriPage() {
     navigate("/kategori");
   };
 
-  // Konten filter dipakai bareng di sidebar desktop & drawer mobile supaya
-  // tidak dobel logic — cukup beda pembungkus tampilannya saja.
   const filterContent = (
     <>
       <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
@@ -316,12 +309,10 @@ export default function KategoriPage() {
     <div>
       <div className="container pt-6">
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6 pb-16">
-          {/* Filter sidebar — hanya tampil di desktop, menetap saat scroll */}
           <FadeIn className="hidden lg:flex flex-col gap-6 bg-surface border border-line rounded-xl p-5 self-start lg:sticky lg:top-[90px]">
             {filterContent}
           </FadeIn>
 
-          {/* Drawer filter mobile — overlay dari kiri, tidak mendorong konten */}
           {mobileFilterOpen && (
             <div className="lg:hidden fixed inset-0 z-[95]">
               <div
@@ -352,7 +343,6 @@ export default function KategoriPage() {
 
           {/* Main content */}
           <FadeIn delay={0.05} className="min-w-0">
-            {/* Toolbar: jumlah produk + urutkan + tombol filter mobile */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <p className="text-[13.5px] text-ink-soft">
                 {!loading && !error && (

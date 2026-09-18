@@ -337,8 +337,6 @@ export default function ProductDetailPage() {
   )}
 </motion.div>
           </motion.div>
-
-          {/* Sidebar beli — sticky di desktop */}
           <motion.aside
             key={`buy-${product.id}`}
             initial={{ opacity: 0, y: 10 }}
@@ -346,7 +344,6 @@ export default function ProductDetailPage() {
             transition={{ duration: 0.35, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="lg:sticky lg:top-[90px] bg-surface border border-line rounded-xl p-5 flex flex-col gap-4"
           >
-            {/* Status stok spotlight */}
             <div
               className={`flex items-center gap-3 rounded-xl border px-3.5 py-3 ${
                 stockTone === "warn"
