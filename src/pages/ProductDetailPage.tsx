@@ -210,7 +210,13 @@ export default function ProductDetailPage() {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="relative rounded-xl overflow-hidden bg-cream-deep aspect-square border border-line"
           >
-            <SafeImage src={product.image} alt={product.name} className="w-full h-full object-cover" />
+            <SafeImage
+              src={product.image}
+              alt={product.name}
+              loading="eager"
+              fetchPriority="high"
+              className="w-full h-full object-cover"
+            />
             {pct > 0 && (
               <span className="absolute top-3 left-3 bg-brand text-white text-[13px] font-extrabold px-2.5 py-1 rounded-md">
                 -{pct}%

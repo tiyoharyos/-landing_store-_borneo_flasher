@@ -11,6 +11,9 @@ interface SafeImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, "src"
  * <img> yang otomatis menampilkan gambar "no image" kalau:
  *  - src kosong (null / undefined / ""), atau
  *  - gambar gagal dimuat (404, server mati, URL rusak, dll).
+ *
+ * Default-nya lazy + decoding async (ringan untuk grid produk). Untuk gambar utama di atas
+ * layar, override: loading="eager" fetchPriority="high".
  */
 export default function SafeImage({ src, fallback = NO_IMAGE, onError, alt = "", ...rest }: SafeImageProps) {
   // Simpan src yang gagal (bukan boolean) supaya otomatis "reset" saat src berubah.
@@ -19,6 +22,8 @@ export default function SafeImage({ src, fallback = NO_IMAGE, onError, alt = "",
 
   return (
     <img
+      loading="lazy"
+      decoding="async"
       {...rest}
       alt={alt}
       src={useFallback ? fallback : src}
