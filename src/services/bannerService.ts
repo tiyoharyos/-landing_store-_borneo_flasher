@@ -1,50 +1,34 @@
-import { resolveUploadFolderUrl } from "@/lib/uploads";
+import api from "@/lib/axios"; // sesuaikan kalau export axios-mu berbeda
 
 /**
- * Data Banner TIDAK diambil lewat endpoint API JSON (mis. Banner/ di
- * api_borneoacademy) — backend belum/tidak punya endpoint itu (404).
+ * GET /store/banner
  *
- * Sebagai gantinya, gambar banner diambil LANGSUNG dari folder upload
- * publiknya:
- *
- *   http://localhost/borneo_academy/upload/store/banner/
- *
- * Caranya: fetch folder itu (directory listing bawaan Apache/Nginx),
- * lalu ambil semua nama file gambar dari HTML listing-nya. Base URL
- * folder ini diatur lewat VITE_UPLOAD_BASE_URL di .env (lihat
- * src/lib/uploads.ts) — TIDAK ada request ke api_borneoacademy sama
- * sekali untuk data banner.
+ * st_banner.file_type: 0 = gambar, 1 = video
+ * Backend sudah mengirim URL absolut (image_url, video_url, media_url)
+ * dan media_type ("image" | "video"), jadi FE tidak perlu membangun URL sendiri.
  */
-
-const IMAGE_EXT_RE = /\.(jpe?g|png|webp|gif|avif)$/i;
-
-function parseImageFilenamesFromDirectoryListing(html: string): string[] {
-  const seen = new Set<string>();
-  const matches = html.matchAll(/href\s*=\s*["']([^"']+)["']/gi);
-
-  for (const m of matches) {
-    let href = m[1];
-    if (!href || href.startsWith("?") || href.startsWith("/") || href.includes("://")) continue;
-    if (href === "../" || href === "..") continue;
-
-    href = decodeURIComponent(href);
-    const filename = href.split("/").filter(Boolean).pop();
-    if (filename && IMAGE_EXT_RE.test(filename)) seen.add(filename);
-  }
-
-  return Array.from(seen);
+export interface ApiBanner {
+  id?: number | string;
+  title?: string | null;
+  link?: string | null;
+  urutan?: number | string | null;
+  file_type: number | string;
+  image_url: string | null;
+  video_url: string | null;
+  media_type: "image" | "video";
+  media_url: string | null;
 }
 
-// Ambil nama-nama file gambar langsung dari directory listing folder
-// upload/store/banner/.
-export async function getBannerFilenamesFromUploadFolder(): Promise<string[]> {
-  const folderUrl = resolveUploadFolderUrl("banner");
-  const res = await fetch(folderUrl);
-  if (!res.ok) throw new Error(`Gagal baca folder banner (${res.status})`);
-  const html = await res.text();
-  return parseImageFilenamesFromDirectoryListing(html);
+interface ApiResponse<T> {
+  status: boolean;
+  message: string;
+  data: T;
 }
 
-export default {
-  getBannerFilenamesFromUploadFolder,
-};
+export async function getBanners(): Promise<ApiBanner[]> {
+  const res = await api.get<ApiResponse<ApiBanner[]>>("/banner");
+  if (!res.data.status) throw new Error(res.data.message);
+  return res.data.data ?? [];
+}
+
+export default { getBanners };

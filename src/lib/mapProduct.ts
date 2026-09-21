@@ -2,6 +2,7 @@ import type { ApiProduct } from "@/services/productsService";
 import type { ApiCategory } from "@/services/categoriesService";
 import type { ApiWishlistItem } from "@/services/wishlistService";
 import type { ApiCartItem } from "@/services/cartService";
+import type { ApiBanner } from "@/services/bannerService";
 import type { Product, CategoryKey } from "@/data/products";
 import type { CartItemView } from "@/context/CartContext";
 import { resolveUploadUrl } from "@/lib/uploads";
@@ -116,23 +117,27 @@ export function mapCategoryOptions(list: ApiCategory[]): CategoryOption[] {
 
 export interface BannerSlide {
   id: string;
-  image: string | null;
+  mediaType: "image" | "video";
+  src: string;
+  poster?: string; // dipakai untuk banner video
   alt: string;
   link: string | null;
   order: number;
 }
 
-// Dipakai kalau backend belum punya endpoint JSON Banner/ — banner diambil
-// langsung dari nama-nama file di folder upload/store/banner/ (lihat
-// bannerService.getBannerFilenamesFromUploadFolder()).
-export function mapBannerFilenamesToSlides(filenames: string[]): BannerSlide[] {
-  return filenames
-    .map((filename, i) => ({
-      id: filename,
-      image: resolveUploadUrl(filename, "banner"),
-      alt: "Banner Borneo Flasher",
-      link: null,
-      order: i,
+// Data dari GET /store/banner. URL sudah absolut dari backend
+// (image_url / video_url / media_url), jadi tidak perlu resolveUploadUrl.
+export function mapBannersToSlides(list: ApiBanner[]): BannerSlide[] {
+  return list
+    .filter((b) => Boolean(b.media_url))
+    .map((b, i) => ({
+      id: String(b.id ?? `banner-${i}`),
+      mediaType: b.media_type,
+      src: b.media_url as string,
+      poster: b.media_type === "video" ? b.image_url ?? undefined : undefined,
+      alt: b.title || `Banner Borneo Flasher ${i + 1}`,
+      link: b.link || null,
+      order: Number(b.urutan ?? i + 1),
     }))
-    .filter((b) => Boolean(b.image));
+    .sort((a, b) => a.order - b.order);
 }

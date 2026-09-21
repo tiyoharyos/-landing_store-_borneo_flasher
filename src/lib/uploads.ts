@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "@/lib/axios";
 
 export const UPLOAD_BASE_URL =
-  import.meta.env.VITE_UPLOAD_BASE_URL ?? "http://localhost/api_borneoacademy/uploads/";
+  import.meta.env.VITE_UPLOAD_BASE_URL ?? "http://localhost/borneo_academy/upload/store/";
 
 export type UploadFolder = "kategori" | "produk" | "banner";
 
