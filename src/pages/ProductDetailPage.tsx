@@ -13,6 +13,7 @@ import { getProductDetail, getProducts } from "@/services/productsService";
 import { getCategories } from "@/services/categoriesService";
 import { mapApiProductToProduct, mapApiProductsToProducts, mapCategoryOptions, type CategoryOption } from "@/lib/mapProduct";
 import { getApiErrorMessage } from "@/lib/axios";
+import SafeImage from "@/components/SafeImage";
 
 const LOW_STOCK_THRESHOLD = 5;
 function extractIdFromSlug(slug: string): string {
@@ -209,7 +210,7 @@ export default function ProductDetailPage() {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="relative rounded-xl overflow-hidden bg-cream-deep aspect-square border border-line"
           >
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+            <SafeImage src={product.image} alt={product.name} className="w-full h-full object-cover" />
             {pct > 0 && (
               <span className="absolute top-3 left-3 bg-brand text-white text-[13px] font-extrabold px-2.5 py-1 rounded-md">
                 -{pct}%

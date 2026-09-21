@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { formatRupiah, discountPercent, type Product } from "@/data/products";
 import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
+import SafeImage from "@/components/SafeImage";
 
 export default function ProductCard({ product }: { product: Product }) {
   const pct = discountPercent(product);
@@ -17,7 +18,7 @@ export default function ProductCard({ product }: { product: Product }) {
       }`}
     >
       <div className="relative aspect-square bg-cream-deep overflow-hidden">
-        <img
+        <SafeImage
           src={product.image}
           alt={product.name}
           loading="lazy"

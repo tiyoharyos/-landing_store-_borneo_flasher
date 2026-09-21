@@ -6,8 +6,7 @@ import type { ApiBanner } from "@/services/bannerService";
 import type { Product, CategoryKey } from "@/data/products";
 import type { CartItemView } from "@/context/CartContext";
 import { resolveUploadUrl } from "@/lib/uploads";
-
-const FALLBACK_IMAGE = "https://picsum.photos/seed/borneo-flasher-fallback/600/600";
+import { NO_IMAGE } from "@/lib/fallbackImages";
 
 const slugify = (text: string) =>
   text
@@ -34,7 +33,7 @@ export function mapApiProductToProduct(p: ApiProduct): Product {
     description: "",
     supplier: p.supplier || undefined,
     location: p.lokasi_penyimpanan || undefined,
-    image: resolveUploadUrl(p.image, "produk") || FALLBACK_IMAGE,
+    image: resolveUploadUrl(p.image, "produk") || NO_IMAGE,
     price: isDiscounted ? hargaSpesial! : hargaNormal,
     priceOriginal: isDiscounted ? hargaNormal : undefined,
     stock: Number(p.kuantitas) || 0,

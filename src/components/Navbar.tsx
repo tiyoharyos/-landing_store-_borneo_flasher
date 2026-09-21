@@ -14,6 +14,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { navLinkClass } from "@/components/navLinkClass";
 import { formatRupiah } from "@/data/products";
 import Logo from "./Logo";
+import SafeImage from "@/components/SafeImage";
 
 const dropdownMotion = {
   initial: { opacity: 0, scale: 0.96, y: -6 },
@@ -192,7 +193,7 @@ export default function Navbar() {
                                 className="relative w-[52px] h-[52px] rounded-lg overflow-hidden flex-shrink-0 bg-cream-deep transition-colors duration-200"
                                 onClick={() => setCartOpen(false)}
                               >
-                                <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
+                                <SafeImage src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
                               </Link>
                               <div className="flex-1 min-w-0">
                                 <Link

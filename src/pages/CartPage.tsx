@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
 import FadeIn from "@/components/FadeIn";
 import AnimatedGrid, { AnimatedGridItem } from "@/components/AnimatedGrid";
+import SafeImage from "@/components/SafeImage";
 
 export default function CartPage() {
   const { items, subtotal, loading, removeItem, setQty } = useCart();
@@ -102,7 +103,7 @@ export default function CartPage() {
                 <AnimatedGridItem key={item.productId}>
                   <div className="flex gap-3.5 bg-surface border border-line rounded-xl p-3.5 items-center">
                   <Link to={`/produk/${item.product.slug}`} className="w-[72px] h-[72px] rounded-[10px] overflow-hidden flex-shrink-0 bg-cream-deep">
-                    <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
+                    <SafeImage src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
                   </Link>
                   <div className="flex-1 min-w-0">
                     <Link to={`/produk/${item.product.slug}`} className="block text-[13.5px] font-semibold text-ink line-clamp-1">

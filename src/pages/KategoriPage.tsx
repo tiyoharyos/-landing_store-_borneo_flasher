@@ -10,6 +10,7 @@ import { getProducts } from "@/services/productsService";
 import { getCategories } from "@/services/categoriesService";
 import { mapApiProductsToProducts, mapCategoryOptions, type CategoryOption } from "@/lib/mapProduct";
 import { getApiErrorMessage } from "@/lib/axios";
+import SafeImage from "@/components/SafeImage";
 
 type SortKey = "terbaru" | "terlaris" | "nama-az" | "nama-za" | "termurah" | "termahal" | "rating";
 type Availability = "semua" | "tersedia" | "habis";
@@ -227,11 +228,7 @@ export default function KategoriPage() {
                 }`}
                 onClick={() => goToCategory(c.key)}
               >
-                {c.image ? (
-                  <img src={c.image} alt="" className="w-4 h-4 rounded object-cover shrink-0" />
-                ) : (
-                  <Icon icon="mdi:tag-outline" width={16} />
-                )}
+                <SafeImage src={c.image} alt="" className="w-4 h-4 rounded object-cover shrink-0" />
                 <span>{c.label}</span>
               </button>
             </li>

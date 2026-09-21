@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
 import { getCategories } from "@/services/categoriesService";
 import { mapCategoryOptions, type CategoryOption } from "@/lib/mapProduct";
+import SafeImage from "@/components/SafeImage";
 
 /**
  * Menampilkan kategori sebagai grid kartu bergambar (bukan sidebar) di
@@ -76,16 +76,12 @@ export default function CategoryShowcase() {
               className="group shrink-0 w-[110px] sm:w-[128px] snap-start flex flex-col items-center gap-2.5 rounded-xl border border-line bg-surface p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-[var(--shadow-sm)]"
             >
               <div className="w-full aspect-square rounded-lg bg-cream-deep overflow-hidden flex items-center justify-center">
-                {c.image ? (
-                  <img
-                    src={c.image}
-                    alt={c.label}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
-                  />
-                ) : (
-                  <Icon icon="mdi:tag-outline" width={28} className="text-muted" />
-                )}
+                <SafeImage
+                  src={c.image}
+                  alt={c.label}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
+                />
               </div>
               <span className="text-[12.5px] font-semibold text-ink-soft text-center leading-snug line-clamp-2 group-hover:text-ink">
                 {c.label}

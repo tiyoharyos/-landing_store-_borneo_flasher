@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 import { useToast } from "@/components/ui/Toast";
 import { fileToDataUrl, validateAvatarFile } from "@/lib/file";
 import type { Address } from "@/data/addresses";
+import SafeImage from "@/components/SafeImage";
 
 type ProfileTab = "pesanan" | "wishlist" | "biodata" | "alamat";
 
@@ -238,7 +239,7 @@ export default function ProfilePage() {
                       <div className="flex flex-col gap-2">
                         {o.items.map((i) => (
                           <div key={i.productId} className="flex items-center gap-2.5 text-[13px]">
-                            <img src={i.image} alt={i.name} className="w-9 h-9 rounded-lg object-cover bg-cream-deep" />
+                            <SafeImage src={i.image} alt={i.name} className="w-9 h-9 rounded-lg object-cover bg-cream-deep" />
                             <span className="flex-1">
                               {i.name} x{i.qty}
                             </span>
