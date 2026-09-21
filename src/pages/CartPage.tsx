@@ -42,15 +42,19 @@ export default function CartPage() {
   };
 
   return (
-    <div>
-      <div className="container pt-6">
-        <p className="font-display font-extrabold text-[1.1rem] text-ink mb-4">Keranjang Belanja</p>
+    <div className="min-h-screen">
+      <div className="container pt-6 pb-14">
+        <div className="mb-5 rounded-[30px] border border-line bg-surface/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-sm md:p-5">
+          <p className="font-display text-[1.6rem] font-extrabold tracking-[-0.05em] text-ink md:text-[2rem]">
+            Keranjang Belanja
+          </p>
+        </div>
 
         {!user && (
-          <div className="flex items-center gap-2 bg-brand-tint text-brand-dark border border-brand/25 rounded-xl px-3.5 py-2.5 text-[12.75px] font-semibold mb-4">
+          <div className="mb-4 flex items-center gap-2 rounded-[18px] border border-brand/25 bg-brand-tint px-3.5 py-2.5 text-[12.75px] font-semibold text-brand-dark">
             <Icon icon="mdi:lock-outline" width={17} />
             <span>
-              Kamu belum masuk. <Link to="/masuk?next=/keranjang" className="underline font-bold">Masuk dulu</Link> untuk mulai
+              Kamu belum masuk. <Link to="/masuk?next=/keranjang" className="font-bold underline">Masuk dulu</Link> untuk mulai
               menambahkan produk ke keranjang.
             </span>
           </div>
@@ -62,15 +66,15 @@ export default function CartPage() {
             <span className="text-[13px]">Memuat keranjang...</span>
           </div>
         ) : items.length === 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
-            <FadeIn className="flex flex-col items-center text-center bg-surface border border-line rounded-xl px-6 py-14 shadow-sm">
-              <div className="w-[140px] h-[140px] flex items-center justify-center text-line">
+          <div className="grid grid-cols-1 items-start gap-5 pb-12 md:grid-cols-[1fr_320px]">
+            <FadeIn className="flex flex-col items-center rounded-[30px] border border-line bg-surface px-6 py-14 text-center shadow-[var(--shadow-sm)]">
+              <div className="flex h-[140px] w-[140px] items-center justify-center rounded-full bg-cream-deep text-line">
                 <Icon icon="mdi:basket-outline" width={56} />
               </div>
-              <p className="font-display font-extrabold text-[1.15rem] text-ink mt-6">
+              <p className="mt-6 font-display text-[1.15rem] font-extrabold text-ink">
                 Wah, keranjang belanjamu kosong
               </p>
-              <p className="text-muted text-[13.5px] mt-1.5 max-w-[320px]">
+              <p className="mt-1.5 max-w-[320px] text-[13.5px] text-muted">
                 Yuk, isi dengan barang-barang kebutuhan servis kamu!
               </p>
               <ButtonLink to="/" icon="mdi:storefront-outline" className="mt-6">
@@ -78,14 +82,14 @@ export default function CartPage() {
               </ButtonLink>
             </FadeIn>
 
-            <FadeIn delay={0.08} className="bg-surface border border-line rounded-xl p-5 sticky top-[90px] opacity-70">
-              <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Belanja</p>
-              <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
+            <FadeIn delay={0.08} className="sticky top-[90px] rounded-[28px] border border-line bg-surface p-5 opacity-70 shadow-[var(--shadow-sm)]">
+              <p className="mb-3 font-display text-[15px] font-bold text-ink">Ringkasan Belanja</p>
+              <div className="flex justify-between py-1.5 text-[13.5px] text-ink-soft">
                 <span>Total</span>
                 <span>-</span>
               </div>
 
-              <div className="flex items-center gap-2 bg-cream-deep rounded-xl px-3.5 py-2.5 text-[13px] text-ink-soft mt-2">
+              <div className="mt-2 flex items-center gap-2 rounded-[18px] bg-cream-deep px-3.5 py-2.5 text-[13px] text-ink-soft">
                 <Icon icon="mdi:tag-outline" width={18} />
                 <span>Makin hemat pakai promo</span>
                 <Icon icon="mdi:chevron-right" width={18} className="ml-auto" />
@@ -97,66 +101,65 @@ export default function CartPage() {
             </FadeIn>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-5 pb-12 items-start">
+          <div className="grid grid-cols-1 items-start gap-5 pb-12 md:grid-cols-[1fr_320px]">
             <AnimatedGrid className="flex flex-col gap-3">
               {items.map((item) => (
                 <AnimatedGridItem key={item.productId}>
-                  <div className="flex gap-3.5 bg-surface border border-line rounded-xl p-3.5 items-center">
-                  <Link to={`/produk/${item.product.slug}`} className="w-[72px] h-[72px] rounded-[10px] overflow-hidden flex-shrink-0 bg-cream-deep">
-                    <SafeImage src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
-                  </Link>
-                  <div className="flex-1 min-w-0">
-                    <Link to={`/produk/${item.product.slug}`} className="block text-[13.5px] font-semibold text-ink line-clamp-1">
-                      {item.product.name}
+                  <div className="flex items-center gap-3.5 rounded-[26px] border border-line bg-surface p-3.5 shadow-[var(--shadow-xs)]">
+                    <Link
+                      to={`/produk/${item.product.slug}`}
+                      className="h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-[16px] bg-cream-deep"
+                    >
+                      <SafeImage src={item.product.image} alt={item.product.name} className="h-full w-full object-cover" />
                     </Link>
-                    <p className="font-mono font-bold text-[13px] text-brand-dark mt-1">{formatRupiah(item.product.price)}</p>
-                    <div className="flex items-center gap-3.5 mt-2">
-                      <div className="flex items-center border border-line rounded-lg overflow-hidden">
+                    <div className="min-w-0 flex-1">
+                      <Link to={`/produk/${item.product.slug}`} className="block text-[13.5px] font-semibold text-ink line-clamp-1">
+                        {item.product.name}
+                      </Link>
+                      <p className="mt-1 font-mono text-[13px] font-bold text-brand-dark">{formatRupiah(item.product.price)}</p>
+                      <div className="mt-2 flex items-center gap-3.5">
+                        <div className="flex items-center overflow-hidden rounded-lg border border-line">
+                          <Button
+                            variant="subtle"
+                            size="sm"
+                            icon="mdi:minus"
+                            onClick={() => setQty(item.productId, item.qty - 1)}
+                            aria-label="Kurangi jumlah"
+                            className="h-[26px]! w-[26px]! rounded-none! border-none! p-0!"
+                          />
+                          <span className="w-[30px] text-center text-[13px] font-bold text-ink">{item.qty}</span>
+                          <Button
+                            variant="subtle"
+                            size="sm"
+                            icon="mdi:plus"
+                            onClick={() => setQty(item.productId, Math.min(item.product.stock, item.qty + 1))}
+                            aria-label="Tambah jumlah"
+                            className="h-[26px]! w-[26px]! rounded-none! border-none! p-0!"
+                          />
+                        </div>
                         <Button
-                          variant="subtle"
-                          size="sm"
-                          icon="mdi:minus"
-                          onClick={() => setQty(item.productId, item.qty - 1)}
-                          aria-label="Kurangi jumlah"
-                          className="w-[26px]! h-[26px]! p-0! rounded-none! border-none!"
-                        />
-                        <span className="w-[30px] text-center font-bold text-[13px] text-ink">{item.qty}</span>
-                        <Button
-                          variant="subtle"
-                          size="sm"
-                          icon="mdi:plus"
-                          onClick={() =>
-                            setQty(item.productId, Math.min(item.product.stock, item.qty + 1))
-                          }
-                          aria-label="Tambah jumlah"
-                          className="w-[26px]! h-[26px]! p-0! rounded-none! border-none!"
-                        />
+                          variant="ghost"
+                          icon="mdi:trash-can-outline"
+                          onClick={() => handleRemove(item.productId, item.product.name)}
+                          className="h-auto! w-auto! gap-1 border-none! p-0! text-xs text-warn! hover:bg-transparent! hover:underline"
+                        >
+                          Hapus
+                        </Button>
                       </div>
-                      <Button
-                        variant="ghost"
-                        icon="mdi:trash-can-outline"
-                        onClick={() => handleRemove(item.productId, item.product.name)}
-                        className="h-auto! w-auto! p-0! border-none! gap-1 text-warn! text-xs hover:bg-transparent! hover:underline"
-                      >
-                        Hapus
-                      </Button>
                     </div>
-                  </div>
-                  <p className="font-mono font-bold text-[13.5px] text-ink flex-shrink-0">{formatRupiah(item.lineTotal)}</p>
+                    <p className="flex-shrink-0 font-mono text-[13.5px] font-bold text-ink">{formatRupiah(item.lineTotal)}</p>
                   </div>
                 </AnimatedGridItem>
               ))}
             </AnimatedGrid>
 
-            <FadeIn delay={0.1} className="bg-surface border border-line rounded-xl p-5 sticky top-[90px]">
-              <p className="font-display font-bold text-[15px] text-ink mb-3">Ringkasan Belanja</p>
-              <div className="flex justify-between text-[13.5px] text-ink-soft py-1.5">
+            <FadeIn delay={0.1} className="sticky top-[90px] rounded-[28px] border border-line bg-surface p-5 shadow-[var(--shadow-sm)]">
+              <p className="mb-3 font-display text-[15px] font-bold text-ink">Ringkasan Belanja</p>
+              <div className="flex justify-between py-1.5 text-[13.5px] text-ink-soft">
                 <span>Subtotal</span>
                 <span>{formatRupiah(subtotal)}</span>
               </div>
-              <p className="text-[11.5px] text-muted mt-1.5">
-                Ongkos kirim dihitung di halaman checkout.
-              </p>
+              <p className="mt-1.5 text-[11.5px] text-muted">Ongkos kirim dihitung di halaman checkout.</p>
               <Button variant="primary" size="lg" fullWidth className="mt-3" onClick={goCheckout}>
                 Checkout ({items.length})
               </Button>

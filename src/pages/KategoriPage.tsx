@@ -205,13 +205,20 @@ export default function KategoriPage() {
   const filterContent = (
     <>
       <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
-        <p className="font-display font-bold text-[13px] text-ink mb-2.5">Kategori</p>
-        <ul className="list-none m-0 p-0 flex flex-col gap-0.5 max-h-[260px] overflow-y-auto">
+        <div className="mb-3 flex items-center justify-between">
+          <p className="font-display font-bold text-[13px] text-ink">Kategori</p>
+          <span className="rounded-full bg-brand-tint px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-brand">
+            {categories.length}
+          </span>
+        </div>
+        <ul className="list-none m-0 p-0 flex flex-col gap-1.5 max-h-[260px] overflow-y-auto pr-1">
           <li>
             <button
               type="button"
-              className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer transition-colors duration-200 ${
-                categoryFilter === SEMUA_KATEGORI ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
+              className={`flex items-center gap-2.5 w-full bg-transparent border-none text-left px-2.5 py-2 rounded-xl text-[13px] font-semibold cursor-pointer transition-all duration-200 ${
+                categoryFilter === SEMUA_KATEGORI
+                  ? "bg-brand-tint text-brand ring-1 ring-brand/15 "
+                  : "text-ink-soft hover:bg-cream-deep hover:text-ink"
               }`}
               onClick={() => goToCategory(SEMUA_KATEGORI)}
             >
@@ -223,12 +230,14 @@ export default function KategoriPage() {
             <li key={c.key}>
               <button
                 type="button"
-                className={`flex items-center gap-2 w-full bg-transparent border-none text-left px-2 py-1.5 rounded-lg text-[13px] font-semibold cursor-pointer transition-colors duration-200 ${
-                  categoryFilter === c.key ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep"
+                className={`flex items-center gap-2.5 w-full bg-transparent border-none text-left px-2.5 py-2 rounded-xl text-[13px] font-semibold cursor-pointer transition-all duration-200 ${
+                  categoryFilter === c.key
+                    ? "bg-brand-tint text-brand ring-1 ring-brand/15"
+                    : "text-ink-soft hover:bg-cream-deep hover:text-ink"
                 }`}
                 onClick={() => goToCategory(c.key)}
               >
-                <SafeImage src={c.image} alt="" className="w-4 h-4 rounded object-cover shrink-0" />
+                <SafeImage src={c.image} alt="" className="w-4 h-4 rounded object-cover shrink-0 ring-1 ring-line" />
                 <span>{c.label}</span>
               </button>
             </li>
@@ -238,29 +247,36 @@ export default function KategoriPage() {
 
       <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
         <p className="font-display font-bold text-[13px] text-ink mb-2.5">Ketersediaan</p>
-        {(
-          [
-            { key: "semua", label: "Semua Produk" },
-            { key: "tersedia", label: "Tersedia" },
-            { key: "habis", label: "Stok Habis" },
-          ] as { key: Availability; label: string }[]
-        ).map((opt) => (
-          <label key={opt.key} className="flex items-center gap-2 text-[13.5px] text-ink-soft py-1.5 cursor-pointer">
-            <input
-              type="radio"
-              name="availability"
-              className="accent-brand"
-              checked={availability === opt.key}
-              onChange={() => setAvailability(opt.key)}
-            />
-            {opt.label}
-          </label>
-        ))}
+        <div className="space-y-2">
+          {(
+            [
+              { key: "semua", label: "Semua Produk" },
+              { key: "tersedia", label: "Tersedia" },
+              { key: "habis", label: "Stok Habis" },
+            ] as { key: Availability; label: string }[]
+          ).map((opt) => (
+            <label
+              key={opt.key}
+              className={`flex items-center gap-2.5 text-[13.5px] cursor-pointer rounded-lg px-2 py-1.5 transition-colors ${
+                availability === opt.key ? "bg-brand-tint text-brand" : "text-ink-soft hover:bg-cream-deep hover:text-ink"
+              }`}
+            >
+              <input
+                type="radio"
+                name="availability"
+                className="accent-brand"
+                checked={availability === opt.key}
+                onChange={() => setAvailability(opt.key)}
+              />
+              {opt.label}
+            </label>
+          ))}
+        </div>
       </div>
 
       <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
         <p className="font-display font-bold text-[13px] text-ink mb-2.5">Range Harga</p>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <div className="relative flex-1 w-0">
             <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[12px] text-muted pointer-events-none">
               Rp
@@ -271,7 +287,7 @@ export default function KategoriPage() {
               placeholder="Min"
               value={priceMin}
               onChange={(e) => setPriceMin(e.target.value)}
-              className="w-full border border-line rounded-lg pl-7 pr-2 py-2 text-[13px] outline-none focus:border-brand"
+              className="w-full border border-line bg-cream rounded-xl pl-7 pr-2 py-2.5 text-[13px] outline-none transition focus:border-brand focus:bg-surface"
             />
           </div>
           <span className="text-muted">-</span>
@@ -285,7 +301,7 @@ export default function KategoriPage() {
               placeholder="Max"
               value={priceMax}
               onChange={(e) => setPriceMax(e.target.value)}
-              className="w-full border border-line rounded-lg pl-7 pr-2 py-2 text-[13px] outline-none focus:border-brand"
+              className="w-full border border-line bg-cream rounded-xl pl-7 pr-2 py-2.5 text-[13px] outline-none transition focus:border-brand focus:bg-surface"
             />
           </div>
         </div>
@@ -295,7 +311,7 @@ export default function KategoriPage() {
         variant="outline"
         fullWidth
         onClick={resetAllFilters}
-        className="mt-0! border-brand! text-brand! hover:bg-brand-tint!"
+        className="mt-2! border-brand/20! bg-brand-tint! text-brand! hover:bg-brand/8!"
       >
         Reset Filter
       </Button>
@@ -303,10 +319,12 @@ export default function KategoriPage() {
   );
 
   return (
-    <div>
-      <div className="container pt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6 pb-16">
-          <FadeIn className="hidden lg:flex flex-col gap-6 bg-surface border border-line rounded-xl p-5 self-start lg:sticky lg:top-[90px]">
+    <div className="min-h-screen">
+      <div className="container pt-6 pb-14">
+   
+
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 pb-16">
+          <FadeIn className="hidden lg:flex flex-col gap-6 bg-surface/90 border border-line rounded-[26px] p-5 shadow-[var(--shadow-sm)] backdrop-blur-sm self-start lg:sticky lg:top-[90px]">
             {filterContent}
           </FadeIn>
 
@@ -316,7 +334,7 @@ export default function KategoriPage() {
                 className="absolute inset-0 bg-overlay animate-[modalIn_0.2s_ease-out]"
                 onClick={() => setMobileFilterOpen(false)}
               />
-              <aside className="absolute inset-y-0 left-0 w-[85vw] max-w-[320px] bg-surface flex flex-col shadow-[var(--shadow-lg)] animate-slide-in-left">
+              <aside className="absolute inset-y-0 left-0 w-[85vw] max-w-[320px] bg-surface/95 backdrop-blur-md flex flex-col shadow-[var(--shadow-lg)] animate-slide-in-left">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-line shrink-0">
                   <p className="font-display font-bold text-[14.5px] text-ink">Filter Produk</p>
                   <Button
@@ -340,7 +358,7 @@ export default function KategoriPage() {
 
           {/* Main content */}
           <FadeIn delay={0.05} className="min-w-0">
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface/80 px-3 py-3 shadow-sm backdrop-blur-sm">
               <p className="text-[13.5px] text-ink-soft">
                 {!loading && !error && (
                   <>
@@ -361,7 +379,7 @@ export default function KategoriPage() {
                     value={sort}
                     onChange={(e) => setSort(e.target.value as SortKey)}
                     aria-label="Urutkan produk"
-                    className="h-9 border border-line rounded-lg bg-surface pl-3 pr-8 text-[12.75px] font-semibold text-ink outline-none appearance-none cursor-pointer transition-all focus:border-brand"
+                    className="h-10 border border-line bg-cream rounded-xl pl-3 pr-9 text-[12.75px] font-semibold text-ink outline-none appearance-none cursor-pointer transition-all focus:border-brand focus:bg-surface"
                   >
                     {SORT_OPTIONS.map((opt) => (
                       <option key={opt.key} value={opt.key}>
@@ -380,7 +398,7 @@ export default function KategoriPage() {
                   variant="outline"
                   icon="mdi:filter-variant"
                   onClick={() => setMobileFilterOpen(true)}
-                  className="relative h-9! border-brand! text-brand! flex! lg:hidden! hover:bg-brand-tint!"
+                  className="relative h-10! border-brand/20! bg-brand-tint! text-brand! flex! lg:hidden! hover:bg-brand/8!"
                 >
                   Filter
                   {activeFilters.length > 0 && (
@@ -393,14 +411,14 @@ export default function KategoriPage() {
             </div>
 
             {activeFilters.length > 0 && (
-              <div className="flex flex-wrap items-center gap-2 mb-4">
+              <div className="mb-4 flex flex-wrap items-center gap-2">
                 {activeFilters.map((f) => (
                   <Button
                     key={f.label}
                     variant="subtle"
                     iconRight="mdi:close"
                     onClick={f.onClear}
-                    className="h-auto! w-auto! rounded-full! px-3! py-1.5! bg-brand-tint! border-none! text-brand! text-xs"
+                    className="h-auto! w-auto! rounded-full! px-3! py-1.5! bg-brand-tint! border-none! text-brand! text-xs shadow-sm"
                   >
                     {f.label}
                   </Button>
@@ -418,13 +436,15 @@ export default function KategoriPage() {
             {loading && (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
                 {Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className="aspect-square rounded-xl bg-cream-deep animate-pulse" />
+                  <div key={i} className="aspect-square rounded-[22px] border border-line bg-cream-deep animate-pulse" />
                 ))}
               </div>
             )}
 
             {!loading && error && (
-              <p className="text-center text-warn text-sm py-12">{error}</p>
+              <div className="rounded-[22px] border border-warn/20 bg-warn/5 px-4 py-12 text-center text-sm text-warn">
+                {error}
+              </div>
             )}
 
             {!loading && !error && (
@@ -481,9 +501,9 @@ export default function KategoriPage() {
                   )}
                 </>
               ) : (
-                <div className="text-center py-12 px-6">
+                <div className="rounded-[26px] border border-dashed border-line bg-surface px-6 py-14 text-center shadow-sm">
                   <Icon icon="mdi:package-variant-closed" width={64} className="text-line inline-block" />
-                  <p className="font-display font-bold text-[1.1rem] mt-4">Produk Tidak Ditemukan</p>
+                  <p className="font-display font-bold text-[1.1rem] mt-4 text-ink">Produk Tidak Ditemukan</p>
                   <p className="text-muted text-sm mt-1">Coba ubah kata kunci atau filter pencarian Anda.</p>
                   {activeFilters.length > 0 && (
                     <Button

@@ -1,0 +1,1 @@
+import{a as e,t}from"./jsx-runtime-rIhEW2gs.js";var n=t();function r(){return(0,n.jsx)(e,{to:`/akun/profil?tab=pesanan`,replace:!0})}export{r as default};

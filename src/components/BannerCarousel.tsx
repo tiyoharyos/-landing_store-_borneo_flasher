@@ -11,7 +11,7 @@ const FALLBACK_BANNERS: BannerSlide[] = [
 ];
 
 // HP: rasio lebih tinggi supaya banner tidak jadi "strip" tipis. Tablet/desktop: rasio asli 1400x500.
-const FRAME = "rounded-xl bg-cream-deep aspect-[16/7] md:aspect-[1400/500] border border-line";
+const FRAME = "rounded-[30px] bg-gradient-to-br from-cream-deep via-white to-cream border border-line/80 shadow-[var(--shadow-sm)] aspect-[16/7] md:aspect-[1400/500] overflow-hidden";
 
 const AUTOPLAY_MS = 5000;
 const SWIPE_MIN_PX = 40;

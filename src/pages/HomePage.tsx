@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import BannerCarousel from "@/components/BannerCarousel";
 import CategoryShowcase from "@/components/CategoryShowcase";
 import ProductCard from "@/components/ProductCard";
@@ -73,26 +72,27 @@ export default function HomePage() {
           <BannerCarousel />
         </FadeIn>
 
-        {/* Kategori */}
         <FadeIn delay={0.05}>
           <CategoryShowcase />
         </FadeIn>
 
-        {/* Produk Pilihan */}
         <section className="py-10 md:py-14">
-          <FadeIn delay={0.08} className="flex flex-wrap items-end justify-between gap-4 mb-8">
-            <div>
-              <p className="font-display font-extrabold text-[1.35rem] text-ink mb-3 tracking-tight">
-                Produk Pilihan
-              </p>
-              <div className="flex gap-6 flex-wrap">
+          <FadeIn delay={0.08} className="mb-6 rounded-[30px] border border-line bg-surface/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-sm sm:p-5">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="font-display font-extrabold text-[1.5rem] text-ink tracking-[-0.04em] md:text-[1.8rem]">
+                  Produk Pilihan
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
                 {SORT_OPTIONS.map((s) => (
                   <button
                     key={s.key}
-                    className={`bg-transparent border-none pb-1.5 text-[13.5px] font-medium cursor-pointer border-b-2 transition-colors ${
+                    className={`rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition-all ${
                       sort === s.key
-                        ? "text-ink border-ink font-semibold"
-                        : "text-muted border-transparent hover:text-ink"
+                        ? "border-brand bg-brand text-white shadow-[var(--shadow-brand)]"
+                        : "border-line bg-cream text-ink-soft hover:border-brand/20 hover:text-brand"
                     }`}
                     onClick={() => setSort(s.key)}
                   >
@@ -101,21 +101,20 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-            <Link to="/kategori" className="text-[13.5px] font-semibold text-ink-soft hover:text-ink transition-colors">
-              Lihat Semua
-            </Link>
           </FadeIn>
 
           {loading && (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="aspect-square rounded-xl bg-cream-deep animate-pulse" />
+                <div key={i} className="aspect-square rounded-[26px] border border-line bg-cream-deep animate-pulse" />
               ))}
             </div>
           )}
 
           {!loading && error && (
-            <p className="text-center text-warn text-sm py-8">{error}</p>
+            <div className="rounded-[22px] border border-warn/20 bg-warn/5 px-4 py-10 text-center text-sm text-warn">
+              {error}
+            </div>
           )}
 
           {!loading && !error && (
@@ -128,8 +127,8 @@ export default function HomePage() {
                 ))}
               </AnimatedGrid>
 
-              <div className="flex justify-center text-white">
-                <ButtonLink to="/kategori" size="sm" className="h-9! px-4! md:px-5!">
+              <div className="flex justify-center">
+                <ButtonLink to="/kategori" size="sm" className="h-10! rounded-full! px-5! shadow-[var(--shadow-sm)]">
                   Lihat Semua Produk
                 </ButtonLink>
               </div>
