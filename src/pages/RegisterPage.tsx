@@ -69,14 +69,33 @@ export default function RegisterPage() {
 
   return (
     <AuthLayout
-      tagline="Belanja & Servis, Semua Ada di Sini"
-      taglineSub="Daftar sekarang dan nikmati kemudahan transaksi di Borneo Flasher Store."
+      eyebrow="MULAI PERJALANANMU"
+      tagline="Akun praktis untuk belanja dan servis"
+      taglineSub="Buat akun sekali, lalu nikmati proses belanja yang lebih rapi, cepat, dan personal."
+      features={[
+        {
+          icon: "mdi:cart-outline",
+          title: "Belanja lebih praktis",
+          description: "Temukan sparepart dan kebutuhan gadget tanpa proses berulang.",
+        },
+        {
+          icon: "mdi:heart-outline",
+          title: "Pengalaman yang personal",
+          description: "Simpan informasi penting untuk memudahkan kunjungan berikutnya.",
+        },
+        {
+          icon: "mdi:shield-check-outline",
+          title: "Akun aman dan terverifikasi",
+          description: "Email verifikasi membantu menjaga akses akunmu tetap terlindungi.",
+        },
+      ]}
     >
       <Card noPadding>
-        <FadeIn className="p-8">
+        <FadeIn className="p-7 sm:p-8">
           <CardHeader className="mb-1">
             <div>
-              <CardTitle>Daftar Akun Baru</CardTitle>
+              <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand">Mulai sekarang</p>
+              <CardTitle className="text-[1.2rem]">Buat akun baru</CardTitle>
               <CardSubtitle>
                 Daftar akun baru untuk mulai belanja & servis di Borneo Flasher Store.
               </CardSubtitle>
@@ -122,8 +141,8 @@ export default function RegisterPage() {
                 ]}
               />
 
-              <Button type="submit" variant="primary" size="lg" fullWidth loading={loading}>
-                Daftar
+              <Button type="submit" variant="primary" size="lg" fullWidth loading={loading} className="shadow-[var(--shadow-brand)]">
+                Buat akun
               </Button>
             </Form>
 

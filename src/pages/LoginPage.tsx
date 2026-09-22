@@ -43,14 +43,33 @@ export default function LoginPage() {
 
   return (
     <AuthLayout
-      tagline="Servis & Belanja Sparepart Jadi Lebih Mudah"
-      taglineSub="Masuk untuk lacak pesanan, simpan alamat, dan checkout lebih cepat."
+      eyebrow="AKSES AKUN"
+      tagline="Belanja lebih cepat, semua tetap terpantau"
+      taglineSub="Satu akun untuk mengelola pesanan, alamat, dan kebutuhan servis di Borneo Flasher Store."
+      features={[
+        {
+          icon: "akar-icons:circle-check",
+          title: "Lacak pesanan dengan mudah",
+          description: "Pantau status order dan riwayat belanja dari satu tempat.",
+        },
+        {
+          icon: "mdi:map-marker-outline",
+          title: "Checkout lebih singkat",
+          description: "Simpan alamat pengiriman agar transaksi berikutnya lebih cepat.",
+        },
+        {
+          icon: "mdi:tools",
+          title: "Siap untuk kebutuhan servis",
+          description: "Akses pengalaman belanja dan servis yang lebih personal.",
+        },
+      ]}
     >
       <Card noPadding>
-        <FadeIn className="p-8">
+        <FadeIn className="p-7 sm:p-8">
           <CardHeader className="mb-1">
             <div>
-              <CardTitle>Masuk ke Akun Kamu</CardTitle>
+              <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand">Selamat datang kembali</p>
+              <CardTitle className="text-[1.2rem]">Masuk ke akun kamu</CardTitle>
               <CardSubtitle>
                 Masuk dengan akun yang sudah kamu daftarkan & verifikasi.
               </CardSubtitle>
@@ -78,8 +97,8 @@ export default function LoginPage() {
                 autoComplete="current-password"
               />
 
-              <Button type="submit" variant="primary" size="lg" fullWidth loading={loading}>
-                Masuk
+              <Button type="submit" variant="primary" size="lg" fullWidth loading={loading} className="shadow-[var(--shadow-brand)]">
+                Masuk ke akun
               </Button>
             </Form>
 
