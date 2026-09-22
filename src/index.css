@@ -1,70 +1,74 @@
-/* Borneo Flasher — Minimalist Design System */
-/* Satu keluarga font untuk seluruh tampilan: Plus Jakarta Sans */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* Borneo Flasher — Apple-inspired Design System */
+/* Inter mendekati SF Pro secara metrik; stack diawali sistem font Apple asli
+   supaya di macOS/iOS otomatis render pakai SF Pro sungguhan. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 :root {
-  /* ---- Palet netral minimalis + satu aksen (merah brand) ---- */
-  --ink: #18181b;          /* Teks utama, hampir hitam */
-  --ink-soft: #52525b;     /* Teks sekunder */
-  --cream: #fafafa;        /* Background halaman */
-  --cream-deep: #f4f4f5;   /* Background sekunder / hover */
+  /* ---- Palet netral ala Apple + satu aksen (merah brand) ---- */
+  --ink: #1d1d1f;          /* Teks utama — abu-hitam khas Apple, bukan hitam pekat */
+  --ink-soft: #48484a;     /* Teks sekunder */
+  --cream: #fbfbfd;        /* Background halaman — putih kebiruan lembut ala apple.com */
+  --cream-deep: #f5f5f7;   /* Background sekunder / hover — abu Apple klasik */
   --surface: #ffffff;      /* Kartu, permukaan */
   --brand: #dc2626;        /* Aksen tunggal — merah brand */
   --brand-dark: #b91c1c;
   --brand-tint: #fef2f2;
-  --accent: #18181b;       /* aksen netral (tombol inverted) */
+  --accent: #1d1d1f;       /* aksen netral (tombol inverted) */
   --accent-dark: #000000;
-  --accent-tint: #e4e4e7;
+  --accent-tint: #e8e8ed;
   --amber: #d97706;
   --amber-dark: #92400e;
-  --line: #e4e4e7;         /* Border tipis */
-  --muted: #71717a;
+  --line: #e5e5ea;         /* Border tipis, halus */
+  --muted: #86868b;        /* Abu Apple untuk teks tersier */
   --ok: #16a34a;
   --warn: #dc2626;
-  --overlay: rgba(15, 15, 17, 0.45);
+  --overlay: rgba(29, 29, 31, 0.4);
 
-  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
 
-  /* Skala shadow — halus, minim, untuk kedalaman tipis saja */
-  --shadow-xs: 0 1px 2px rgba(15, 15, 17, 0.05);
-  --shadow-sm: 0 2px 8px rgba(15, 15, 17, 0.06);
-  --shadow-md: 0 6px 20px rgba(15, 15, 17, 0.08);
-  --shadow-lg: 0 16px 40px rgba(15, 15, 17, 0.12);
-  --shadow-brand: 0 10px 24px rgba(220, 38, 38, 0.20);
+  /* Easing khas Apple — halus & sedikit "settle" di akhir */
+  --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
+
+  /* Skala shadow — sangat lembut & menyebar, bukan tegas/kontras */
+  --shadow-xs: 0 1px 2px rgba(29, 29, 31, 0.04);
+  --shadow-sm: 0 4px 14px rgba(29, 29, 31, 0.05);
+  --shadow-md: 0 12px 32px rgba(29, 29, 31, 0.08);
+  --shadow-lg: 0 24px 60px rgba(29, 29, 31, 0.12);
+  --shadow-brand: 0 12px 28px rgba(220, 38, 38, 0.18);
 
   /* Footer & tombol WA selalu gelap, tidak ikut berganti tema */
-  --footer-bg: #18181b;
-  --footer-text: #fafafa;
-  --footer-muted: #a1a1aa;
-  --footer-line: rgba(250, 250, 250, 0.12);
+  --footer-bg: #1d1d1f;
+  --footer-text: #f5f5f7;
+  --footer-muted: #98989d;
+  --footer-line: rgba(245, 245, 247, 0.12);
 }
 
 [data-theme="dark"] {
-  --ink: #fafafa;
-  --ink-soft: #d4d4d8;
-  --cream: #131316;
-  --cream-deep: #1d1d21;
-  --surface: #1a1a1e;
+  --ink: #f5f5f7;
+  --ink-soft: #d1d1d6;
+  --cream: #000000;
+  --cream-deep: #1c1c1e;
+  --surface: #161618;
   --brand: #f0474d;
   --brand-dark: #dc2626;
-  --brand-tint: #341012;
-  --accent: #fafafa;
+  --brand-tint: #2c1214;
+  --accent: #f5f5f7;
   --accent-dark: #ffffff;
-  --accent-tint: #2c2c31;
+  --accent-tint: #2c2c2e;
   --amber: #fbbf24;
   --amber-dark: #f59e0b;
-  --line: #2c2c31;
-  --muted: #9a9aa2;
+  --line: #2c2c2e;
+  --muted: #98989d;
   --ok: #34d399;
   --warn: #f87171;
-  --overlay: rgba(0, 0, 0, 0.65);
+  --overlay: rgba(0, 0, 0, 0.7);
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5);
-  --shadow-brand: 0 10px 24px rgba(240, 71, 77, 0.28);
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 28px 64px rgba(0, 0, 0, 0.55);
+  --shadow-brand: 0 12px 28px rgba(240, 71, 77, 0.25);
 }
 
 @theme {
@@ -92,9 +96,18 @@
   --color-footer-line: var(--footer-line);
 
   /* Satu keluarga font dipakai di semua peran tipografi */
-  --font-display: var(--font-jakarta);
-  --font-body: var(--font-jakarta);
-  --font-mono: var(--font-jakarta);
+  --font-display: var(--font-inter);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-inter);
+
+  /* Skala radius dibesarkan supaya semua elemen "rounded-lg/xl/2xl/3xl"
+     yang sudah dipakai di seluruh komponen otomatis terasa lebih lembut
+     dan mengikuti bahasa desain Apple (kurva besar, tanpa perlu ubah tiap file). */
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.125rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
 }
 
 /* variant dark: masih disediakan untuk kasus khusus (mis. re-theme
@@ -118,7 +131,16 @@ body {
   color: var(--ink);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Judul selalu memakai tracking rapat & bobot tegas ala tipografi Apple */
+h1, h2, h3, h4,
+.font-display {
+  letter-spacing: -0.022em;
+  font-weight: 700;
 }
 
 /* Angka (harga, jumlah) memakai figure tabular agar rapi tanpa perlu font terpisah */

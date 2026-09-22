@@ -9,7 +9,7 @@ export default function NavbarHome() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-cream border-b border-line sticky top-0 z-50 transition-colors">
+    <nav className="sticky top-0 z-50 border-b border-line/70 bg-cream/70 backdrop-blur-2xl saturate-150 transition-colors duration-200">
       <div className="container flex items-center justify-between py-3.5">
         <NavLink to="/" onClick={() => setOpen(false)}>
           <img src={logoLpks} alt="LPKS Borneo Flasher" className="h-10 w-auto" />

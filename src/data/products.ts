@@ -5,8 +5,6 @@
 // untuk pemetaan response API -> tipe Product di bawah ini).
 // ==========================================================
 
-import { CATEGORIES as LEGACY_CATEGORIES, PRODUCTS as LEGACY_PRODUCTS } from "@/data/mockData";
-
 export type CategoryKey = string;
 
 export type Condition = "Baru" | "Bekas Layak Pakai";
@@ -38,33 +36,6 @@ export interface Product {
   // Timestamp dari backend (created_at), format string apa adanya.
   createdAt?: string;
 }
-
-export const CATEGORIES = LEGACY_CATEGORIES.map((c) => ({
-  key: c.slug,
-  label: c.name,
-  icon: c.icon,
-}));
-
-export const PRODUCTS: Product[] = LEGACY_PRODUCTS.map((p) => ({
-  id: p.id,
-  slug: p.id,
-  category: p.category,
-  categoryName: p.category,
-  name: p.name,
-  code: p.id,
-  description: "",
-  supplier: undefined,
-  location: undefined,
-  image: p.image,
-  price: p.price,
-  priceOriginal: p.priceOriginal,
-  stock: p.stock,
-  sold: p.sold,
-  rating: p.rating,
-  condition: "Baru",
-  weightGram: 0,
-  createdAt: undefined,
-}));
 
 // -----------------------------
 // Helpers

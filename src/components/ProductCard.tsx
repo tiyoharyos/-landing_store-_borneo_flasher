@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import { memo } from "react";
 import { formatRupiah, discountPercent, type Product } from "@/data/products";
 import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
 import SafeImage from "@/components/SafeImage";
 
-export default function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product }: { product: Product }) {
   const pct = discountPercent(product);
   const { isWishlisted, toggle } = useWishlist();
   const wished = isWishlisted(product.id);
@@ -13,7 +14,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       to={`/produk/${product.slug}`}
-      className={`group block bg-surface border border-line rounded-xl overflow-hidden transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:shadow-[var(--shadow-md)] hover:border-ink/20 ${
+      className={`group block bg-surface border border-line rounded-2xl overflow-hidden transition-[transform,box-shadow,border-color] duration-300 [transition-timing-function:var(--ease-apple)] hover:-translate-y-1 hover:shadow-[var(--shadow-md)] hover:border-ink/15 ${
         outOfStock ? "opacity-80" : ""
       }`}
     >
@@ -96,3 +97,5 @@ export default function ProductCard({ product }: { product: Product }) {
     </Link>
   );
 }
+
+export default memo(ProductCard);

@@ -37,7 +37,7 @@ export default function Modal({ open, onClose, title, children, maxWidth = 480 }
           transition={{ duration: 0.18, ease: "easeOut" }}
         >
           <motion.div
-            className="w-full bg-surface border border-line rounded-xl shadow-[var(--shadow-lg)] my-6 sm:my-0 max-h-[90vh] flex flex-col"
+            className="w-full bg-surface border border-line rounded-3xl shadow-[var(--shadow-lg)] my-6 sm:my-0 max-h-[90vh] flex flex-col"
             style={{ maxWidth, willChange: "opacity, transform" }}
             onMouseDown={(e) => e.stopPropagation()}
             role="dialog"

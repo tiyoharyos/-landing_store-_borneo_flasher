@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import BannerCarousel from "@/components/BannerCarousel";
 import CategoryShowcase from "@/components/CategoryShowcase";
 import ProductCard from "@/components/ProductCard";
@@ -49,19 +50,21 @@ export default function HomePage() {
     };
   }, []);
 
-  const sorted = [...products].sort((a, b) => {
-    switch (sort) {
-      case "termurah":
-        return a.price - b.price;
-      case "termahal":
-        return b.price - a.price;
-      case "terbaru":
-        return b.id.localeCompare(a.id);
-      case "terlaris":
-      default:
-        return b.sold - a.sold;
-    }
-  });
+  const sorted = useMemo(() => {
+    return [...products].sort((a, b) => {
+      switch (sort) {
+        case "termurah":
+          return a.price - b.price;
+        case "termahal":
+          return b.price - a.price;
+        case "terbaru":
+          return b.id.localeCompare(a.id);
+        case "terlaris":
+        default:
+          return b.sold - a.sold;
+      }
+    });
+  }, [products, sort]);
 
   return (
     <div>
@@ -119,7 +122,10 @@ export default function HomePage() {
 
           {!loading && !error && (
             <>
-              <AnimatedGrid className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-10">
+              <AnimatedGrid
+                key={sort}
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-10"
+              >
                 {sorted.slice(0, 12).map((p) => (
                   <AnimatedGridItem key={p.id}>
                     <ProductCard product={p} />

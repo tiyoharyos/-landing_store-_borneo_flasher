@@ -56,8 +56,22 @@ export default function KategoriPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>(urlCategory);
   const [sort, setSort] = useState<SortKey>("terbaru");
   const [availability, setAvailability] = useState<Availability>("semua");
+  const [priceMinInput, setPriceMinInput] = useState("");
+  const [priceMaxInput, setPriceMaxInput] = useState("");
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
+
+  // Debounce input harga: filter cuma jalan 400ms setelah user berhenti ngetik,
+  // biar nggak re-filter/re-sort tiap satu digit diketik.
+  useEffect(() => {
+    const t = setTimeout(() => setPriceMin(priceMinInput), 400);
+    return () => clearTimeout(t);
+  }, [priceMinInput]);
+
+  useEffect(() => {
+    const t = setTimeout(() => setPriceMax(priceMaxInput), 400);
+    return () => clearTimeout(t);
+  }, [priceMaxInput]);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -175,8 +189,22 @@ export default function KategoriPage() {
       label: availability === "tersedia" ? "Tersedia" : "Stok Habis",
       onClear: () => setAvailability("semua"),
     });
-  if (priceMin) activeFilters.push({ label: `Min Rp ${priceMin}`, onClear: () => setPriceMin("") });
-  if (priceMax) activeFilters.push({ label: `Max Rp ${priceMax}`, onClear: () => setPriceMax("") });
+  if (priceMin)
+    activeFilters.push({
+      label: `Min Rp ${priceMin}`,
+      onClear: () => {
+        setPriceMinInput("");
+        setPriceMin("");
+      },
+    });
+  if (priceMax)
+    activeFilters.push({
+      label: `Max Rp ${priceMax}`,
+      onClear: () => {
+        setPriceMaxInput("");
+        setPriceMax("");
+      },
+    });
 
   function goToCategory(key: string) {
     setCategoryFilter(key);
@@ -194,6 +222,8 @@ export default function KategoriPage() {
 
   const resetAllFilters = () => {
     setAvailability("semua");
+    setPriceMinInput("");
+    setPriceMaxInput("");
     setPriceMin("");
     setPriceMax("");
     setSort("terbaru");
@@ -285,8 +315,8 @@ export default function KategoriPage() {
               type="number"
               min={0}
               placeholder="Min"
-              value={priceMin}
-              onChange={(e) => setPriceMin(e.target.value)}
+              value={priceMinInput}
+              onChange={(e) => setPriceMinInput(e.target.value)}
               className="w-full border border-line bg-cream rounded-xl pl-7 pr-2 py-2.5 text-[13px] outline-none transition focus:border-brand focus:bg-surface"
             />
           </div>
@@ -299,8 +329,8 @@ export default function KategoriPage() {
               type="number"
               min={0}
               placeholder="Max"
-              value={priceMax}
-              onChange={(e) => setPriceMax(e.target.value)}
+              value={priceMaxInput}
+              onChange={(e) => setPriceMaxInput(e.target.value)}
               className="w-full border border-line bg-cream rounded-xl pl-7 pr-2 py-2.5 text-[13px] outline-none transition focus:border-brand focus:bg-surface"
             />
           </div>
@@ -450,7 +480,10 @@ export default function KategoriPage() {
             {!loading && !error && (
               paged.length ? (
                 <>
-                  <AnimatedGrid className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
+                  <AnimatedGrid
+                    key={`${categoryFilter}|${query}|${sort}|${availability}|${priceMin}|${priceMax}|${page}`}
+                    className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8"
+                  >
                     {paged.map((p) => (
                       <AnimatedGridItem key={p.id}>
                         <ProductCard product={p} />

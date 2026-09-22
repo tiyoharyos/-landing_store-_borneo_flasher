@@ -79,7 +79,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-line/80 bg-white/80 backdrop-blur-xl transition-colors duration-200 dark:bg-[#111214]/80">
+    <nav className="sticky top-0 z-50 border-b border-line/70 bg-white/70 backdrop-blur-2xl saturate-150 transition-colors duration-200 dark:bg-[#111214]/70">
       <div className="container py-3">
         <div className="flex flex-wrap items-center justify-between gap-y-3 md:gap-[18px]">
           <Link to="/" className="order-1 flex-shrink-0" onClick={() => setOpen(false)}>
@@ -93,7 +93,7 @@ export default function Navbar() {
             />
           </Link>
 
-          <div className="order-3 flex w-full min-w-0 items-center gap-2 rounded-[18px] border border-line bg-[#f5f5f7] px-[18px] py-1.5 pr-1.5 transition-all duration-200 focus-within:border-brand focus-within:ring-[3px] focus-within:ring-brand/15 md:order-2 md:flex-1 dark:bg-[#1a1a1d]">
+          <div className="order-3 flex w-full min-w-0 items-center gap-2 rounded-full border border-line bg-[#f5f5f7] px-[18px] py-1.5 pr-1.5 transition-all duration-200 focus-within:border-brand focus-within:ring-[3px] focus-within:ring-brand/15 md:order-2 md:flex-1 dark:bg-[#1a1a1d]">
             <Icon icon="mdi:magnify" width={19} className="flex-shrink-0 text-muted" />
             <input
               type="text"
