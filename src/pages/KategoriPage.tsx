@@ -19,13 +19,10 @@ const PER_PAGE = 12;
 const SEMUA_KATEGORI = "semua";
 
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
-  { key: "terbaru", label: "Terbaru" },
-  { key: "terlaris", label: "Paling Laris" },
   { key: "termurah", label: "Harga Terendah" },
   { key: "termahal", label: "Harga Tertinggi" },
   { key: "nama-az", label: "Nama A-Z" },
   { key: "nama-za", label: "Nama Z-A" },
-  { key: "rating", label: "Rating Tertinggi" },
 ];
 
 function getPageNumbers(current: number, total: number): (number | "...")[] {
