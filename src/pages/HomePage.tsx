@@ -66,7 +66,6 @@ export default function HomePage() {
 
   return (
     <div>
-
       <div className="container pt-8">
         {/* Hero */}
         <FadeIn y={8}>
@@ -74,36 +73,38 @@ export default function HomePage() {
         </FadeIn>
 
         <section className="py-10 md:py-14">
-          <FadeIn delay={0.08} className="mb-6 rounded-[30px] border border-line bg-surface/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-sm sm:p-5">
-            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="font-display font-extrabold text-[1.5rem] text-ink tracking-[-0.04em] md:text-[1.8rem]">
-                  Produk Pilihan
-                </p>
-              </div>
+          <FadeIn
+            delay={0.08}
+            className="flex flex-wrap items-end justify-between gap-4 mb-8"
+          >
+            <p className="font-display font-extrabold text-[1.35rem] text-ink tracking-tight">
+              Produk Pilihan
+            </p>
 
-              <div className="flex flex-wrap items-center gap-2">
-                {SORT_OPTIONS.map((s) => (
-                  <button
-                    key={s.key}
-                    className={`rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition-all ${
-                      sort === s.key
-                        ? "border-brand bg-brand text-white shadow-[var(--shadow-brand)]"
-                        : "border-line bg-cream text-ink-soft hover:border-brand/20 hover:text-brand"
-                    }`}
-                    onClick={() => setSort(s.key)}
-                  >
-                    {s.label}
-                  </button>
-                ))}
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {SORT_OPTIONS.map((s) => (
+                <button
+                  key={s.key}
+                  className={`rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition-all ${
+                    sort === s.key
+                      ? "border-brand bg-brand text-white shadow-[var(--shadow-brand)]"
+                      : "border-line bg-cream text-ink-soft hover:border-brand/20 hover:text-brand"
+                  }`}
+                  onClick={() => setSort(s.key)}
+                >
+                  {s.label}
+                </button>
+              ))}
             </div>
           </FadeIn>
 
           {loading && (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="aspect-square rounded-[26px] border border-line bg-cream-deep animate-pulse" />
+                <div
+                  key={i}
+                  className="aspect-square rounded-[26px] border border-line bg-cream-deep animate-pulse"
+                />
               ))}
             </div>
           )}
@@ -127,8 +128,12 @@ export default function HomePage() {
                 ))}
               </AnimatedGrid>
 
-              <div className="flex justify-center text-white">
-                <ButtonLink to="/kategori" size="sm" className="h-9! flex-shrink-0 px-4! md:px-5!">
+              <div className="flex justify-center">
+                <ButtonLink
+                  to="/kategori"
+                  size="sm"
+                  className="h-9! flex-shrink-0 px-4! md:px-5! text-white"
+                >
                   Lihat Semua Produk
                 </ButtonLink>
               </div>
