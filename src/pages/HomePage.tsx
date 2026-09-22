@@ -127,8 +127,8 @@ export default function HomePage() {
                 ))}
               </AnimatedGrid>
 
-              <div className="flex justify-center">
-                <ButtonLink to="/kategori" size="sm" className="h-10! rounded-full! px-5! shadow-[var(--shadow-sm)]">
+              <div className="flex justify-center text-white">
+                <ButtonLink to="/kategori" size="sm" className="h-9! flex-shrink-0 px-4! md:px-5!">
                   Lihat Semua Produk
                 </ButtonLink>
               </div>
