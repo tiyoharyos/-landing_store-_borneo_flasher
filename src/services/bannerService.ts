@@ -1,22 +1,20 @@
-import api from "@/lib/axios"; // sesuaikan kalau export axios-mu berbeda
+import api from "@/lib/axios";
 
-/**
- * GET /store/banner
- *
- * st_banner.file_type: 0 = gambar, 1 = video
- * Backend sudah mengirim URL absolut (image_url, video_url, media_url)
- * dan media_type ("image" | "video"), jadi FE tidak perlu membangun URL sendiri.
- */
 export interface ApiBanner {
-  id?: number | string;
+  id_banner: string | number;
+  file_type: string | number;
   title?: string | null;
   link?: string | null;
-  urutan?: number | string | null;
-  file_type: number | string;
+  link_embed?: string | null;
+  image_path?: string | null;
+  status: string | number;
+  created_at?: string;
+  updated_at?: string;
   image_url: string | null;
   video_url: string | null;
   media_type: "image" | "video";
   media_url: string | null;
+  urutan?: number | string | null;
 }
 
 interface ApiResponse<T> {

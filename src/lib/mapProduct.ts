@@ -130,9 +130,11 @@ export function mapBannersToSlides(list: ApiBanner[]): BannerSlide[] {
   return list
     .filter((b) => Boolean(b.media_url))
     .map((b, i) => ({
-      id: String(b.id ?? `banner-${i}`),
+      // Menggunakan id_banner dari respons JSON
+      id: String(b.id_banner ?? `banner-${i}`),
       mediaType: b.media_type,
       src: b.media_url as string,
+      // Jika video, poster mengambil dari image_url (jika ada)
       poster: b.media_type === "video" ? b.image_url ?? undefined : undefined,
       alt: b.title || `Banner Borneo Flasher ${i + 1}`,
       link: b.link || null,
