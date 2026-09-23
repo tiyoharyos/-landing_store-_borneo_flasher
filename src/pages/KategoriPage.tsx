@@ -229,7 +229,7 @@ export default function KategoriPage() {
     navigate("/kategori");
   };
 
-  const filterContent = (
+  const filterContent = (instance: "desktop" | "mobile") => (
     <>
       <div className="pb-5 border-b border-line last-of-type:border-b-0 last-of-type:pb-0">
         <div className="mb-3 flex items-center justify-between">
@@ -290,7 +290,7 @@ export default function KategoriPage() {
             >
               <input
                 type="radio"
-                name="availability"
+                name={`availability-${instance}`}
                 className="accent-brand"
                 checked={availability === opt.key}
                 onChange={() => setAvailability(opt.key)}
@@ -352,7 +352,7 @@ export default function KategoriPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 pb-16">
           <FadeIn className="hidden lg:flex flex-col gap-6 bg-surface/90 border border-line rounded-[26px] p-5 shadow-[var(--shadow-sm)] backdrop-blur-sm self-start lg:sticky lg:top-[90px]">
-            {filterContent}
+            {filterContent("desktop")}
           </FadeIn>
 
           {mobileFilterOpen && (
@@ -373,7 +373,7 @@ export default function KategoriPage() {
                     className="w-8! h-8! p-0! rounded-full!"
                   />
                 </div>
-                <div className="p-5 flex flex-col gap-5 overflow-y-auto">{filterContent}</div>
+                <div className="p-5 flex flex-col gap-5 overflow-y-auto">{filterContent("mobile")}</div>
                 <div className="p-4 border-t border-line shrink-0">
                   <Button variant="primary" size="lg" fullWidth onClick={() => setMobileFilterOpen(false)}>
                     Tampilkan {filtered.length} Produk

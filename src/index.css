@@ -155,6 +155,13 @@ h1, h2, h3, h4,
   display: flex;
   flex-direction: column;
   overflow-x: clip;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Navbar sticky ditempel di top:0 — dorong dia turun sejauh status bar/notch
+   supaya tidak ketimpa, tanpa perlu ubah komponen Navbar itu sendiri. */
+.sticky.top-0 {
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 a {

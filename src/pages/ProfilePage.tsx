@@ -134,25 +134,27 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <div className="container grid grid-cols-1 md:grid-cols-[260px_1fr] gap-4.5 gap-x-4 pt-6 pb-12 items-start">
-        <FadeIn y={8} className="bg-surface border border-line rounded-xl overflow-hidden">
-          <div className="flex flex-col items-center text-center px-4 py-6 border-b border-line">
+      <div className="container grid grid-cols-1 items-start gap-4 pt-4 pb-10 sm:gap-5 sm:pt-6 sm:pb-12 md:grid-cols-[260px_1fr] md:gap-x-4">
+        <FadeIn y={8} className="overflow-hidden rounded-xl border border-line bg-surface">
+          <div className="flex items-center gap-3 border-b border-line px-4 py-4 text-left sm:flex-col sm:px-4 sm:py-6 sm:text-center">
             {user.avatar ? (
               <img
                 src={user.avatar}
                 alt="Foto profil"
-                className="w-16 h-16 rounded-full object-cover border border-line mb-2.5"
+                className="h-14 w-14 flex-shrink-0 rounded-full border border-line object-cover sm:mb-2.5 sm:h-16 sm:w-16"
               />
             ) : (
-              <div className="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-display font-extrabold text-2xl mb-2.5">
+              <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-brand font-display text-2xl font-extrabold text-white sm:mb-2.5 sm:h-16 sm:w-16">
                 {initial}
               </div>
             )}
-            <p className="font-bold text-[14.5px] text-ink">{user.name}</p>
-            <p className="text-xs text-muted mt-0.5 break-all">{user.email}</p>
+            <div className="min-w-0 sm:w-full">
+              <p className="truncate text-[14.5px] font-bold text-ink">{user.name}</p>
+              <p className="mt-0.5 truncate text-xs text-muted">{user.email}</p>
+            </div>
           </div>
 
-          <nav className="flex flex-col p-2.5 gap-0.5">
+          <nav className="grid grid-cols-2 gap-1.5 p-2.5 sm:flex sm:flex-col sm:gap-0.5">
             <button type="button" className={navItemClass(tab === "pesanan")} onClick={() => changeTab("pesanan")}>
               <Icon icon="mdi:receipt-text-outline" width={18} />
               Pesanan Saya
@@ -169,7 +171,7 @@ export default function ProfilePage() {
               )}
             </button>
 
-            <p className="text-[11px] font-bold uppercase tracking-wide text-muted px-3 pt-3.5 pb-1">Profil Saya</p>
+            <p className="col-span-2 px-3 pb-1 pt-2 text-[11px] font-bold uppercase tracking-wide text-muted sm:col-span-1 sm:pt-3.5">Profil Saya</p>
             <button type="button" className={navItemClass(tab === "biodata", "pl-5 font-medium")} onClick={() => changeTab("biodata")}>
               Biodata Diri
             </button>
@@ -180,15 +182,15 @@ export default function ProfilePage() {
               )}
             </button>
 
-            <button type="button" className={`${navItemClass(false)} text-warn mt-1.5`} onClick={handleLogout}>
+            <button type="button" className={`${navItemClass(false)} col-span-2 mt-1 text-warn sm:col-span-1 sm:mt-1.5`} onClick={handleLogout}>
               <Icon icon="mdi:logout" width={18} />
               Keluar
             </button>
           </nav>
         </FadeIn>
 
-        <FadeIn y={8} delay={0.06} className="bg-surface border border-line rounded-xl overflow-hidden">
-          <div className="flex gap-1 border-b border-line px-4 overflow-x-auto">
+        <FadeIn y={8} delay={0.06} className="overflow-hidden rounded-xl border border-line bg-surface">
+          <div className="no-scrollbar flex gap-1 overflow-x-auto border-b border-line px-2 sm:px-4">
             <button type="button" className={tabBtnClass(tab === "pesanan")} onClick={() => changeTab("pesanan")}>
               Pesanan Saya{orders.length > 0 ? ` (${orders.length})` : ""}
             </button>
@@ -204,7 +206,7 @@ export default function ProfilePage() {
           </div>
 
           {tab === "pesanan" && (
-            <div className="p-5">
+            <div className="p-3.5 sm:p-5">
               {orders.length === 0 ? (
                 <div className="text-center py-12 px-6">
                   <Icon icon="mdi:receipt-text-outline" width={64} className="text-line inline-block" />
@@ -218,8 +220,8 @@ export default function ProfilePage() {
                 <AnimatedGrid className="flex flex-col gap-4">
                   {orders.map((o) => (
                     <AnimatedGridItem key={o.id}>
-                      <div className="bg-surface border border-line rounded-xl px-5 py-4.5">
-                      <div className="flex justify-between items-center pb-2.5 border-b border-line mb-2.5">
+                      <div className="rounded-xl border border-line bg-surface px-3.5 py-4 sm:px-5 sm:py-4.5">
+                      <div className="mb-2.5 flex flex-col items-start gap-2 border-b border-line pb-2.5 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                           <p className="font-mono font-bold text-brand-dark">{o.id}</p>
                           <p className="text-xs text-muted mt-0.5">
@@ -231,19 +233,19 @@ export default function ProfilePage() {
                           </p>
                         </div>
                         <span
-                          className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold whitespace-nowrap ${ORDER_STATUS_STYLES[o.status]}`}
+                          className={`inline-flex max-w-full items-center gap-1 rounded-full px-3 py-1 text-[0.72rem] font-bold whitespace-nowrap ${ORDER_STATUS_STYLES[o.status]}`}
                         >
                           {o.status}
                         </span>
                       </div>
                       <div className="flex flex-col gap-2">
                         {o.items.map((i) => (
-                          <div key={i.productId} className="flex items-center gap-2.5 text-[13px]">
-                            <SafeImage src={i.image} alt={i.name} className="w-9 h-9 rounded-lg object-cover bg-cream-deep" />
-                            <span className="flex-1">
+                          <div key={i.productId} className="flex min-w-0 items-center gap-2.5 text-[13px]">
+                            <SafeImage src={i.image} alt={i.name} className="h-9 w-9 flex-shrink-0 rounded-lg bg-cream-deep object-cover" />
+                            <span className="min-w-0 flex-1 truncate">
                               {i.name} x{i.qty}
                             </span>
-                            <span>{formatRupiah(i.price * i.qty)}</span>
+                            <span className="flex-shrink-0 text-right">{formatRupiah(i.price * i.qty)}</span>
                           </div>
                         ))}
                       </div>
@@ -260,9 +262,9 @@ export default function ProfilePage() {
           )}
 
           {tab === "biodata" && (
-            <div className="p-5 grid grid-cols-1 sm:grid-cols-[230px_1fr] gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 gap-5 p-3.5 sm:gap-8 sm:p-5 md:grid-cols-[230px_1fr]">
               <div>
-                <div className="w-full sm:w-[230px] border border-line rounded-xl overflow-hidden flex flex-col">
+                <div className="mx-auto flex w-full max-w-[230px] flex-col overflow-hidden rounded-xl border border-line">
                   <div className="aspect-square w-full bg-cream-deep overflow-hidden">
                     {user.avatar ? (
                       <img src={user.avatar} alt="Foto profil" className="w-full h-full object-cover" />
@@ -297,12 +299,12 @@ export default function ProfilePage() {
                 </p>
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <p className="font-display font-extrabold text-base text-ink mb-1">Ubah Biodata Diri</p>
 
-                <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
-                  <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nama</span>
-                  <span className="text-[13.5px] text-ink font-semibold">{user.name}</span>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-line py-3.5">
+                  <span className="w-full flex-shrink-0 text-[13px] font-semibold text-muted sm:w-[120px]">Nama</span>
+                  <span className="min-w-0 max-w-full truncate text-[13.5px] font-semibold text-ink sm:flex-1">{user.name}</span>
                   <Button
                     variant="ghost"
                     onClick={openNameModal}
@@ -314,15 +316,15 @@ export default function ProfilePage() {
 
                 <p className="font-display font-extrabold text-base text-ink mt-5 mb-1">Ubah Kontak</p>
 
-                <div className="flex items-center gap-3 py-3.5 border-b border-line flex-wrap">
-                  <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Email</span>
-                  <span className="text-[13.5px] text-ink font-semibold">{user.email}</span>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-line py-3.5">
+                  <span className="w-full flex-shrink-0 text-[13px] font-semibold text-muted sm:w-[120px]">Email</span>
+                  <span className="min-w-0 max-w-full truncate text-[13.5px] font-semibold text-ink sm:flex-1">{user.email}</span>
                   <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.72rem] font-bold bg-ok/10 text-ok">Terverifikasi</span>
                 </div>
 
-                <div className="flex items-center gap-3 py-3.5 flex-wrap">
-                  <span className="w-[120px] flex-shrink-0 text-[13px] text-muted font-semibold">Nomor HP</span>
-                  <span className={`text-[13.5px] font-medium ${user.phone ? "text-ink font-semibold" : "text-muted"}`}>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 py-3.5">
+                  <span className="w-full flex-shrink-0 text-[13px] font-semibold text-muted sm:w-[120px]">Nomor HP</span>
+                  <span className={`min-w-0 max-w-full truncate text-[13.5px] font-medium sm:flex-1 ${user.phone ? "text-ink font-semibold" : "text-muted"}`}>
                     {user.phone || "Belum ditambahkan"}
                   </span>
                   <Button
@@ -338,10 +340,10 @@ export default function ProfilePage() {
           )}
 
           {tab === "alamat" && (
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-                <p className="font-display font-extrabold text-base text-ink">Alamat Tersimpan</p>
-                <Button variant="primary" size="sm" icon="mdi:plus" onClick={openAddAddress} className="h-9!">
+            <div className="p-3.5 sm:p-5">
+              <div className="mb-4 flex flex-col items-stretch justify-between gap-3 sm:flex-row sm:items-center">
+                <p className="font-display text-base font-extrabold text-ink">Alamat Tersimpan</p>
+                <Button variant="primary" size="sm" icon="mdi:plus" onClick={openAddAddress} className="h-9! w-full sm:w-auto">
                   Tambah Alamat Baru
                 </Button>
               </div>
@@ -370,7 +372,7 @@ export default function ProfilePage() {
           )}
 
           {tab === "wishlist" && (
-            <div className="p-5">
+            <div className="p-3.5 sm:p-5">
               {wishlistItems.length === 0 ? (
                 <div className="text-center py-12 px-6">
                   <Icon icon="mdi:heart-outline" width={64} className="text-line inline-block" />
@@ -383,7 +385,7 @@ export default function ProfilePage() {
                   </ButtonLink>
                 </div>
               ) : (
-                <AnimatedGrid className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <AnimatedGrid className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
                   {wishlistItems.map((p) => (
                     <AnimatedGridItem key={p.id}>
                       <ProductCard product={p} />

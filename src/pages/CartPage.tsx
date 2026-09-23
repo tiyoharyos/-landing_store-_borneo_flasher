@@ -44,11 +44,19 @@ export default function CartPage() {
   return (
     <div className="min-h-screen">
       <div className="container pt-6 pb-14">
-        <div className="mb-5 rounded-[30px] border border-line bg-surface/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-sm md:p-5">
-          <p className="font-display text-[1.6rem] font-extrabold tracking-[-0.05em] text-ink md:text-[2rem]">
-            Keranjang Belanja
-          </p>
-        </div>
+        <FadeIn y={6} className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <h1 className="mt-1 font-display text-[1.55rem] font-extrabold tracking-tight text-ink">Keranjang Belanja</h1>
+            <p className="mt-1 text-[13px] text-muted">
+              {items.length > 0 ? `${items.length} produk siap diproses` : "Simpan produk pilihanmu di sini"}
+            </p>
+          </div>
+          {items.length > 0 && (
+            <span className="hidden rounded-full bg-cream-deep px-3 py-1.5 text-[12px] font-semibold text-ink-soft sm:inline-flex">
+              {items.length} item
+            </span>
+          )}
+        </FadeIn>
 
         {!user && (
           <div className="mb-4 flex items-center gap-2 rounded-[18px] border border-brand/25 bg-brand-tint px-3.5 py-2.5 text-[12.75px] font-semibold text-brand-dark">
@@ -101,40 +109,40 @@ export default function CartPage() {
             </FadeIn>
           </div>
         ) : (
-          <div className="grid grid-cols-1 items-start gap-5 pb-12 md:grid-cols-[1fr_320px]">
-            <AnimatedGrid className="flex flex-col gap-3">
+          <div className="grid grid-cols-1 items-start gap-6 pb-12 md:grid-cols-[minmax(0,1fr)_340px]">
+            <AnimatedGrid className="flex flex-col gap-3.5">
               {items.map((item) => (
                 <AnimatedGridItem key={item.productId}>
-                  <div className="flex items-center gap-3.5 rounded-[26px] border border-line bg-surface p-3.5 shadow-[var(--shadow-xs)]">
+                  <div className="group flex items-center gap-3.5 rounded-[22px] border border-line bg-surface p-3 shadow-[var(--shadow-xs)] transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-ink/15 hover:shadow-[var(--shadow-sm)] sm:p-3.5">
                     <Link
                       to={`/produk/${item.product.slug}`}
-                      className="h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-[16px] bg-cream-deep"
+                      className="h-[76px] w-[76px] flex-shrink-0 overflow-hidden rounded-[15px] bg-cream-deep sm:h-[84px] sm:w-[84px]"
                     >
-                      <SafeImage src={item.product.image} alt={item.product.name} className="h-full w-full object-cover" />
+                      <SafeImage src={item.product.image} alt={item.product.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                     </Link>
                     <div className="min-w-0 flex-1">
-                      <Link to={`/produk/${item.product.slug}`} className="block text-[13.5px] font-semibold text-ink line-clamp-1">
+                      <Link to={`/produk/${item.product.slug}`} className="block text-[13.5px] font-semibold leading-snug text-ink line-clamp-2 hover:text-brand">
                         {item.product.name}
                       </Link>
-                      <p className="mt-1 font-mono text-[13px] font-bold text-brand-dark">{formatRupiah(item.product.price)}</p>
-                      <div className="mt-2 flex items-center gap-3.5">
-                        <div className="flex items-center overflow-hidden rounded-lg border border-line">
+                      <p className="mt-1.5 font-mono text-[13px] font-bold text-brand-dark">{formatRupiah(item.product.price)}</p>
+                      <div className="mt-2.5 flex items-center gap-3">
+                        <div className="flex h-8 items-center overflow-hidden rounded-lg border border-line bg-cream">
                           <Button
                             variant="subtle"
                             size="sm"
                             icon="mdi:minus"
                             onClick={() => setQty(item.productId, item.qty - 1)}
                             aria-label="Kurangi jumlah"
-                            className="h-[26px]! w-[26px]! rounded-none! border-none! p-0!"
+                            className="h-8! w-8! rounded-none! border-none! p-0!"
                           />
-                          <span className="w-[30px] text-center text-[13px] font-bold text-ink">{item.qty}</span>
+                          <span className="w-[28px] text-center text-[12.5px] font-bold text-ink">{item.qty}</span>
                           <Button
                             variant="subtle"
                             size="sm"
                             icon="mdi:plus"
                             onClick={() => setQty(item.productId, Math.min(item.product.stock, item.qty + 1))}
                             aria-label="Tambah jumlah"
-                            className="h-[26px]! w-[26px]! rounded-none! border-none! p-0!"
+                            className="h-8! w-8! rounded-none! border-none! p-0!"
                           />
                         </div>
                         <Button
@@ -147,20 +155,26 @@ export default function CartPage() {
                         </Button>
                       </div>
                     </div>
-                    <p className="flex-shrink-0 font-mono text-[13.5px] font-bold text-ink">{formatRupiah(item.lineTotal)}</p>
+                    <p className="self-start pt-1 text-right font-mono text-[12.5px] font-bold text-ink sm:self-center sm:text-[13.5px]">{formatRupiah(item.lineTotal)}</p>
                   </div>
                 </AnimatedGridItem>
               ))}
             </AnimatedGrid>
 
-            <FadeIn delay={0.1} className="sticky top-[90px] rounded-[28px] border border-line bg-surface p-5 shadow-[var(--shadow-sm)]">
-              <p className="mb-3 font-display text-[15px] font-bold text-ink">Ringkasan Belanja</p>
-              <div className="flex justify-between py-1.5 text-[13.5px] text-ink-soft">
-                <span>Subtotal</span>
-                <span>{formatRupiah(subtotal)}</span>
+            <FadeIn delay={0.1} className="sticky top-[90px] rounded-[22px] border border-line bg-surface p-5 shadow-[var(--shadow-sm)] md:p-6">
+              <div className="mb-5 flex items-center justify-between">
+                <p className="font-display text-[15px] font-bold text-ink">Ringkasan Belanja</p>
+                <Icon icon="mdi:receipt-text-outline" width={20} className="text-muted" />
               </div>
-              <p className="mt-1.5 text-[11.5px] text-muted">Ongkos kirim dihitung di halaman checkout.</p>
-              <Button variant="primary" size="lg" fullWidth className="mt-3" onClick={goCheckout}>
+              <div className="flex justify-between border-b border-line pb-3 text-[13.5px] text-ink-soft">
+                <span>Subtotal</span>
+                <span className="font-mono font-semibold text-ink">{formatRupiah(subtotal)}</span>
+              </div>
+              <div className="mt-3 flex items-start gap-2 text-[11.5px] leading-relaxed text-muted">
+                <Icon icon="mdi:information-outline" width={16} className="mt-0.5 flex-shrink-0" />
+                <p>Ongkos kirim dihitung di halaman checkout.</p>
+              </div>
+              <Button variant="primary" size="lg" fullWidth className="mt-5 shadow-[var(--shadow-brand)]" onClick={goCheckout}>
                 Checkout ({items.length})
               </Button>
             </FadeIn>

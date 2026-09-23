@@ -51,7 +51,7 @@ function ProductCard({ product }: { product: Product }) {
             e.stopPropagation();
             toggle(product.id);
           }}
-          className={`absolute top-2 right-2 w-7! h-7! p-0! rounded-full! bg-surface/95! z-[2] ${
+          className={`absolute top-2 right-2 w-8! h-8! p-0! rounded-full! bg-surface/95! z-[2] active:scale-90! ${
             wished ? "text-brand!" : "text-ink-soft!"
           }`}
         />

@@ -80,8 +80,8 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-line/70 bg-white/70 backdrop-blur-2xl saturate-150 transition-colors duration-200 dark:bg-[#111214]/70">
-      <div className="container py-3">
-        <div className="flex flex-wrap items-center justify-between gap-y-3 md:gap-[18px]">
+      <div className="container px-3.5 py-2.5 sm:px-5 sm:py-3">
+        <div className="flex flex-wrap items-center justify-between gap-y-2.5 md:gap-[18px]">
           <Link to="/" className="order-1 flex-shrink-0" onClick={() => setOpen(false)}>
             <div className="hidden md:block">
               <Logo />
@@ -89,31 +89,31 @@ export default function Navbar() {
             <img
               src={logoLpks}
               alt="Logo LPKS"
-              className="block h-9 w-auto object-contain md:hidden"
+              className="block h-8 w-auto object-contain sm:h-9 md:hidden"
             />
           </Link>
 
-          <div className="order-3 flex w-full min-w-0 items-center gap-2 rounded-full border border-line bg-[#f5f5f7] px-[18px] py-1.5 pr-1.5 transition-all duration-200 focus-within:border-brand focus-within:ring-[3px] focus-within:ring-brand/15 md:order-2 md:flex-1 dark:bg-[#1a1a1d]">
-            <Icon icon="mdi:magnify" width={19} className="flex-shrink-0 text-muted" />
+          <div className="order-3 flex w-full min-w-0 items-center gap-1.5 rounded-full border border-line bg-[#f5f5f7] px-3 py-1.5 pr-1.5 transition-all duration-200 focus-within:border-brand focus-within:ring-[3px] focus-within:ring-brand/15 sm:gap-2 sm:px-[18px] md:order-2 md:flex-1 dark:bg-[#1a1a1d]">
+            <Icon icon="mdi:magnify" width={18} className="flex-shrink-0 text-muted sm:w-[19px]" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyUp={(e) => e.key === "Enter" && submitSearch()}
               placeholder="Cari alat, sparepart..."
-              className="h-9 flex-1 min-w-0 border-none bg-transparent text-sm text-ink outline-none placeholder:text-muted"
+              className="h-9 min-w-0 flex-1 border-none bg-transparent text-[13px] text-ink outline-none placeholder:text-muted sm:text-sm"
             />
             <Button
               variant="primary"
               size="sm"
               onClick={submitSearch}
-              className="h-9! flex-shrink-0 px-4! md:px-5!"
+              className="h-[34px]! flex-shrink-0 px-3! text-[12px]! sm:h-9! sm:px-4! sm:text-[12.5px]! md:px-5!"
             >
               Cari
             </Button>
           </div>
 
-          <div className="order-2 flex flex-shrink-0 items-center gap-3 sm:gap-3.5 md:order-3">
+          <div className="order-2 flex flex-shrink-0 items-center gap-2 sm:gap-3.5 md:order-3">
             <ThemeToggle className="hidden cursor-pointer sm:flex" />
 
             <Link
@@ -121,7 +121,7 @@ export default function Navbar() {
               className="relative flex text-ink-soft transition-colors hover:text-ink"
               aria-label="Wishlist"
             >
-              <Icon icon="mdi:heart-outline" width={23} />
+              <Icon icon="mdi:heart-outline" width={21} className="sm:w-[23px]" />
               {wishlistCount > 0 && (
                 <span className="absolute -right-2 -top-1.5 min-w-[16px] rounded-full bg-brand px-1 text-center text-[10px] font-bold text-white animate-[modalIn_0.2s_cubic-bezier(0.16,1,0.3,1)]">
                   {wishlistCount}
@@ -135,7 +135,7 @@ export default function Navbar() {
               onMouseLeave={scheduleCloseCartDropdown}
             >
               <Link to="/keranjang" className="relative flex text-ink-soft" aria-label="Keranjang">
-                <Icon icon="mdi:cart-outline" width={24} />
+                <Icon icon="mdi:cart-outline" width={22} className="sm:w-6" />
                 {totalItems > 0 && (
                   <span className="absolute -right-2 -top-1.5 min-w-[16px] rounded-full bg-brand px-1 text-center text-[10px] font-bold text-white animate-[modalIn_0.2s_cubic-bezier(0.16,1,0.3,1)]">
                     {totalItems}
@@ -224,7 +224,7 @@ export default function Navbar() {
                                         icon="mdi:minus"
                                         onClick={() => setQty(item.productId, item.qty - 1)}
                                         aria-label="Kurangi jumlah"
-                                        className="h-[26px]! w-[26px]! rounded-none! border-none! p-0! hover:bg-brand-tint! hover:text-brand!"
+                                        className="h-[30px]! w-[30px]! rounded-none! border-none! p-0! hover:bg-brand-tint! hover:text-brand!"
                                       />
                                       <span className="w-[30px] text-center text-[13px] font-bold text-ink">{item.qty}</span>
                                       <Button
@@ -238,7 +238,7 @@ export default function Navbar() {
                                           )
                                         }
                                         aria-label="Tambah jumlah"
-                                        className="h-[26px]! w-[26px]! rounded-none! border-none! p-0! hover:bg-brand-tint! hover:text-brand!"
+                                        className="h-[30px]! w-[30px]! rounded-none! border-none! p-0! hover:bg-brand-tint! hover:text-brand!"
                                       />
                                     </div>
                                     <span className="text-[11px] text-muted">Stok: {item.product.stock}</span>
@@ -281,7 +281,7 @@ export default function Navbar() {
                   icon="mdi:account-circle-outline"
                   iconRight="mdi:chevron-down"
                   onClick={() => setMenuOpen((v) => !v)}
-                  className="h-auto! border-none! px-0! text-[13.5px]"
+                  className="h-9! w-9! gap-0! rounded-full! border-none! p-0! text-[13.5px] sm:h-auto! sm:w-auto! sm:gap-2! sm:rounded-none! sm:px-0!"
                 >
                   <span className="hidden sm:inline">{user.name.split(" ")[0]}</span>
                 </Button>
@@ -337,7 +337,7 @@ export default function Navbar() {
               icon={open ? "mdi:close" : "mdi:menu"}
               onClick={() => setOpen(!open)}
               aria-label="Toggle navigation"
-              className="ml-1 h-auto! w-auto! border-none! px-0! py-0! text-2xl text-ink md:hidden! [&_svg]:h-6 [&_svg]:w-6"
+              className="ml-0 h-9! w-9! rounded-full! border-none! p-0! text-2xl text-ink md:hidden! [&_svg]:h-5 [&_svg]:w-5"
             />
           </div>
         </div>
@@ -345,7 +345,7 @@ export default function Navbar() {
         <ul
           className={`${
             open ? "flex animate-fade-slide-down" : "hidden"
-          } m-0 mt-4 list-none items-start gap-2 p-0 md:mt-2 md:flex md:flex-row md:items-center md:gap-6`}
+          } m-0 mt-3 list-none flex-col items-stretch gap-1 rounded-2xl border border-line bg-surface p-2 shadow-[var(--shadow-sm)] md:mt-2 md:flex md:flex-row md:items-center md:gap-6 md:rounded-none md:border-none md:bg-transparent md:p-0 md:shadow-none`}
         >
           <li>
             <NavLink to="/" end className={navLinkClass} onClick={() => setOpen(false)}>
