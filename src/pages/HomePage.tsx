@@ -72,22 +72,24 @@ export default function HomePage() {
           <BannerCarousel />
         </FadeIn>
 
-        <section className="py-10 md:py-14">
+        <section className="py-10 md:py-14" aria-busy={loading}>
           <FadeIn
             delay={0.08}
             className="flex flex-wrap items-end justify-between gap-4 mb-8"
           >
-            <p className="font-display font-extrabold text-[1.35rem] text-ink tracking-tight">
+            <h2 className="font-display font-extrabold text-[1.35rem] text-ink tracking-tight">
               Produk Pilihan
-            </p>
+            </h2>
 
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Urutkan produk">
               {SORT_OPTIONS.map((s) => (
                 <button
                   key={s.key}
+                  type="button"
+                  aria-pressed={sort === s.key}
                   className={`rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition-all ${
                     sort === s.key
-                      ? "border-brand bg-brand text-white shadow-[var(--shadow-brand)]"
+                      ? "border-brand bg-brand !text-white shadow-[var(--shadow-brand)]"
                       : "border-line bg-cream text-ink-soft hover:border-brand/20 hover:text-brand"
                   }`}
                   onClick={() => setSort(s.key)}
@@ -132,7 +134,7 @@ export default function HomePage() {
                 <ButtonLink
                   to="/kategori"
                   size="sm"
-                  className="h-9! flex-shrink-0 px-4! md:px-5! text-white"
+                  className="h-9! flex-shrink-0 px-4! md:px-5! !text-white"
                 >
                   Lihat Semua Produk
                 </ButtonLink>

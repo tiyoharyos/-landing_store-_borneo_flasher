@@ -27,7 +27,7 @@ export const ICON_SIZE: Record<ButtonSize, number> = { sm: 15, md: 17, lg: 19 };
 /* 4 varian utama sesuai style guide: Primary / Secondary / Inverted / Outlined */
 export const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand border-brand text-white hover:bg-brand-dark hover:border-brand-dark",
+    "bg-brand border-brand !text-white hover:bg-brand-dark hover:border-brand-dark",
   secondary:
     "bg-cream border-cream text-ink hover:bg-cream-deep hover:border-cream-deep",
   inverted:
@@ -39,7 +39,7 @@ export const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   subtle:
     "bg-cream border-cream text-ink hover:bg-cream-deep",
   danger:
-    "bg-warn border-warn text-white hover:brightness-90",
+    "bg-warn border-warn !text-white hover:brightness-90",
 };
 
 export const SIZE_CLASSES: Record<ButtonSize, string> = {

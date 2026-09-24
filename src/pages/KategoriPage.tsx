@@ -335,10 +335,10 @@ export default function KategoriPage() {
       </div>
 
       <Button
-        variant="outline"
+        variant="primary"
         fullWidth
         onClick={resetAllFilters}
-        className="mt-2! border-brand/20! bg-brand-tint! text-brand! hover:bg-brand/8!"
+        className="mt-2!"
       >
         Reset Filter
       </Button>
@@ -520,7 +520,7 @@ export default function KategoriPage() {
                         )
                       )}
                       <Button
-                        variant="outline"
+                        variant="primary"
                         icon="mdi:chevron-right"
                         disabled={page === totalPages}
                         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
@@ -537,10 +537,10 @@ export default function KategoriPage() {
                   <p className="text-muted text-sm mt-1">Coba ubah kata kunci atau filter pencarian Anda.</p>
                   {activeFilters.length > 0 && (
                     <Button
-                      variant="outline"
+                      variant="primary"
                       size="sm"
                       onClick={resetAllFilters}
-                      className="mt-4 border-brand! text-brand! hover:bg-brand-tint!"
+                      className="mt-4"
                     >
                       Reset Filter
                     </Button>
