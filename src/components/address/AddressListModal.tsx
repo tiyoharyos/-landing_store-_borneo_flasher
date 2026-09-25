@@ -90,7 +90,6 @@ export default function AddressListModal({ open, onClose, onPick }: Props) {
         onClose={() => setFormOpen(false)}
         editing={editing}
         onSaved={(saved) => {
-          // Kalau nambah/ubah alamat langsung dari modal checkout, sekalian pilih & tutup.
           onPick(saved);
           onClose();
         }}

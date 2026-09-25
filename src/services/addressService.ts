@@ -1,6 +1,5 @@
 import api, { type ApiResponse } from "@/lib/axios";
 
-
 export interface ApiAddress {
   id_address: number | string;
   id_user?: number | string;

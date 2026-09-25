@@ -4,18 +4,18 @@
 import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);        // ✅ tipe HTMLDivElement
+  const cursorRef = useRef<HTMLDivElement>(null);
   const cursorX = useRef<number>(0);
   const cursorY = useRef<number>(0);
   const targetX = useRef<number>(0);
   const targetY = useRef<number>(0);
-  const animFrameRef = useRef<number>(0);               // ✅ tipe number
+  const animFrameRef = useRef<number>(0);
 
   useEffect(() => {
     const lerp = (start: number, end: number, factor: number): number =>
       start * (1 - factor) + end * factor;
 
-    const updateCursor = (e: MouseEvent) => {           // ✅ tipe MouseEvent
+    const updateCursor = (e: MouseEvent) => {
       targetX.current = e.clientX;
       targetY.current = e.clientY;
       if (cursorRef.current) cursorRef.current.style.opacity = "1";

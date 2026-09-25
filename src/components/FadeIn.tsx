@@ -2,16 +2,6 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { EASE_SMOOTH } from "@/lib/motion";
 
-/**
- * Animasi masuk halus (fade + slide tipis) untuk blok konten di dalam
- * sebuah halaman. Hanya transform/opacity (murah di GPU).
- *
- * - Default: animasi jalan begitu komponen mount (cocok untuk konten yang
- *   langsung terlihat di atas layar, mis. header, kartu ringkasan).
- * - `viewport`: animasi baru jalan saat elemen masuk area layar (dipakai
- *   IntersectionObserver lewat whileInView), cocok untuk konten yang
- *   letaknya di bawah lipatan (list panjang, dsb) — animasi cuma sekali.
- */
 export default function FadeIn({
   children,
   delay = 0,

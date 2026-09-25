@@ -10,12 +10,10 @@ export interface ModalProps {
   onClose: () => void;
   title: string;
   children?: ReactNode;
-  /** Lebar maksimum panel, default 480px */
   maxWidth?: number;
 }
 
 export default function Modal({ open, onClose, title, children, maxWidth = 480 }: ModalProps) {
-  // Kunci scroll body selagi modal terbuka.
   useEffect(() => {
     if (!open) return;
     const prevOverflow = document.body.style.overflow;

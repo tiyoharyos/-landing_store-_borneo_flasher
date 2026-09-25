@@ -24,7 +24,6 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const ICON_SIZE: Record<ButtonSize, number> = { sm: 15, md: 17, lg: 19 };
 
-/* 4 varian utama sesuai style guide: Primary / Secondary / Inverted / Outlined */
 export const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
     "bg-brand border-brand !text-white hover:bg-brand-dark hover:border-brand-dark",
@@ -61,8 +60,6 @@ export const SPINNER_BORDER: Record<ButtonVariant, string> = {
 export const BUTTON_BASE_CLASSES =
   "inline-flex items-center justify-center border font-semibold whitespace-nowrap select-none cursor-pointer transition-[color,background-color,border-color,box-shadow,transform,filter] duration-200 [transition-timing-function:var(--ease-apple)] hover:brightness-[1.04] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand/15";
 
-/** Class builder dipakai bersama oleh <Button> (elemen <button>) dan <ButtonLink> (elemen <Link>/<a>)
- *  supaya kedua bentuk tombol selalu memakai satu sumber gaya yang sama. */
 export function buttonClasses({
   variant = "primary",
   size = "md",

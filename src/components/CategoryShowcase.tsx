@@ -4,11 +4,6 @@ import { getCategories } from "@/services/categoriesService";
 import { mapCategoryOptions, type CategoryOption } from "@/lib/mapProduct";
 import SafeImage from "@/components/SafeImage";
 
-/**
- * Menampilkan kategori sebagai grid kartu bergambar (bukan sidebar) di
- * HomePage, diambil langsung dari GET Categories/ (lihat categoriesService.ts).
- * Tiap kategori jadi tautan ke /kategori/:id_kategori.
- */
 export default function CategoryShowcase() {
   const [categories, setCategories] = useState<CategoryOption[]>([]);
   const [loading, setLoading] = useState(true);

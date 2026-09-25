@@ -22,8 +22,6 @@ interface SharedProps {
 export type ButtonLinkProps = SharedProps &
   Omit<LinkProps, "className" | "children">;
 
-/** Versi <ButtonLink> dari <Button> — dipakai untuk navigasi internal (react-router)
- *  yang tampil sebagai tombol. Memakai kelas yang sama persis dengan <Button>. */
 const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function ButtonLink(
   { variant = "primary", size = "md", fullWidth = false, icon, iconRight, className = "", children, ...rest },
   ref
@@ -41,8 +39,6 @@ const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function Butto
 export type ExternalButtonLinkProps = SharedProps &
   Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "children">;
 
-/** Untuk tautan keluar (mis. WhatsApp, tel:, situs eksternal) yang butuh elemen <a> biasa,
- *  tetap satu gaya dengan <Button> / <ButtonLink>. */
 export const ExternalButtonLink = forwardRef<HTMLAnchorElement, ExternalButtonLinkProps>(
   function ExternalButtonLink(
     { variant = "primary", size = "md", fullWidth = false, icon, iconRight, className = "", children, ...rest },

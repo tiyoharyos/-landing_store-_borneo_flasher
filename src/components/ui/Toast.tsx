@@ -49,8 +49,6 @@ const getContainerClass = (pos: ToastPosition) => {
   }
 };
 
-// Offset arah masuk (& keluar, dibalik) tiap posisi — dipakai framer-motion
-// supaya toast juga fade+slide halus saat DIHAPUS, bukan cuma saat muncul.
 const getSlideOffset = (pos: ToastPosition) => {
   switch (pos) {
     case "top-left":

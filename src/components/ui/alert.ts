@@ -1,11 +1,5 @@
 import Swal from "sweetalert2";
 
-// ==========================================================
-// Alert kit — dialog konfirmasi & notifikasi pakai SweetAlert2
-// langsung (tanpa wrapper/mixin custom).
-// Untuk toast ringan (tambah ke keranjang, dsb), pakai
-// `useToast()` dari "@/components/ui/Toast" alih-alih file ini.
-// ==========================================================
 
 interface BasicAlertOptions {
   title: string;
@@ -53,10 +47,6 @@ export async function confirmDialog({
   });
   return res.isConfirmed;
 }
-
-// Dialog khusus: minta user login dulu sebelum bisa lanjut (mis. sebelum
-// menambahkan produk ke keranjang). Mengembalikan true jika user memilih
-// untuk pergi ke halaman masuk.
 export async function alertNeedLogin(): Promise<boolean> {
   const res = await Swal.fire({
     icon: "info",

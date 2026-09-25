@@ -7,8 +7,6 @@ import Navbar from "@/components/Navbar";
 import HomePage from "@/pages/HomePage";
 import { NO_CHROME_ROUTES, routeGroupKey } from "@/router/routeChrome";
 
-// Halaman selain Home di-lazy-load per rute: mengecilkan bundle awal
-// supaya render pertama & transisi antar halaman lebih ringan/mulus.
 const KategoriPage = lazy(() => import("@/pages/KategoriPage"));
 const ProductDetailPage = lazy(() => import("@/pages/ProductDetailPage"));
 const CartPage = lazy(() => import("@/pages/CartPage"));
@@ -27,9 +25,6 @@ export default function AppRouter() {
 
   return (
     <div className="relative">
-      {/* Navbar dirender sekali di sini, di luar area yang di-key/animasikan,
-          supaya dia TIDAK ikut remount tiap pindah halaman (search box,
-          dropdown keranjang, dll tetap dalam keadaannya). */}
       {showChrome && <Navbar />}
       <Suspense fallback={<PageLoader />}>
         <AnimatePresence mode="popLayout" initial={false}>

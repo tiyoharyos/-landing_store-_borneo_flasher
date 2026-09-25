@@ -6,7 +6,6 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   hint?: string;
-  /** Iconify icon id, ditampilkan di sisi kiri input */
   icon?: string;
   containerClassName?: string;
 }

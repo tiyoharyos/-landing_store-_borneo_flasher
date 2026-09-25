@@ -12,12 +12,6 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE_SMOOTH } },
 };
 
-/**
- * Bungkus grid kartu (produk, dll) supaya muncul halus & bertahap saat masuk
- * viewport. Pakai IntersectionObserver di balik layar (whileInView) + hanya
- * transform/opacity, jadi murah secara render — sekali animasi per elemen,
- * bukan animasi yang terikat ke scroll.
- */
 export default function AnimatedGrid({
   children,
   className = "",

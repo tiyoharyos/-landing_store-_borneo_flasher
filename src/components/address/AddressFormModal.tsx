@@ -28,9 +28,7 @@ const emptyForm: AddressInput = {
 interface Props {
   open: boolean;
   onClose: () => void;
-  /** Kalau diisi, modal jadi mode "ubah" untuk alamat ini */
   editing?: Address | null;
-  /** Dipanggil setelah alamat berhasil disimpan (baik tambah maupun ubah) */
   onSaved?: (address: Address) => void;
 }
 

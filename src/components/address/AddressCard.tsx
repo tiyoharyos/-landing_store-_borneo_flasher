@@ -4,7 +4,6 @@ import type { Address } from "@/data/addresses";
 
 interface Props {
   address: Address;
-  /** Tampilkan tombol "Pilih" (dipakai di modal ganti alamat saat checkout) */
   selectable?: boolean;
   onSelect?: () => void;
   onEdit?: () => void;
