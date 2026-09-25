@@ -1,17 +1,6 @@
 import api, { type ApiResponse } from "@/lib/axios";
 
-/**
- * Service untuk endpoint Auth (login, register, verify, profile).
- * Base URL sudah di-set di src/lib/axios.ts (VITE_API_BASE_URL),
- * jadi path di sini ditulis relatif tanpa leading slash, contoh: "Auth/login".
- */
-
 export type Gender = "L" | "P";
-
-// ---------- LOGIN ----------
-// POST Auth/login
-// Body: { email, password }
-// Response.status = boolean (true/false)
 
 export interface LoginPayload {
   email: string;
@@ -30,10 +19,6 @@ export async function loginAccount(payload: LoginPayload) {
   return res.data;
 }
 
-// ---------- REGISTER ----------
-// POST Auth/register
-// Body: { full_name, email, password, gender } -> gender harus "L" | "P"
-// Response.status = kode HTTP (200/400/409/201/500), sukses = 201
 
 export interface RegisterPayload {
   full_name: string;
@@ -52,8 +37,6 @@ export async function registerAccount(payload: RegisterPayload) {
   return res.data;
 }
 
-// ---------- VERIFY EMAIL ----------
-// GET Auth/verify?token=xxx
 
 export async function verifyAccount(token: string) {
   const res = await api.get<ApiResponse<null>>("Auth/verify", {
@@ -61,14 +44,6 @@ export async function verifyAccount(token: string) {
   });
   return res.data;
 }
-
-// ---------- PROFILE ----------
-// GET Auth/profile (butuh Authorization: Bearer <token>, sudah otomatis via interceptor di lib/axios.ts)
-// PUT Auth/profile (update biodata)
-//
-// Catatan: struktur endpoint profile ini mengikuti nama field yang sudah dipakai
-// di AuthContext.tsx (full_name, no_hp, foto). Sesuaikan path/nama field di bawah
-// ini kalau ternyata implementasi backend Auth/profile kamu berbeda.
 
 export interface ProfileData {
   id: number | string;
