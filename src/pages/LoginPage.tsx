@@ -44,23 +44,23 @@ export default function LoginPage() {
   return (
     <AuthLayout
       eyebrow="AKSES AKUN"
-      tagline="Belanja lebih cepat, semua tetap terpantau"
-      taglineSub="Satu akun untuk mengelola pesanan, alamat, dan kebutuhan servis di Borneo Flasher Store."
+      tagline="Belanja kebutuhan servis jadi lebih praktis"
+      taglineSub="Akses pesanan sparepart HP, peralatan servis, dan merchandise dalam satu akun."
       features={[
         {
           icon: "akar-icons:circle-check",
-          title: "Lacak pesanan dengan mudah",
-          description: "Pantau status order dan riwayat belanja dari satu tempat.",
+          title: "Pantau pesananmu",
+          description: "Cek status pengiriman dan riwayat pembelian dengan mudah.",
         },
         {
           icon: "mdi:map-marker-outline",
-          title: "Checkout lebih singkat",
-          description: "Simpan alamat pengiriman agar transaksi berikutnya lebih cepat.",
+          title: "Checkout lebih cepat",
+          description: "Simpan alamat pengiriman untuk belanja berikutnya.",
         },
         {
           icon: "mdi:tools",
-          title: "Siap untuk kebutuhan servis",
-          description: "Akses pengalaman belanja dan servis yang lebih personal.",
+          title: "Lengkapi kebutuhan servis",
+          description: "Temukan sparepart dan alat servis untuk mendukung pekerjaanmu.",
         },
       ]}
     >
@@ -69,9 +69,9 @@ export default function LoginPage() {
           <CardHeader className="mb-1">
             <div>
               <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand">Selamat datang kembali</p>
-              <CardTitle className="text-[1.2rem]">Masuk ke akun kamu</CardTitle>
+              <CardTitle className="text-[1.2rem]">Masuk untuk mulai belanja</CardTitle>
               <CardSubtitle>
-                Masuk dengan akun yang sudah kamu daftarkan & verifikasi.
+                Kelola pesanan dan temukan kebutuhan servis pilihanmu.
               </CardSubtitle>
             </div>
           </CardHeader>
@@ -98,7 +98,7 @@ export default function LoginPage() {
               />
 
               <Button type="submit" variant="primary" size="lg" fullWidth loading={loading} className="shadow-[var(--shadow-brand)]">
-                Masuk ke akun
+                Masuk dan belanja
               </Button>
             </Form>
 

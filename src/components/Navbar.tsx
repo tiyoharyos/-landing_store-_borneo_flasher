@@ -113,12 +113,12 @@ export default function Navbar() {
             </Button>
           </div>
 
-          <div className="order-2 flex flex-shrink-0 items-center gap-2 sm:gap-3.5 md:order-3">
+          <div className="order-2 flex flex-shrink-0 items-center gap-1 sm:gap-2.5 md:order-3">
             <ThemeToggle className="hidden cursor-pointer sm:flex" />
 
             <Link
               to="/akun/profil?tab=wishlist"
-              className="relative flex text-ink-soft transition-colors hover:text-ink"
+              className="relative flex h-9 w-9 items-center justify-center text-ink-soft transition-colors hover:text-ink sm:h-10 sm:w-10"
               aria-label="Wishlist"
             >
               <Icon icon="mdi:heart-outline" width={21} className="sm:w-[23px]" />
@@ -134,7 +134,7 @@ export default function Navbar() {
               onMouseEnter={openCartDropdown}
               onMouseLeave={scheduleCloseCartDropdown}
             >
-              <Link to="/keranjang" className="relative flex text-ink-soft" aria-label="Keranjang">
+              <Link to="/keranjang" className="relative flex h-9 w-9 items-center justify-center text-ink-soft sm:h-10 sm:w-10" aria-label="Keranjang">
                 <Icon icon="mdi:cart-outline" width={22} className="sm:w-6" />
                 {totalItems > 0 && (
                   <span className="absolute -right-2 -top-1.5 min-w-[16px] rounded-full bg-brand px-1 text-center text-[10px] font-bold text-white animate-[modalIn_0.2s_cubic-bezier(0.16,1,0.3,1)]">
@@ -281,7 +281,7 @@ export default function Navbar() {
                   icon="mdi:account-circle-outline"
                   iconRight="mdi:chevron-down"
                   onClick={() => setMenuOpen((v) => !v)}
-                  className="h-9! w-9! gap-0! rounded-full! border-none! p-0! text-[13.5px] sm:h-auto! sm:w-auto! sm:gap-2! sm:rounded-none! sm:px-0!"
+                  className="h-9! w-9! gap-0! rounded-full! border-none! p-0! text-[13.5px] sm:h-10! sm:w-auto! sm:gap-2! sm:rounded-none! sm:px-0!"
                 >
                   <span className="hidden sm:inline">{user.name.split(" ")[0]}</span>
                 </Button>
@@ -326,7 +326,7 @@ export default function Navbar() {
                 >
                   Masuk
                 </ButtonLink>
-                <ButtonLink to="/daftar" variant="primary" size="sm" className="px-3! md:px-4!">
+                <ButtonLink to="/daftar" variant="primary" size="sm" className="hidden px-3! sm:inline-flex md:px-4!">
                   Daftar
                 </ButtonLink>
               </div>
@@ -338,11 +338,14 @@ export default function Navbar() {
               onClick={() => setOpen(!open)}
               aria-label="Toggle navigation"
               className="ml-0 h-9! w-9! rounded-full! border-none! p-0! text-2xl text-ink md:hidden! [&_svg]:h-5 [&_svg]:w-5"
+              aria-expanded={open}
+              aria-controls="primary-navigation"
             />
           </div>
         </div>
 
         <ul
+          id="primary-navigation"
           className={`${
             open ? "flex animate-fade-slide-down" : "hidden"
           } m-0 mt-3 list-none flex-col items-stretch gap-1 rounded-2xl border border-line bg-surface p-2 shadow-[var(--shadow-sm)] md:mt-2 md:flex md:flex-row md:items-center md:gap-6 md:rounded-none md:border-none md:bg-transparent md:p-0 md:shadow-none`}
@@ -357,6 +360,20 @@ export default function Navbar() {
               Catalog
             </NavLink>
           </li>
+          {!user && (
+            <>
+              <li className="sm:hidden">
+                <NavLink to="/masuk" className={navLinkClass} onClick={() => setOpen(false)}>
+                  Masuk
+                </NavLink>
+              </li>
+              <li className="sm:hidden">
+                <NavLink to="/daftar" className={navLinkClass} onClick={() => setOpen(false)}>
+                  Daftar
+                </NavLink>
+              </li>
+            </>
+          )}
           <li className="mt-2 w-full border-t border-line pt-2 sm:hidden">
             <ThemeToggle />
           </li>

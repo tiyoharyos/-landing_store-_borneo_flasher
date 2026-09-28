@@ -16,9 +16,9 @@ const MAPS_LINK = "https://maps.app.goo.gl/S1aJNh1cRAmLpoqF7";
 export default function Footer() {
   return (
     <footer className="relative mt-auto border-t border-line bg-[#f5f5f7] text-ink transition-colors duration-200 dark:bg-[#111214]">
-      <div className="container py-8 md:py-14">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-4">
+      <div className="container px-4 py-8 sm:px-5 md:py-14">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+          <div className="min-w-0 lg:col-span-4">
             <Logo className="mb-4" />
             <p className="mt-4 text-[14px] leading-relaxed text-muted">
               Borneo Flasher Indonesia menghadirkan marketplace terpercaya untuk kebutuhan sparepart
@@ -41,37 +41,37 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="md:col-span-2">
+          <div className="min-w-0 lg:col-span-2">
             <p className="mb-3 font-display text-[15px] font-bold text-ink">Menu</p>
             <div className="flex flex-col gap-2 text-[14px] text-muted">
-              <Link to="/" className="w-fit transition-colors duration-200 hover:text-brand">Beranda</Link>
-              <Link to="/kategori/alat-tools" className="w-fit transition-colors duration-200 hover:text-brand">
+              <Link to="/" className="w-fit py-0.5 transition-colors duration-200 hover:text-brand">Beranda</Link>
+              <Link to="/kategori/alat-tools" className="w-fit py-0.5 transition-colors duration-200 hover:text-brand">
                 Alat & Tools
               </Link>
-              <Link to="/kategori/sparepart-iphone" className="w-fit transition-colors duration-200 hover:text-brand">
+              <Link to="/kategori/sparepart-iphone" className="w-fit py-0.5 transition-colors duration-200 hover:text-brand">
                 Sparepart iPhone
               </Link>
-              <Link to="/keranjang" className="w-fit transition-colors duration-200 hover:text-brand">
+              <Link to="/keranjang" className="w-fit py-0.5 transition-colors duration-200 hover:text-brand">
                 Keranjang
               </Link>
             </div>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="min-w-0 lg:col-span-3">
             <p className="mb-3 font-display text-[15px] font-bold text-ink">Kontak</p>
             <div className="flex flex-col gap-2.5 text-[14px] text-muted">
-              <span className="flex items-center gap-2">
-                <Icon icon="mdi:phone-outline" className="text-brand" />
+              <span className="flex min-w-0 items-start gap-2 break-words">
+                <Icon icon="mdi:phone-outline" className="mt-0.5 flex-shrink-0 text-brand" />
                 {PHONE_DISPLAY}
               </span>
-              <span className="flex items-center gap-2">
-                <Icon icon="mdi:email-outline" className="text-brand" />
-                {EMAIL}
+              <span className="flex min-w-0 items-start gap-2 break-all">
+                <Icon icon="mdi:email-outline" className="mt-0.5 flex-shrink-0 text-brand" />
+                <span className="min-w-0">{EMAIL}</span>
               </span>
             </div>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="min-w-0 lg:col-span-3">
             <p className="mb-3 font-display text-[15px] font-bold text-ink">Alamat</p>
             <a
               href={MAPS_LINK}
@@ -85,7 +85,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-line pt-6 text-center text-[13px] text-muted md:flex-row md:text-left">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-line pt-6 text-center text-[12px] leading-relaxed text-muted sm:text-[13px] md:flex-row md:text-left">
           <p>Copyright © 2026 LPKS Borneo Flasher Indonesia. All rights reserved.</p>
         </div>
       </div>

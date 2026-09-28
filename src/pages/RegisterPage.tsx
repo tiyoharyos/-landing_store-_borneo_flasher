@@ -70,23 +70,23 @@ export default function RegisterPage() {
   return (
     <AuthLayout
       eyebrow="MULAI PERJALANANMU"
-      tagline="Akun praktis untuk belanja dan servis"
-      taglineSub="Buat akun sekali, lalu nikmati proses belanja yang lebih rapi, cepat, dan personal."
+      tagline="Satu akun untuk semua kebutuhan servis HP"
+      taglineSub="Belanja sparepart HP, peralatan servis, dan merchandise Borneo Flasher dengan lebih mudah."
       features={[
         {
           icon: "mdi:cart-outline",
-          title: "Belanja lebih praktis",
-          description: "Temukan sparepart dan kebutuhan gadget tanpa proses berulang.",
+          title: "Koleksi kebutuhan servis",
+          description: "Temukan sparepart HP dan peralatan servis dalam satu toko.",
         },
         {
           icon: "mdi:heart-outline",
-          title: "Pengalaman yang personal",
-          description: "Simpan informasi penting untuk memudahkan kunjungan berikutnya.",
+          title: "Checkout lebih praktis",
+          description: "Simpan alamat dan informasi akun untuk transaksi berikutnya.",
         },
         {
           icon: "mdi:shield-check-outline",
-          title: "Akun aman dan terverifikasi",
-          description: "Email verifikasi membantu menjaga akses akunmu tetap terlindungi.",
+          title: "Belanja dengan tenang",
+          description: "Akun terverifikasi membantu menjaga aktivitas belanjamu.",
         },
       ]}
     >
@@ -94,10 +94,10 @@ export default function RegisterPage() {
         <FadeIn className="p-7 sm:p-8">
           <CardHeader className="mb-1">
             <div>
-              <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand">Mulai sekarang</p>
-              <CardTitle className="text-[1.2rem]">Buat akun baru</CardTitle>
+              <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand">Mulai belanja</p>
+              <CardTitle className="text-[1.2rem]">Buat akun e-commerce</CardTitle>
               <CardSubtitle>
-                Daftar akun baru untuk mulai belanja & servis di Borneo Flasher Store.
+                Daftar untuk membeli sparepart HP, alat servis, dan merchandise Borneo Flasher.
               </CardSubtitle>
             </div>
           </CardHeader>
@@ -142,7 +142,7 @@ export default function RegisterPage() {
               />
 
               <Button type="submit" variant="primary" size="lg" fullWidth loading={loading} className="shadow-[var(--shadow-brand)]">
-                Buat akun
+                Daftar dan mulai belanja
               </Button>
             </Form>
 
