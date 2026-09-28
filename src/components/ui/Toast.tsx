@@ -137,7 +137,7 @@ export function ToastProvider({
                       title={t.title}
                       message={t.message}
                       onClose={() => dismiss(t.id)}
-                      className="shadow-xl backdrop-blur-md w-full"
+                      className="shadow-xl w-full"
                     />
                   </motion.div>
                 );
