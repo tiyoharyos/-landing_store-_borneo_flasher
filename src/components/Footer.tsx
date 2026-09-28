@@ -21,9 +21,8 @@ export default function Footer() {
           <div className="min-w-0 lg:col-span-4">
             <Logo className="mb-4" />
             <p className="mt-4 text-[14px] leading-relaxed text-muted">
-              Borneo Flasher Indonesia menghadirkan marketplace terpercaya untuk kebutuhan sparepart
-              smartphone, alat servis, dan perlengkapan teknisi dengan produk berkualitas serta harga
-              terbaik.
+              Borneo Flasher Indonesia adalah toko online untuk sparepart HP, peralatan servis,
+              perlengkapan teknisi, dan merchandise dengan produk berkualitas serta harga terbaik.
             </p>
             <div className="mt-5 flex gap-2">
               {SOCIAL_ICONS.map((s) => (
@@ -46,10 +45,10 @@ export default function Footer() {
             <div className="flex flex-col gap-2 text-[14px] text-muted">
               <Link to="/" className="w-fit py-0.5 transition-colors duration-200 hover:text-brand">Beranda</Link>
               <Link to="/kategori/alat-tools" className="w-fit py-0.5 transition-colors duration-200 hover:text-brand">
-                Alat & Tools
+                Peralatan Servis
               </Link>
               <Link to="/kategori/sparepart-iphone" className="w-fit py-0.5 transition-colors duration-200 hover:text-brand">
-                Sparepart iPhone
+                Sparepart HP
               </Link>
               <Link to="/keranjang" className="w-fit py-0.5 transition-colors duration-200 hover:text-brand">
                 Keranjang

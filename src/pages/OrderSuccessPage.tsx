@@ -41,11 +41,11 @@ export default function OrderSuccessPage() {
             <Icon icon="mdi:check-decagram" width={64} className="text-ok" />
           </motion.div>
           <FadeIn delay={0.1} className="flex flex-col items-center w-full">
-          <p className="font-display font-extrabold text-[1.4rem] mt-2.5 text-ink">Pesanan Berhasil Dibuat!</p>
+          <p className="font-display font-extrabold text-[1.4rem] mt-2.5 text-ink">Pesanan Berhasil Dibuat</p>
           <p className="text-muted text-[13.5px] mt-1">
             Nomor pesanan kamu: <span className="font-mono font-bold text-brand-dark">{order.id}</span>
           </p>
-          <p className="text-muted text-[13.5px] mt-1">Status: {order.status} (simulasi, belum ada pembayaran nyata)</p>
+          <p className="text-muted text-[13.5px] mt-1">Status pesanan: {order.status} (simulasi)</p>
 
           <div className="w-full bg-surface border border-line rounded-xl p-5 mt-6 text-left">
             <p className="flex items-center gap-2 font-display font-bold text-[14.5px] text-ink mb-3">Ringkasan Pesanan</p>
@@ -88,10 +88,10 @@ export default function OrderSuccessPage() {
               size="lg"
               className="rounded-xl! border-[1.5px]! border-brand! text-brand! hover:bg-brand-tint!"
             >
-              Kembali ke Beranda
+              Kembali ke Toko
             </ButtonLink>
             <ButtonLink to="/akun/profil?tab=pesanan" size="lg" className="rounded-xl!">
-              Lihat Pesanan Saya
+              Lihat Riwayat Pesanan
             </ButtonLink>
           </div>
           </FadeIn>

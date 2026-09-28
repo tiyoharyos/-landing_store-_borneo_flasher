@@ -48,7 +48,7 @@ export default function CartPage() {
           <div>
             <h1 className="mt-1 font-display text-[1.55rem] font-extrabold tracking-tight text-ink">Keranjang Belanja</h1>
             <p className="mt-1 text-[13px] text-muted">
-              {items.length > 0 ? `${items.length} produk siap diproses` : "Simpan produk pilihanmu di sini"}
+              {items.length > 0 ? `${items.length} produk siap dibeli` : "Simpan produk yang ingin kamu beli di sini"}
             </p>
           </div>
           {items.length > 0 && (
@@ -83,7 +83,7 @@ export default function CartPage() {
                 Wah, keranjang belanjamu kosong
               </p>
               <p className="mt-1.5 max-w-[320px] text-[13.5px] text-muted">
-                Yuk, isi dengan barang-barang kebutuhan servis kamu!
+                Yuk, isi dengan sparepart, alat servis, atau merchandise pilihanmu.
               </p>
               <ButtonLink to="/" icon="mdi:storefront-outline" className="mt-6">
                 Mulai Belanja
@@ -99,12 +99,12 @@ export default function CartPage() {
 
               <div className="mt-2 flex items-center gap-2 rounded-[18px] bg-cream-deep px-3.5 py-2.5 text-[13px] text-ink-soft">
                 <Icon icon="mdi:tag-outline" width={18} />
-                <span>Makin hemat pakai promo</span>
+                <span>Cek promo untuk belanja lebih hemat</span>
                 <Icon icon="mdi:chevron-right" width={18} className="ml-auto" />
               </div>
 
               <Button variant="primary" size="lg" fullWidth className="mt-3" disabled>
-                Beli
+                Lanjut Belanja
               </Button>
             </FadeIn>
           </div>

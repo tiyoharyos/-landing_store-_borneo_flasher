@@ -100,7 +100,7 @@ export default function Navbar() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyUp={(e) => e.key === "Enter" && submitSearch()}
-              placeholder="Cari alat, sparepart..."
+              placeholder="Cari sparepart, alat servis, merchandise..."
               className="h-9 min-w-0 flex-1 border-none bg-transparent text-[13px] text-ink outline-none placeholder:text-muted sm:text-sm"
             />
             <Button
@@ -173,7 +173,7 @@ export default function Navbar() {
                             Wah, keranjang belanjamu kosong
                           </p>
                           <p className="mt-1 text-[12.5px] text-muted">
-                            Yuk, isi dengan barang-barang impianmu!
+                            Yuk, isi dengan kebutuhan servis dan produk favoritmu!
                           </p>
                           <ButtonLink
                             to="/"

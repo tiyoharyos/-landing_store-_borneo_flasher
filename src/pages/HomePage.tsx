@@ -78,7 +78,7 @@ export default function HomePage() {
             className="flex flex-wrap items-end justify-between gap-4 mb-8"
           >
             <h2 className="font-display font-extrabold text-[1.35rem] text-ink tracking-tight">
-              Produk Pilihan
+              Produk Pilihan untuk Kebutuhanmu
             </h2>
 
             <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Urutkan produk">
@@ -136,7 +136,7 @@ export default function HomePage() {
                   size="sm"
                   className="h-9! flex-shrink-0 px-4! md:px-5! !text-white"
                 >
-                  Lihat Semua Produk
+                  Jelajahi Semua Produk
                 </ButtonLink>
               </div>
             </>

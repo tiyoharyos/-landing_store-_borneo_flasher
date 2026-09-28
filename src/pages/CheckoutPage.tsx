@@ -51,9 +51,9 @@ export default function CheckoutPage() {
         <div className="container text-center py-12 px-6">
           <Icon icon="mdi:cart-off" width={64} className="text-line inline-block" />
           <p className="font-display font-bold text-[1.1rem] mt-4">Keranjang Kosong</p>
-          <p className="text-muted text-sm mt-1">Tambahkan produk ke keranjang sebelum checkout.</p>
+          <p className="text-muted text-sm mt-1">Pilih produk yang ingin dibeli sebelum melanjutkan checkout.</p>
           <ButtonLink to="/" icon="mdi:storefront-outline" className="mt-4">
-            Kembali Belanja
+            Lanjut Belanja
           </ButtonLink>
         </div>
       </div>
@@ -266,7 +266,7 @@ export default function CheckoutPage() {
               Buat Pesanan
             </Button>
             <p className="text-[11.5px] text-muted mt-1.5 text-center mt-2">
-              Ini adalah simulasi checkout (belum ada pembayaran nyata).
+              Checkout ini masih dalam mode simulasi dan belum memproses pembayaran nyata.
             </p>
           </FadeIn>
         </div>

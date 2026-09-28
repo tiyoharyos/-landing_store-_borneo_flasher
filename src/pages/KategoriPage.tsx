@@ -534,7 +534,7 @@ export default function KategoriPage() {
                 <div className="rounded-[26px] border border-dashed border-line bg-surface px-6 py-14 text-center shadow-sm">
                   <Icon icon="mdi:package-variant-closed" width={64} className="text-line inline-block" />
                   <p className="font-display font-bold text-[1.1rem] mt-4 text-ink">Produk Tidak Ditemukan</p>
-                  <p className="text-muted text-sm mt-1">Coba ubah kata kunci atau filter pencarian Anda.</p>
+                  <p className="text-muted text-sm mt-1">Coba ubah kata kunci, kategori, atau filter produk.</p>
                   {activeFilters.length > 0 && (
                     <Button
                       variant="primary"

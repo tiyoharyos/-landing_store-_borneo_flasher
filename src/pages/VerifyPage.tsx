@@ -49,8 +49,8 @@ export default function VerifyPage() {
 
   return (
     <AuthLayout
-      tagline="Satu Langkah Lagi"
-      taglineSub="Verifikasi email kamu supaya akun langsung siap dipakai untuk belanja & servis."
+      tagline="Satu langkah lagi sebelum belanja"
+      taglineSub="Verifikasi email kamu agar akun siap dipakai untuk membeli sparepart, alat servis, dan merchandise."
     >
       <Card noPadding>
         <FadeIn className="p-8">

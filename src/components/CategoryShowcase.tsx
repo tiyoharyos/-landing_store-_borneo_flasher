@@ -39,13 +39,13 @@ export default function CategoryShowcase() {
     <section className="py-6 md:py-8">
       <div className="flex items-end justify-between gap-4 mb-5">
         <p className="font-display font-extrabold text-[1.35rem] text-ink tracking-tight">
-          Belanja per Kategori
+          Jelajahi Kategori Produk
         </p>
         <Link
           to="/kategori"
           className="text-[13.5px] font-semibold text-ink-soft hover:text-ink transition-colors shrink-0"
         >
-          Lihat Semua
+          Lihat Semua Kategori
         </Link>
       </div>
 

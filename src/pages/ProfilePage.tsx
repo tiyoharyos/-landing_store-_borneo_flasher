@@ -210,8 +210,8 @@ export default function ProfilePage() {
               {orders.length === 0 ? (
                 <div className="text-center py-12 px-6">
                   <Icon icon="mdi:receipt-text-outline" width={64} className="text-line inline-block" />
-                  <p className="font-display font-bold text-[1.1rem] mt-4">Belum Ada Pesanan</p>
-                  <p className="text-muted text-sm mt-1">Pesanan yang kamu buat akan muncul di sini.</p>
+                  <p className="font-display font-bold text-[1.1rem] mt-4">Belum Ada Riwayat Pesanan</p>
+                  <p className="text-muted text-sm mt-1">Pesanan sparepart, alat servis, dan merchandise akan muncul di sini.</p>
                   <ButtonLink to="/" variant="outline" size="sm" className="mt-4 border-brand! text-brand! hover:bg-brand-tint!">
                     Mulai Belanja
                   </ButtonLink>
@@ -378,7 +378,7 @@ export default function ProfilePage() {
                   <Icon icon="mdi:heart-outline" width={64} className="text-line inline-block" />
                   <p className="font-display font-bold text-[1.1rem] mt-4">Wishlist Kamu Masih Kosong</p>
                   <p className="text-muted text-sm mt-1">
-                    Simpan produk favoritmu dengan tap ikon hati pada produk.
+                    Simpan produk favoritmu untuk dibeli nanti dengan ikon hati.
                   </p>
                   <ButtonLink to="/" variant="outline" size="sm" className="mt-4 border-brand! text-brand! hover:bg-brand-tint!">
                     Mulai Belanja

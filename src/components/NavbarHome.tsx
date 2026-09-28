@@ -41,7 +41,7 @@ export default function NavbarHome() {
           </li>
           <li>
             <NavLink to="/kategori" onClick={() => setOpen(false)} className={navLinkClass}>
-              Kategori Kelas
+              Kategori Produk
             </NavLink>
           </li>
           <li className="hidden md:block">

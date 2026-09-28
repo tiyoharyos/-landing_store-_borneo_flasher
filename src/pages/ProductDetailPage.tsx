@@ -14,6 +14,8 @@ import { getCategories } from "@/services/categoriesService";
 import { mapApiProductToProduct, mapApiProductsToProducts, mapCategoryOptions, type CategoryOption } from "@/lib/mapProduct";
 import { getApiErrorMessage } from "@/lib/axios";
 import SafeImage from "@/components/SafeImage";
+import { useToast } from "@/components/ui/Toast";
+import { waLink } from "@/config/config";
 
 const LOW_STOCK_THRESHOLD = 5;
 function extractIdFromSlug(slug: string): string {
@@ -26,6 +28,7 @@ export default function ProductDetailPage() {
   const navigate = useNavigate();
   const { addItem } = useCart();
   const { isWishlisted, toggle } = useWishlist();
+  const toast = useToast();
   const [qty, setQty] = useState(1);
   const qtyPulse = useAnimation();
 
@@ -145,7 +148,7 @@ export default function ProductDetailPage() {
             size="sm"
             className="mt-4 border-brand! text-brand! hover:bg-brand-tint!"
           >
-            Kembali ke Beranda
+            Kembali ke Toko
           </ButtonLink>
         </div>
       </div>
@@ -174,6 +177,31 @@ export default function ProductDetailPage() {
   const handleBuyNow = async () => {
     const added = await addItem(product.id, qty);
     if (added) navigate("/keranjang");
+  };
+
+  const handleAskProduct = () => {
+    const message = `Halo, saya ingin bertanya tentang produk ${product.name}.\n\nLink produk: ${window.location.href}`;
+    window.open(waLink(message), "_blank", "noopener,noreferrer");
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: product.name,
+      text: `Cek produk ${product.name} di Borneo Flasher Store.`,
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success("Link produk disalin", "Bagikan link ini ke pelanggan atau temanmu.");
+    } catch {
+      toast.error("Link belum berhasil dibagikan", "Coba lagi atau salin link dari alamat browser.");
+    }
   };
 
   return (
@@ -390,7 +418,7 @@ export default function ProductDetailPage() {
                 </p>
                 <p className="text-[11.5px] text-muted mt-0.5">
                   {outOfStock
-                    ? "Pantau lewat wishlist."
+                    ? "Simpan ke wishlist untuk dipantau."
                     : isLowStock
                     ? "Segera checkout."
                     : `${product.stock} unit siap dikirim`}
@@ -467,7 +495,7 @@ export default function ProductDetailPage() {
                 onClick={handleAddToCart}
                 className="w-full justify-center"
               >
-                Keranjang
+                Tambah ke Keranjang
               </Button>
               <Button
                 variant="primary"
@@ -476,7 +504,7 @@ export default function ProductDetailPage() {
                 onClick={handleBuyNow}
                 className="w-full justify-center"
               >
-                Beli Langsung
+                Beli Sekarang
               </Button>
             </div>
 
@@ -484,9 +512,10 @@ export default function ProductDetailPage() {
               <Button
                 variant="ghost"
                 icon="mdi:chat-outline"
+                onClick={handleAskProduct}
                 className="h-auto! w-auto! p-0! border-none! gap-1.5 hover:bg-transparent! hover:text-brand!"
               >
-                Chat
+                Tanya Produk
               </Button>
               <Button
                 variant="ghost"
@@ -501,6 +530,7 @@ export default function ProductDetailPage() {
               <Button
                 variant="ghost"
                 icon="mdi:share-variant-outline"
+                onClick={handleShare}
                 className="h-auto! w-auto! p-0! border-none! gap-1.5 hover:bg-transparent! hover:text-brand!"
               >
                 Share

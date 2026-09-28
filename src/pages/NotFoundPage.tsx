@@ -16,10 +16,10 @@ export default function NotFoundPage() {
       <FadeIn delay={0.1} className="flex flex-col items-center gap-2">
         <h1 className="font-display font-extrabold text-[28px] mt-2 text-ink">404 — Halaman Tidak Ditemukan</h1>
         <p className="text-muted">
-          Halaman yang kamu cari sudah pindah atau belum tersedia.
+          Halaman toko yang kamu cari sudah pindah atau belum tersedia.
         </p>
         <ButtonLink to="/" className="mt-2">
-          Kembali ke Beranda
+          Kembali ke Toko
         </ButtonLink>
       </FadeIn>
     </div>
