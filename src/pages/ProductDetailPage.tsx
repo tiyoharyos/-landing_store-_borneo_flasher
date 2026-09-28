@@ -8,16 +8,17 @@ import { useWishlist } from "@/context/WishlistContext";
 import Button from "@/components/ui/Button";
 import ButtonLink from "@/components/ui/ButtonLink";
 import FadeIn from "@/components/FadeIn";
+import ShareDialog from "@/components/ShareDialog";
 import { type Product, formatRupiah, discountPercent } from "@/data/products";
 import { getProductDetail, getProducts } from "@/services/productsService";
 import { getCategories } from "@/services/categoriesService";
 import { mapApiProductToProduct, mapApiProductsToProducts, mapCategoryOptions, type CategoryOption } from "@/lib/mapProduct";
 import { getApiErrorMessage } from "@/lib/axios";
 import SafeImage from "@/components/SafeImage";
-import { useToast } from "@/components/ui/Toast";
-import { waLink } from "@/config/config";
 
 const LOW_STOCK_THRESHOLD = 5;
+const WA_NUMBER = "6281273417555"; // +62 812-7341-7555
+
 function extractIdFromSlug(slug: string): string {
   const parts = slug.split("-");
   return parts[parts.length - 1];
@@ -28,9 +29,9 @@ export default function ProductDetailPage() {
   const navigate = useNavigate();
   const { addItem } = useCart();
   const { isWishlisted, toggle } = useWishlist();
-  const toast = useToast();
   const [qty, setQty] = useState(1);
   const qtyPulse = useAnimation();
+  const [shareOpen, setShareOpen] = useState(false);
 
   const [product, setProduct] = useState<Product | null>(null);
   const [categories, setCategories] = useState<CategoryOption[]>([]);
@@ -38,6 +39,7 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     setQty(1);
   }, [slug]);
@@ -179,29 +181,35 @@ export default function ProductDetailPage() {
     if (added) navigate("/keranjang");
   };
 
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const shareText = `${product.name} - ${formatRupiah(product.price)}`;
+
+  // "Tanya Produk": buka WhatsApp ke nomor toko dengan pesan otomatis.
   const handleAskProduct = () => {
-    const message = `Halo, saya ingin bertanya tentang produk ${product.name}.\n\nLink produk: ${window.location.href}`;
-    window.open(waLink(message), "_blank", "noopener,noreferrer");
+    const message =
+      `Halo, saya mau tanya tentang produk ini:\n\n` +
+      `*${product.name}*\n` +
+      `Harga: ${formatRupiah(product.price)}\n` +
+      `${shareUrl}`;
+    window.open(
+      `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
+  // "Share": di HP pakai share sheet bawaan, di desktop pakai dialog custom.
   const handleShare = async () => {
-    const shareData = {
-      title: product.name,
-      text: `Cek produk ${product.name} di Borneo Flasher Store.`,
-      url: window.location.href,
-    };
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-        return;
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch && navigator.share) {
+      try {
+        await navigator.share({ title: product.name, text: shareText, url: shareUrl });
+      } catch {
+        // User membatalkan share, abaikan.
       }
-
-      await navigator.clipboard.writeText(window.location.href);
-      toast.success("Link produk disalin", "Bagikan link ini ke pelanggan atau temanmu.");
-    } catch {
-      toast.error("Link belum berhasil dibagikan", "Coba lagi atau salin link dari alamat browser.");
+      return;
     }
+    setShareOpen(true);
   };
 
   return (
@@ -315,63 +323,65 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Spesifikasi produk — langsung tampil, tanpa tab & tanpa judul */}
-           <motion.div
-  initial={{ opacity: 0, y: 6 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.25, delay: 0.15 }}
-  className="mt-5 pt-4 border-t border-line flex flex-col gap-2"
->
-  <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
-    <span className="w-[120px] text-muted flex-shrink-0">Kondisi</span>
-    <span>{product.condition}</span>
-  </div>
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, delay: 0.15 }}
+              className="mt-5 pt-4 border-t border-line flex flex-col gap-2"
+            >
+              <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
+                <span className="w-[120px] text-muted flex-shrink-0">Kondisi</span>
+                <span>{product.condition}</span>
+              </div>
 
-  {product.weightGram > 0 && (
-    <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
-      <span className="w-[120px] text-muted flex-shrink-0">Berat Satuan</span>
-      <span>{product.weightGram} g</span>
-    </div>
-  )}
+              {product.weightGram > 0 && (
+                <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
+                  <span className="w-[120px] text-muted flex-shrink-0">Berat Satuan</span>
+                  <span>{product.weightGram} g</span>
+                </div>
+              )}
 
-  {product.code && (
-    <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
-      <span className="w-[120px] text-muted flex-shrink-0">Kode Produk</span>
-      <span className="font-mono">{product.code}</span>
-    </div>
-  )}
+              {product.code && (
+                <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
+                  <span className="w-[120px] text-muted flex-shrink-0">Kode Produk</span>
+                  <span className="font-mono">{product.code}</span>
+                </div>
+              )}
 
-  <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
-    <span className="w-[120px] text-muted flex-shrink-0">Kategori</span>
-    <span>{categoryLabel ?? "-"}</span>
-  </div>
+              <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
+                <span className="w-[120px] text-muted flex-shrink-0">Kategori</span>
+                <span>{categoryLabel ?? "-"}</span>
+              </div>
 
-  {product.supplier && (
-    <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
-      <span className="w-[120px] text-muted flex-shrink-0">Supplier</span>
-      <span>{product.supplier}</span>
-    </div>
-  )}
+              {product.supplier && (
+                <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
+                  <span className="w-[120px] text-muted flex-shrink-0">Supplier</span>
+                  <span>{product.supplier}</span>
+                </div>
+              )}
 
-  {product.location && (
-    <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
-      <span className="w-[120px] text-muted flex-shrink-0">Lokasi</span>
-      <span>{product.location}</span>
-    </div>
-  )}
+              {product.location && (
+                <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
+                  <span className="w-[120px] text-muted flex-shrink-0">Lokasi</span>
+                  <span>{product.location}</span>
+                </div>
+              )}
 
-  <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
-    <span className="w-[120px] text-muted flex-shrink-0">Stok</span>
-    <span>{outOfStock ? "0 unit" : `${product.stock} unit`}</span>
-  </div>
+              <div className="flex gap-2.5 text-[13.5px] text-ink-soft">
+                <span className="w-[120px] text-muted flex-shrink-0">Stok</span>
+                <span>{outOfStock ? "0 unit" : `${product.stock} unit`}</span>
+              </div>
 
-  {product.description && (
-    <div className="flex gap-2.5 text-[13.5px] text-ink-soft pt-1">
-      <span className="w-[120px] text-muted flex-shrink-0">Deskripsi</span>
-      <span className="leading-relaxed whitespace-pre-line">{product.description}</span>
-    </div>
-  )}
-</motion.div>
+              {product.description && (
+                <div className="flex gap-2.5 text-[13.5px] text-ink-soft pt-1">
+                  <span className="w-[120px] text-muted flex-shrink-0">Deskripsi</span>
+                  <span className="leading-relaxed whitespace-pre-line">{product.description}</span>
+                </div>
+              )}
+            </motion.div>
           </motion.div>
+
+          {/* Sidebar beli */}
           <motion.aside
             key={`buy-${product.id}`}
             initial={{ opacity: 0, y: 10 }}
@@ -567,6 +577,14 @@ export default function ProductDetailPage() {
           </div>
         )}
       </div>
+
+      <ShareDialog
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        url={shareUrl}
+        title={product.name}
+        text={shareText}
+      />
     </div>
   );
 }
