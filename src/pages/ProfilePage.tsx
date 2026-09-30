@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import ProductCard from "@/components/ProductCard";
@@ -28,7 +28,6 @@ export default function ProfilePage() {
   const { items: wishlistItems, totalItems: wishlistCount } = useWishlist();
   const { addresses, removeAddress, makePrimary } = useAddresses();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [orders, setOrders] = useState<Order[]>([]);
   const toast = useToast();
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
@@ -43,9 +42,7 @@ export default function ProfilePage() {
     tabFromUrl === "wishlist" || tabFromUrl === "pesanan" || tabFromUrl === "alamat" ? tabFromUrl : "biodata"
   );
 
-  useEffect(() => {
-    if (user) setOrders(getOrders(user.email));
-  }, [user]);
+  const orders = useMemo<Order[]>(() => (user ? getOrders(user.email) : []), [user]);
 
   if (!user) return <Navigate to="/masuk?next=/akun/profil" replace />;
 

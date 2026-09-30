@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -17,12 +17,15 @@ export default function PhoneEditModal({ open, onClose }: Props) {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
+  // Reset form tiap kali modal dibuka (pola "adjust state during render").
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (open) {
       setPhone(user?.phone ?? "");
       setError("");
     }
-  }, [open, user]);
+  }
 
   const handleSubmit = async () => {
     if (!user) return;

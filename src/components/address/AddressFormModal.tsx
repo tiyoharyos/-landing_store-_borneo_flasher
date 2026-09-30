@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
@@ -40,19 +40,25 @@ export default function AddressFormModal({ open, onClose, editing, onSaved }: Pr
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (!open) return;
-    if (editing) {
-      const { id: _id, isPrimary, ...rest } = editing;
-      void _id;
-      setForm(rest);
-      setMakePrimary(isPrimary);
-    } else {
-      setForm({ ...emptyForm, recipientName: user?.name ?? "", phone: user?.phone ?? "" });
-      setMakePrimary(false);
+  // Isi ulang form tiap kali modal dibuka atau alamat yang diedit berganti
+  // (pola "adjust state during render", tanpa setState di dalam effect).
+  const resetKey = open ? (editing?.id ?? "new") : null;
+  const [prevKey, setPrevKey] = useState<string | null>(null);
+  if (resetKey !== prevKey) {
+    setPrevKey(resetKey);
+    if (resetKey !== null) {
+      if (editing) {
+        const { id: _id, isPrimary, ...rest } = editing;
+        void _id;
+        setForm(rest);
+        setMakePrimary(isPrimary);
+      } else {
+        setForm({ ...emptyForm, recipientName: user?.name ?? "", phone: user?.phone ?? "" });
+        setMakePrimary(false);
+      }
+      setErrors({});
     }
-    setErrors({});
-  }, [open, editing, user]);
+  }
 
   const setField = (key: keyof AddressInput) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

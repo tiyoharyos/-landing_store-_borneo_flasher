@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import {
   getProfile,
   loginAccount,
@@ -7,7 +7,8 @@ import {
   type Gender,
   type ProfileData,
 } from "@/services/authService";
-import { getApiErrorMessage } from "@/lib/axios";
+import { getApiErrorMessage, UNAUTHORIZED_EVENT } from "@/lib/axios";
+import { useToast } from "@/components/ui/Toast";
 
 export interface User {
   id?: number | string;
@@ -61,6 +62,23 @@ function mapProfileToUser(data: ProfileData): User {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const toast = useToast();
+  const toastRef = useRef(toast);
+  useEffect(() => {
+    toastRef.current = toast;
+  });
+
+  // Token ditolak server (kedaluwarsa/tidak valid): interceptor axios sudah
+  // membersihkan localStorage, di sini state React ikut di-logout supaya UI
+  // tidak terlihat "masih login".
+  useEffect(() => {
+    const onUnauthorized = () => {
+      setUser(null);
+      toastRef.current.error("Sesi kamu berakhir, silakan masuk lagi.");
+    };
+    window.addEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
+    return () => window.removeEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
+  }, []);
 
   const persist = (u: User | null, token?: string | null) => {
     setUser(u);

@@ -4,8 +4,15 @@ export interface CheckoutResult {
   total_price: number;
 }
 
-export async function checkout() {
-  const res = await api.post<ApiResponse<CheckoutResult>>("Checkout");
+export interface CheckoutPayload {
+  id_alamat: number | string;
+  shipping_method: string;
+  shipping_cost: number;
+  payment_method: string;
+}
+
+export async function checkout(payload: CheckoutPayload) {
+  const res = await api.post<ApiResponse<CheckoutResult>>("Checkout", payload);
   return res.data;
 }
 

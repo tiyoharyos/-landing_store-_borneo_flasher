@@ -6,7 +6,7 @@ export const WHATSAPP_TEXT =
 export const PHONE_DISPLAY = "0812-7341-7555";
 export const EMAIL = "info@borneoflasher.id";
 export const ADDRESS =
-  "Rt 01 Rw 10, Banjarsari, Penggung, Boyolali, Jawa Tengah , Boyolali, Indonesia, Boyolali, Indonesia, 57316";
+  "Rt 01 Rw 10, Banjarsari, Penggung, Boyolali, Jawa Tengah, Indonesia, 57316";
 
 export const SOCIALS = {
   facebook: "https://www.facebook.com/BorneoFlasherIndonesia?locale=id_ID",

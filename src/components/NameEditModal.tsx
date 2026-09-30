@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -17,12 +17,15 @@ export default function NameEditModal({ open, onClose }: Props) {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
+  // Reset form tiap kali modal dibuka (pola "adjust state during render").
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
     if (open) {
       setName(user?.name ?? "");
       setError("");
     }
-  }, [open, user]);
+  }
 
   const handleSubmit = async () => {
     if (!name.trim()) {

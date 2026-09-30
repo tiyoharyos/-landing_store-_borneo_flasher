@@ -27,9 +27,7 @@ export default function ShareDialog({ open, onClose, url, title, text }: Props) 
     };
   }, [open, onClose]);
 
-  useEffect(() => {
-    if (!open) setCopied(false);
-  }, [open]);
+  if (!open && copied) setCopied(false);
 
   const handleCopy = async () => {
     try {

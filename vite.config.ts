@@ -10,8 +10,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-   server: {
-    host: true,      // expose ke network (0.0.0.0)
-    port: 5173,      // port default, bisa diganti
+  server: {
+    host: true, // expose ke network (0.0.0.0) — hanya untuk dev, bukan deployment
+    port: 5173,
   },
 });

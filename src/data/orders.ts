@@ -44,8 +44,8 @@ export const SHIPPING_OPTIONS: { key: ShippingMethodKey; label: string; eta: str
 ];
 
 export const PAYMENT_OPTIONS: { key: PaymentMethodKey; label: string; desc: string }[] = [
-  { key: "transfer", label: "Transfer Bank", desc: "BCA / BNI / BRI / Mandiri (mock)" },
-  { key: "cod", label: "Bayar di Tempat (COD)", desc: "Hanya untuk area tertentu (mock)" },
+  { key: "transfer", label: "Transfer Bank", desc: "BCA / BNI / BRI / Mandiri" },
+  { key: "cod", label: "Bayar di Tempat (COD)", desc: "Hanya untuk area tertentu" },
 ];
 
 /** Kelas warna badge status, dipakai halaman profil/riwayat pesanan. */

@@ -47,7 +47,10 @@ export default function RegisterPage() {
       });
       return;
     }
-    if (res.verificationToken) {
+    // Auto-verifikasi HANYA untuk testing lokal (npm run dev + VITE_AUTO_VERIFY=true).
+    // Di production, pengguna wajib verifikasi lewat link di email.
+    const autoVerify = import.meta.env.DEV && import.meta.env.VITE_AUTO_VERIFY === "true";
+    if (autoVerify && res.verificationToken) {
       await Swal.fire({
         icon: "success",
         title: "Registrasi Berhasil",

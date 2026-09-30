@@ -7,7 +7,7 @@ import {
   ICON_SIZE,
   type ButtonSize,
   type ButtonVariant,
-} from "./Button";
+} from "./buttonStyles";
 
 interface SharedProps {
   variant?: ButtonVariant;

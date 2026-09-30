@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
@@ -29,17 +29,15 @@ export default function CheckoutPage() {
   const { addresses, primaryAddress, loading: addressesLoading } = useAddresses();
   const navigate = useNavigate();
 
-  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  // Alamat yang dipilih manual; kalau belum ada, pakai alamat utama.
+  const [pickedAddress, setPickedAddress] = useState<Address | null>(null);
+  const selectedAddress = pickedAddress ?? primaryAddress ?? null;
   const [addressListOpen, setAddressListOpen] = useState(false);
   const [addressFormOpen, setAddressFormOpen] = useState(false);
   const [shippingMethod, setShippingMethod] = useState<ShippingMethodKey>("reguler");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodKey>("transfer");
   const [submitting, setSubmitting] = useState(false);
   const toast = useToast();
-
-  useEffect(() => {
-    if (!selectedAddress && primaryAddress) setSelectedAddress(primaryAddress);
-  }, [primaryAddress, selectedAddress]);
 
   if (!user) {
     return <Navigate to="/masuk?next=/checkout" replace />;
@@ -76,7 +74,12 @@ export default function CheckoutPage() {
 
     setSubmitting(true);
     try {
-      const res = await checkout();
+      const res = await checkout({
+        id_alamat: selectedAddress.id,
+        shipping_method: shippingMethod,
+        shipping_cost: shippingCost,
+        payment_method: paymentMethod,
+      });
       const idOrder = res.data?.id_order;
 
       const order = createOrder(
@@ -275,12 +278,12 @@ export default function CheckoutPage() {
       <AddressListModal
         open={addressListOpen}
         onClose={() => setAddressListOpen(false)}
-        onPick={(address) => setSelectedAddress(address)}
+        onPick={(address) => setPickedAddress(address)}
       />
       <AddressFormModal
         open={addressFormOpen}
         onClose={() => setAddressFormOpen(false)}
-        onSaved={(address) => setSelectedAddress(address)}
+        onSaved={(address) => setPickedAddress(address)}
       />
     </div>
   );

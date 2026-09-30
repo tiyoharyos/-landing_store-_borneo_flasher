@@ -9,6 +9,12 @@ export type CategoryKey = string;
 
 export type Condition = "Baru" | "Bekas Layak Pakai";
 
+export interface Category {
+  key: CategoryKey;
+  label: string;
+  icon: string;
+}
+
 export interface Product {
   id: string;
   slug: string;

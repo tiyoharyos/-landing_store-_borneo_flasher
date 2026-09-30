@@ -1,10 +1,13 @@
 import axios from "axios";
 
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? "http://localhost/api_borneoacademy/";
+  import.meta.env.VITE_API_BASE_URL ?? "http://localhost/api_borneoacademy/store/";
 
 const API_KEY_HEADER = import.meta.env.VITE_API_KEY_HEADER ?? "BA-KEY";
 const API_KEY = import.meta.env.VITE_API_KEY ?? "";
+
+/** Event global yang dikirim saat server menolak token (401). Didengarkan AuthContext. */
+export const UNAUTHORIZED_EVENT = "bf:unauthorized";
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -28,8 +31,12 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
+      // Hanya anggap "sesi berakhir" kalau memang ada token tersimpan
+      // (401 saat login dengan password salah tidak perlu memicu apa-apa).
+      const hadToken = Boolean(localStorage.getItem("bf_access_token"));
       localStorage.removeItem("bf_access_token");
       localStorage.removeItem("bf_auth_user");
+      if (hadToken) window.dispatchEvent(new Event(UNAUTHORIZED_EVENT));
     }
     return Promise.reject(error);
   }

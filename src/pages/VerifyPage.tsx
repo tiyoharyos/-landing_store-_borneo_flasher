@@ -17,19 +17,17 @@ export default function VerifyPage() {
   const navigate = useNavigate();
   const token = params.get("token");
 
-  const [state, setState] = useState<VerifyState>("loading");
-  const [message, setMessage] = useState("Memverifikasi email kamu, tunggu sebentar...");
+  const [state, setState] = useState<VerifyState>(token ? "loading" : "error");
+  const [message, setMessage] = useState(
+    token
+      ? "Memverifikasi email kamu, tunggu sebentar..."
+      : "Link verifikasi tidak valid. Token tidak ditemukan pada URL."
+  );
   const requestedRef = useRef(false);
 
   useEffect(() => {
-    if (requestedRef.current) return;
+    if (!token || requestedRef.current) return;
     requestedRef.current = true;
-
-    if (!token) {
-      setState("error");
-      setMessage("Link verifikasi tidak valid. Token tidak ditemukan pada URL.");
-      return;
-    }
 
     verifyAccount(token)
       .then((res) => {
