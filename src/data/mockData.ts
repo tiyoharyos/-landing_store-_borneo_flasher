@@ -1,8 +1,3 @@
-// ==========================================================
-// MOCK DATA — Borneo Flasher Store
-// Nama produk & harga mengacu ke borneoflasher.com/LandingStore
-// (di-parafrase/dirapikan, gambar pakai URL asli sebagai ilustrasi)
-// ==========================================================
 
 export interface Category {
   slug: string;

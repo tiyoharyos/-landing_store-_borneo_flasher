@@ -48,7 +48,6 @@ export const PAYMENT_OPTIONS: { key: PaymentMethodKey; label: string; desc: stri
   { key: "cod", label: "Bayar di Tempat (COD)", desc: "Hanya untuk area tertentu" },
 ];
 
-/** Kelas warna badge status, dipakai halaman profil/riwayat pesanan. */
 export const ORDER_STATUS_STYLES: Record<OrderStatus, string> = {
   "Menunggu Pembayaran": "bg-amber/15 text-amber-dark",
   Diproses: "bg-amber/15 text-amber-dark",
@@ -81,9 +80,6 @@ export function createOrder(
   shippingMethod: ShippingMethodKey,
   paymentMethod: PaymentMethodKey,
   userEmail: string,
-  /** ID order asli dari backend (Checkout/), dipakai kalau ada supaya nomor
-   *  pesanan yang tampil di UI konsisten dengan data di server. Kalau tidak
-   *  diisi, dibuatkan id lokal seperti sebelumnya. */
   orderId?: string
 ): Order {
   const shippingCost = SHIPPING_OPTIONS.find((s) => s.key === shippingMethod)?.cost ?? 0;
